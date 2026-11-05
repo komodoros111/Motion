@@ -10,7 +10,7 @@ This document is the operating contract for any assistant asked to create, edit,
 
 ## What the preview can render
 
-The current preview represents one centered, stylized text element. It can animate position X/Y, rotation, scale, and opacity. Text and element/background colors are editable canvas settings. It does not yet render multiple layers, video, audio, masks, particles, arbitrary SVG paths, blur, shadows as animated properties, or compositing effects. Keep the result inside these capabilities; if the request asks for more, say what the editor can represent and give the user an achievable approximation. Never claim unsupported effects are visible in the preview.
+The current preview represents one centered, stylized text element. It can animate position X/Y, rotation, scale, and opacity. Text and element/background colors are editable canvas settings. It exports silent WebM video and can speak optional narration with browser/system voices, but narration is not mixed into the exported video. It does not render multiple layers, imported footage, masks, particles, arbitrary SVG paths, animated blur/shadows, or compositing effects. Keep the result inside these capabilities; if the request asks for more, say what the editor can represent and give the user an achievable approximation. Never claim unsupported effects are visible in the preview.
 
 ## Motion JSON v1 contract
 
@@ -31,6 +31,7 @@ Top-level structure:
     "objectColor": "#b9a3ff",
     "subtitle": "Optional call to action"
   },
+  "narration": { "text": "Optional spoken copy", "voiceURI": "Optional browser voice ID", "rate": 1 },
   "tracks": []
 }
 ```
@@ -56,6 +57,7 @@ Supported `property`: `x`, `y`, `rotation`, `scale`, `opacity`. Supported `easin
 - `durationMs`: 100–120000. `fps`: 1–240.
 - `canvas.width` and `canvas.height`: 1–8192 pixels.
 - Canvas colors: six-digit `#RRGGBB`. `label`: up to 24 characters; `subtitle`: up to 80 characters.
+- Optional `narration.text`: up to 1000 characters; `narration.voiceURI` is a browser/system voice identifier and may differ between computers; `narration.rate`: 0.5–2. Narration is previewed through browser speech synthesis, not stored as audio.
 - At most 64 tracks and 10000 keyframes.
 - Keyframe `timeMs`: inclusive 0–`durationMs`.
 - `opacity`: 0–1. `scale`: greater than 0 and at most 100.

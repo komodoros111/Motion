@@ -1,4 +1,5 @@
 import { createSampleMotion, validateMotionDocument, encodeMotionBinary, decodeMotionBinary, repairMotionChecksum, MAX_BINARY_BYTES } from "./motion-format.js";
+import { exportMotionVideo } from "./video-export.js";
 
 const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => [...document.querySelectorAll(selector)];
@@ -86,6 +87,10 @@ function renderTimeline() {
   $("#field-name").value = project.name;
   $("#field-label").value = project.canvas.label ?? "M";
   $("#field-subtitle").value = project.canvas.subtitle ?? "";
+  $("#field-narration").value = project.narration?.text ?? "";
+  $("#field-narration-rate").value = project.narration?.rate ?? 1;
+  $("#narration-rate-label").textContent = `${Number(project.narration?.rate ?? 1).toFixed(1).replace(".", ",")}×`;
+  $("#field-voice").value = project.narration?.voiceURI ?? "";
   $("#field-background").value = project.canvas.background ?? "#090b13";
   $("#field-object-color").value = project.canvas.objectColor ?? "#b9a3ff";
   $("#field-duration").value = project.durationMs;
@@ -244,6 +249,43 @@ function openProjectFile(file) {
   }).catch((error) => toast(`Não consegui abrir: ${error.message}`));
 }
 
+function refreshSpeechVoices() {
+  const select = $("#field-voice");
+  if (!select || !("speechSynthesis" in window)) return;
+  const previous = project.narration?.voiceURI ?? select.value;
+  const voices = speechSynthesis.getVoices();
+  select.innerHTML = `<option value="">Voz padrão do navegador</option>${voices.map((voice) => `<option value="${escapeAttribute(voice.voiceURI)}">${escapeHtml(voice.name)} · ${escapeHtml(voice.lang)}${voice.localService ? " · local" : ""}</option>`).join("")}`;
+  if (voices.some((voice) => voice.voiceURI === previous)) select.value = previous;
+}
+
+function speakNarration() {
+  if (!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) { toast("A síntese de voz não está disponível neste navegador."); return; }
+  const text = project.narration?.text?.trim();
+  if (!text) { toast("Escreva o texto da narração primeiro."); $("#field-narration").focus(); return; }
+  speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  const voices = speechSynthesis.getVoices();
+  utterance.voice = voices.find((voice) => voice.voiceURI === project.narration.voiceURI) ?? null;
+  utterance.rate = project.narration.rate ?? 1;
+  utterance.onstart = () => toast("Reproduzindo narração pelo navegador.");
+  utterance.onerror = (event) => { if (event.error !== "canceled") toast("Não foi possível reproduzir a narração."); };
+  speechSynthesis.speak(utterance);
+}
+
+async function exportVideo() {
+  try {
+    validateMotionDocument(project);
+    $(".video-action b").textContent = "Renderizando…";
+    $(".video-action").disabled = true;
+    const { blob, width, height } = await exportMotionVideo(project, (progress) => {
+      $(".video-action b").textContent = `${Math.round(progress * 100)}%`;
+    });
+    download(`${safeName(project.name)}.webm`, blob, "video/webm");
+    toast(`Vídeo WebM exportado · ${width} × ${height}.`);
+  } catch (error) { toast(error.message); }
+  finally { $(".video-action b").textContent = "Exportar vídeo"; $(".video-action").disabled = false; }
+}
+
 function setHexBuffer(bytes, name) {
   hexBytes = new Uint8Array(bytes); hexOriginal = new Uint8Array(bytes); hexName = name; hexOffset = 0; selectedByte = -1; hexDirty = false; renderHex();
 }
@@ -346,6 +388,7 @@ document.addEventListener("click", (event) => {
   if (!action) return;
   const actions = {
     "open-project": () => $("#open-file").click(), "open-binary": () => $("#open-binary-file").click(), "save-json": saveJSON, "save-binary": saveMotionBinary,
+    "export-video": exportVideo, "speak": speakNarration, "stop-speech": () => { if ("speechSynthesis" in window) speechSynthesis.cancel(); },
     "save-binary-file": saveHexCopy, "ai-brief": aiBrief, "rename": () => { const name = prompt("Nome do motion", project.name); if (name?.trim()) { project.name = name.trim().slice(0, 120); markDirty(); renderTimeline(); } },
     "reset-sample": () => { if (confirm("Carregar o Motion Studio demo? O projeto atual será guardado para restauração.")) { backupCurrentProject(); project = createSampleMotion(); selectedTrackId = project.tracks[0].id; selectedKey = null; currentTime = 0; markDirty(); renderAll(); } },
     "open-next-level": openNextLevelPromo, "restore-previous": restorePreviousProject,
@@ -404,6 +447,9 @@ $("#ruler-scale").addEventListener("click", (event) => setTimeFromScale(event, e
 $("#field-name").addEventListener("input", (event) => { project.name = event.target.value.slice(0, 120); $("#heading-name").textContent = project.name || "Sem nome"; $("#project-name").textContent = project.name || "Sem nome"; $("#stage-caption-name").textContent = project.name || "Sem nome"; markDirty(); });
 $("#field-label").addEventListener("input", (event) => { project.canvas.label = event.target.value.slice(0, 24); $("#motion-object > span").textContent = project.canvas.label || " "; $("#stage-caption-badge").textContent = project.canvas.label.trim().split(/\s+/).map((part) => part[0] ?? "").join("").slice(0, 2).toUpperCase() || "M"; markDirty(); });
 $("#field-subtitle").addEventListener("input", (event) => { project.canvas.subtitle = event.target.value.slice(0, 80); $("#stage-subtitle").textContent = project.canvas.subtitle; $("#stage-subtitle").hidden = !project.canvas.subtitle.trim(); markDirty(); });
+$("#field-narration").addEventListener("input", (event) => { project.narration ??= { text: "", rate: 1 }; project.narration.text = event.target.value.slice(0, 1000); markDirty(); });
+$("#field-voice").addEventListener("change", (event) => { project.narration ??= { text: "", rate: 1 }; project.narration.voiceURI = event.target.value; markDirty(); });
+$("#field-narration-rate").addEventListener("input", (event) => { project.narration ??= { text: "", rate: 1 }; project.narration.rate = Number(event.target.value); $("#narration-rate-label").textContent = `${project.narration.rate.toFixed(1).replace(".", ",")}×`; markDirty(); });
 $("#field-background").addEventListener("input", (event) => { project.canvas.background = event.target.value; $("#stage").style.setProperty("--stage-bg", event.target.value); markDirty(); });
 $("#field-object-color").addEventListener("input", (event) => { project.canvas.objectColor = event.target.value; $("#motion-object").style.setProperty("--object-color", event.target.value); markDirty(); });
 $("#field-duration").addEventListener("change", (event) => { project.durationMs = Math.max(100, Math.min(120000, Number(event.target.value) || 100)); for (const track of project.tracks) for (const frame of track.keyframes) frame.timeMs = Math.min(project.durationMs, frame.timeMs); currentTime = Math.min(currentTime, project.durationMs); markDirty(); renderTimeline(); });
@@ -427,6 +473,20 @@ document.addEventListener("keydown", (event) => {
   else if (event.key === "ArrowLeft" && activePanel === "timeline") setCurrentTime(currentTime - 1000 / project.fps);
   else if (event.key === "ArrowRight" && activePanel === "timeline") setCurrentTime(currentTime + 1000 / project.fps);
   else if (event.key === "Delete" && selectedKey) deleteKeyframe();
+});
+
+if ("speechSynthesis" in window) { refreshSpeechVoices(); speechSynthesis.addEventListener?.("voiceschanged", refreshSpeechVoices); }
+const dropOverlay = $("#drop-overlay");
+let dragDepth = 0;
+document.addEventListener("dragenter", (event) => { if (!event.dataTransfer?.types.includes("Files")) return; event.preventDefault(); dragDepth += 1; dropOverlay.hidden = false; });
+document.addEventListener("dragover", (event) => { if (event.dataTransfer?.types.includes("Files")) event.preventDefault(); });
+document.addEventListener("dragleave", (event) => { if (!event.dataTransfer?.types.includes("Files")) return; dragDepth = Math.max(0, dragDepth - 1); if (!dragDepth) dropOverlay.hidden = true; });
+document.addEventListener("drop", (event) => {
+  if (!event.dataTransfer?.files.length) return;
+  event.preventDefault(); dragDepth = 0; dropOverlay.hidden = true;
+  const file = event.dataTransfer.files[0];
+  if (!/\.(motion\.json|json|nvmb)$/i.test(file.name)) { toast("Solte um projeto .motion.json, .json ou .nvmb."); return; }
+  openProjectFile(file);
 });
 
 try {

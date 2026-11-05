@@ -33,7 +33,8 @@ O guia contém um prompt inicial copiável, o esquema exato e critérios de vali
 - Timeline com tracks de X, Y, rotação, escala e opacidade.
 - Seleção, criação, edição e exclusão de keyframes; arraste com snap ao frame.
 - Interpolação linear, ease-in, ease-out e ease-in-out.
-- Salvamento automático local no navegador e importação/exportação de projeto JSON.
+- Salvamento automático local, importação por botão ou arrastar e soltar, exportação JSON/NVMB e renderização de vídeo WebM.
+- Narração opcional com as vozes instaladas no navegador, sem conta, chave API ou tokens. A fala pode ser ouvida no editor; o WebM exportado é vídeo sem faixa de áudio.
 - Exportação e validação do formato `.nvmb` com tamanho e CRC-32.
 - Editor hexadecimal de arquivos locais com busca, navegação de offsets, edição de bytes e exportação sempre como cópia.
 - Briefing que inclui o pedido escrito, as regras do esquema e o projeto aberto.
@@ -79,7 +80,7 @@ Use JavaScript ES modules e APIs nativas; se introduzir dependências, explique 
 
 ## Limitações conhecidas
 
-O preview atual mostra um único elemento estilizado. Não renderiza vídeo, áudio, texto multi-camada, máscaras, partículas, paths vetoriais ou efeitos de composição. O editor binário é de uso geral para inspeção bruta, mas só decodifica NVMB. CRC detecta corrupção acidental; não autentica o arquivo.
+O preview atual mostra um único elemento estilizado. O exportador cria WebM silencioso do motion; narração usa síntese local do navegador para prévia e não é incorporada ao vídeo. Não renderiza mídia importada, texto em múltiplas camadas, máscaras, partículas, paths vetoriais ou efeitos de composição. O editor binário é de uso geral para inspeção bruta, mas só decodifica NVMB. CRC detecta corrupção acidental; não autentica o arquivo.
 
 O exemplo `examples/next-level-promo.motion.json` demonstra a divulgação do servidor Next Level com entrada, overshoot curto, acomodação e chamada para ação. Há uma cópia NVMB em `examples/next-level-promo.nvmb` e a descrição do ritmo em [`examples/NEXT-LEVEL.md`](examples/NEXT-LEVEL.md). No editor, use **Exemplo Next Level**; o projeto aberto fica disponível pelo botão **Restaurar anterior**.
 

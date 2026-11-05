@@ -17,9 +17,10 @@
       <a class="brand" href="#" aria-label="Motion Studio AI início"><span class="brand-mark">M</span><span class="brand-copy">motion<span>studio</span><small>AI EDITION</small></span></a>
       <div class="project-ident"><span class="live-dot"></span><span id="project-name">Aurora — entrada</span><span class="save-state" id="save-state">Salvo localmente</span></div>
       <nav class="top-actions" aria-label="Ações do projeto">
-        <button class="top-action" data-action="open-project" title="Abrir JSON ou Motion Binary"><span>↥</span><b>Abrir</b></button>
+        <button class="top-action" data-action="open-project" title="Abrir projeto .motion.json ou .nvmb"><span>↥</span><b>Abrir projeto</b></button>
         <button class="top-action" data-action="save-json" title="Exportar motion JSON"><span>↓</span><b>JSON</b></button>
         <button class="top-action" data-action="save-binary" title="Exportar contêiner binário NVMB"><span>⬡</span><b>Binary</b></button>
+        <button class="top-action video-action" data-action="export-video" title="Renderizar e baixar vídeo WebM"><span>▶</span><b>Exportar vídeo</b></button>
         <button class="top-action ai-action" data-action="ai-brief" title="Copiar briefing para uma IA"><span>✳</span><b>Briefing IA</b></button>
       </nav>
     </header>
@@ -72,6 +73,13 @@
             <div class="empty-selection" id="empty-selection"><span>◇</span><p>Selecione um losango na timeline<br>ou adicione um keyframe.</p></div>
             <div id="keyframe-fields" hidden><label class="field-label">Trilha<select id="field-track"></select></label><div class="field-grid"><label class="field-label">Tempo <span class="field-suffix">ms</span><input id="field-key-time" type="number" min="0" step="1"></label><label class="field-label">Valor<input id="field-key-value" type="number" step="0.01"></label></div><label class="field-label">Interpolação<select id="field-easing"><option value="linear">Linear</option><option value="easeIn">Ease in</option><option value="easeOut">Ease out</option><option value="easeInOut">Ease in/out</option></select></label><button class="danger-button" data-action="delete-keyframe">Excluir keyframe</button></div>
           </div>
+          <div class="inspector-section narration-section"><div class="inspector-section__title"><span>NARRAÇÃO</span><span class="keyframe-state">LOCAL · GRÁTIS</span></div>
+            <label class="field-label">Texto falado<textarea id="field-narration" rows="3" maxlength="1000" placeholder="Ex.: Junte-se à comunidade Next Level no Discord."></textarea></label>
+            <label class="field-label">Voz do sistema<select id="field-voice"><option value="">Voz padrão do navegador</option></select></label>
+            <label class="field-label">Velocidade <span id="narration-rate-label">1,0×</span><input id="field-narration-rate" type="range" min="0.5" max="2" step="0.1" value="1"></label>
+            <div class="narration-actions"><button class="quiet-button" data-action="speak">▶ Ouvir narração</button><button class="quiet-button" data-action="stop-speech">■ Parar</button></div>
+            <small class="narration-note">Usa as vozes instaladas no navegador/sistema, sem API, chave ou tokens. O WebM exportado contém o vídeo; a narração pode ser ouvida aqui e o texto é guardado no projeto.</small>
+          </div>
           <div class="inspector-section inspector-help"><span class="help-icon">✳</span><div><strong>Assistente de motion</strong><p>Gere um briefing com o projeto e peça para uma IA editar o arquivo <code>.motion.json</code>.</p><button class="text-link" data-action="ai-brief">Copiar briefing →</button></div></div>
         </div>
         <div class="inspector-content" id="inspector-ai" hidden><div class="ai-card"><div class="ai-card__icon">✳</div><h2>Preparar edição com IA</h2><p>Descreva o resultado visual. O briefing inclui o projeto atual e as regras do formato.</p><label class="field-label ai-request-label">O que você quer animar?<textarea id="ai-request" rows="5" maxlength="1600" placeholder="Ex.: Revele o título com uma entrada curta da esquerda, desacelere no final e faça um pequeno overshoot."></textarea></label><div class="prompt-presets" aria-label="Exemplos de pedidos"><button type="button" data-prompt="Crie uma entrada de logo: comece com opacidade 0 e escala 0,72; entre em 700 ms com easeOut e assente em escala 1 com um overshoot discreto. Mantenha o centro e deixe o restante do motion intacto.">Logo</button><button type="button" data-prompt="Anime uma entrada de título elegante: deslize 90 px de baixo para cima em 500 ms, opacidade 0 para 1 e easeOut. Adicione uma pausa e saída curta no final da duração. Preserve o canvas.">Título</button><button type="button" data-prompt="Faça um loop suave de 3 segundos: movimento vertical de 0 a -18 px e de volta a 0, com easeInOut e keyframes distribuídos simetricamente. Evite saltos no ponto de emenda.">Loop</button></div><button class="button-primary" data-action="ai-brief">Copiar briefing + projeto <span>↗</span></button><small>Se a IA devolver JSON completo, use <b>Abrir</b> para importar. Nada é enviado automaticamente.</small></div><div class="ai-format-link"><span>Guias da IA</span><a href="/AI-INSTRUCTIONS.md" target="_blank" rel="noreferrer">Contrato →</a><a href="/docs/AI-WORKFLOW.md" target="_blank" rel="noreferrer">Fluxo →</a></div></div>
@@ -87,6 +95,7 @@
     </section>
     <footer class="app-footer"><span>Motion Studio AI <i>·</i> edição local, arquivos seus</span><span>NVMB v1 <i>·</i> <a href="/docs/FORMAT.md" target="_blank" rel="noreferrer">Especificação</a></span></footer>
     <input id="open-file" type="file" accept=".json,.motion.json,.nvmb,application/json,application/octet-stream" hidden>
+    <div class="drop-overlay" id="drop-overlay" hidden><div><strong>Abrir projeto</strong><span>Solte um arquivo .motion.json ou .nvmb</span></div></div>
     <input id="open-binary-file" type="file" accept="*/*" hidden>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
   </div>
