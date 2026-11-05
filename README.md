@@ -22,6 +22,8 @@ Open <http://127.0.0.1:4173>. The server listens only on loopback.
 - Live reflection, contrast, brightness, shine, and perspective controls.
 - Drag keyframes with frame snapping; edit, add, and remove tracks and scenes.
 - Live preview and silent WebM export up to 1920 px per side and 60 FPS.
+- Export the active scene as a self-contained, square SVG icon.
+- Load curated or custom Google Fonts CSS2 families without an API key; system fallback works offline.
 - Browser-native speech synthesis for narration previews. It uses installed voices, requires no API key or tokens, and is not mixed into WebM.
 - Local autosave, project recovery, JSON and NVMB import/export, and drag-and-drop project opening.
 - Hex editor for raw binary inspection and copy-only editing.
@@ -30,7 +32,7 @@ Open <http://127.0.0.1:4173>. The server listens only on loopback.
 
 ## Open a project and export
 
-Click **Open project** to load a `.motion.json` or `.nvmb` project, or drag a project file into the editor. Use **Next Level promo** to load the included multi-scene example. Scrub the timeline and scene markers, press Space to preview, then click **Export video** for WebM. Export JSON or NVMB to continue editing elsewhere.
+Click **Open project** to load a `.motion.json` or `.nvmb` project, or drag a project file into the editor. Use **Next Level promo** to load the included multi-scene example. Scrub the timeline and scene markers, press Space to preview, then click **Export video** for WebM or **SVG icon** for a scalable icon of the current scene. Choose a typeface in Composition; the Google Fonts service requires an internet connection. Export JSON or NVMB to continue editing elsewhere.
 
 ## AI-assisted editing
 
@@ -56,7 +58,7 @@ The editor is designed for typographic promo scenes. The DOM preview uses CSS pe
 
 ## References and implementation
 
-The transition catalog and keyframe controls were informed by public documentation for Remotion, Motion Canvas, and GSAP. This repository contains an original implementation; it does not copy their source code or documentation. See [`docs/REFERENCE-NOTES.md`](docs/REFERENCE-NOTES.md) for links and license notes.
+The transition catalog and keyframe controls were informed by public documentation for Remotion, Motion Canvas, and GSAP. Typography uses the public Google Fonts CSS2 API and its [google/fonts GitHub library](https://github.com/google/fonts). This repository contains an original implementation; it does not copy their source code or documentation. See [`docs/REFERENCE-NOTES.md`](docs/REFERENCE-NOTES.md) for links and license notes.
 
 ## Development
 

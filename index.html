@@ -20,6 +20,7 @@
         <button class="top-action" data-action="open-project" title="Open a .motion.json or .nvmb project"><span>↥</span><b>Open project</b></button>
         <button class="top-action" data-action="save-json" title="Export motion JSON"><span>↓</span><b>JSON</b></button>
         <button class="top-action" data-action="save-binary" title="Export NVMB binary container"><span>⬡</span><b>Binary</b></button>
+        <button class="top-action" data-action="export-svg" title="Export the current scene as a scalable SVG icon"><span>◇</span><b>SVG icon</b></button>
         <button class="top-action video-action" data-action="export-video" title="Render and download WebM video"><span>▶</span><b>Export video</b></button>
         <button class="top-action ai-action" data-action="ai-brief" title="Copy project brief for an AI"><span>✳</span><b>AI brief</b></button>
       </nav>
@@ -69,6 +70,8 @@
             <div class="field-grid"><label class="field-label">Background<input id="field-background" type="color" value="#090b13"></label><label class="field-label">Accent color<input id="field-object-color" type="color" value="#b9a3ff"></label></div>
             <div class="field-grid"><label class="field-label">Duration <span class="field-suffix">ms</span><input id="field-duration" type="number" min="100" max="120000" step="100" value="4000"></label><label class="field-label">Frame rate <span class="field-suffix">fps</span><input id="field-fps" type="number" min="1" max="240" value="30"></label></div>
             <div class="field-grid"><label class="field-label">Width<input id="field-width" type="number" min="1" max="8192" value="1280"></label><label class="field-label">Height<input id="field-height" type="number" min="1" max="8192" value="720"></label></div>
+            <label class="field-label">Display font<select id="field-font"><option>Space Grotesk</option><option>DM Sans</option><option>Barlow Condensed</option><option>Bebas Neue</option><option>Archivo Black</option><option>Orbitron</option><option>Sora</option><option>Manrope</option><option>Inter</option><option>Outfit</option></select></label>
+            <div class="font-actions"><input id="field-font-custom" type="text" maxlength="80" placeholder="Another Google Font" aria-label="Custom Google Font family"><button class="quiet-button" data-action="load-font">Load font</button></div><small class="fx-note">Google Fonts CSS API · open families from google/fonts on GitHub. Online access is needed; a system fallback is used offline.</small>
           </div>
           <div class="inspector-section scene-section"><div class="inspector-section__title"><span>SCENES & TRANSITIONS</span><span class="keyframe-state" id="scene-count">1 SCENE</span></div>
             <div class="scene-actions"><select id="field-scene" aria-label="Select scene"></select><button class="quiet-button" data-action="add-scene">＋ Scene</button><button class="quiet-button" data-action="remove-scene">−</button></div>

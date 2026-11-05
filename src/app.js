@@ -106,6 +106,7 @@ function setSceneVisual(element, scene, x, y, rotation, rotationX, rotationY, sc
   element.hidden = false;
   const card = element.querySelector(".motion-object");
   element.querySelector(".motion-object > span").textContent = scene.label;
+  card.dataset.reflection = scene.label;
   const subtitle = element.querySelector(".stage-subtitle");
   subtitle.textContent = scene.subtitle; subtitle.hidden = !scene.subtitle;
   card.style.setProperty("--object-color", scene.objectColor);
@@ -131,7 +132,22 @@ function setSceneVisual(element, scene, x, y, rotation, rotationX, rotationY, sc
   content.style.setProperty("--shine-position", `${Math.max(-1, Math.min(1, shineSweep)) * 50 + 50}%`);
   content.style.setProperty("--shine-opacity", String(project.canvas.effects?.shine ?? .68));
   const reflectionAmount = type === "reflectionFlip" ? Math.max(.7, reflection) : Math.max(0, Math.min(1, reflection));
-  content.style.setProperty("--reflection-opacity", `${reflectionAmount * 100}%`);
+  content.style.setProperty("--reflection-opacity", String(reflectionAmount * .16));
+  content.style.setProperty("--motion-font", `"${project.canvas.fontFamily ?? "Space Grotesk"}", sans-serif`);
+}
+
+function normalizeSceneTransitions() {
+  const scenes = [...(project.scenes ?? [])].sort((a, b) => a.startMs - b.startMs);
+  let previousHalf = 0, adjusted = false;
+  for (let i = 0; i < scenes.length; i++) {
+    const scene = scenes[i]; scene.transition ??= { type: "cut", durationMs: 0 };
+    if (scene.transition.type === "cut") { previousHalf = 0; continue; }
+    const gap = i ? scene.startMs - scenes[i - 1].startMs : Infinity;
+    const max = Math.max(0, Math.min(4000, 2 * Math.max(0, project.durationMs - scene.startMs), i ? 2 * Math.max(0, gap - previousHalf) : 4000));
+    if (max < 100) { scene.transition = { type: "cut", durationMs: 0 }; previousHalf = 0; adjusted = true; }
+    else { const next = Math.min(scene.transition.durationMs || 620, max); adjusted ||= next !== scene.transition.durationMs; scene.transition.durationMs = next; previousHalf = next / 2; }
+  }
+  return adjusted;
 }
 
 function renderTimeline() {
@@ -159,6 +175,7 @@ function renderTimeline() {
   $("#field-fps").value = project.fps;
   $("#field-width").value = project.canvas.width;
   $("#field-height").value = project.canvas.height;
+  $("#field-font").value = project.canvas.fontFamily ?? "Space Grotesk";
   $("#stage-size").textContent = `${project.canvas.width} × ${project.canvas.height} · ${project.fps} FPS`;
   $("#stage").style.setProperty("--stage-bg", project.canvas.background ?? "#090b13");
   $("#stage").style.setProperty("--canvas-ratio", `${project.canvas.width} / ${project.canvas.height}`);
@@ -323,6 +340,36 @@ function saveJSON() {
 function saveMotionBinary() {
   try { const bytes = encodeMotionBinary(project); download(`${safeName(project.name)}.nvmb`, bytes, "application/octet-stream"); toast(`Motion Binary exported · ${bytes.byteLength} bytes.`); }
   catch (error) { toast(error.message); }
+}
+function exportSvgIcon() {
+  try {
+    validateMotionDocument(project);
+    const state = sceneAtTime(currentTime), scene = state.incoming;
+    const esc = (value) => String(value).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&apos;" })[c]);
+    const label = scene.label || "MOTION", subtitle = scene.subtitle || "";
+    const color = /^#[\da-f]{6}$/i.test(scene.objectColor) ? scene.objectColor : "#9878e8";
+    const bg = /^#[\da-f]{6}$/i.test(scene.background) ? scene.background : "#11121a";
+    const font = (project.canvas.fontFamily ?? "Space Grotesk").replace(/[^\p{L}\p{N} _.,'-]/gu, "");
+    const centerX = 512 + valueAt("x", currentTime) / project.canvas.width * 880;
+    const centerY = 490 + valueAt("y", currentTime) / project.canvas.height * 500;
+    const fit = Math.min(1, 800 / Math.max(label.length * 54, 350));
+    const transform = `translate(${centerX} ${centerY}) rotate(${valueAt("rotation", currentTime)}) scale(${valueAt("scale", currentTime) * fit})`;
+    const subtitleSvg = subtitle ? `<text x="512" y="755" text-anchor="middle" fill="#e9eaf6" font-family="${esc(font)},Arial,sans-serif" font-size="22" font-weight="700" letter-spacing="3">${esc(subtitle)}</text>` : "";
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc"><title id="title">${esc(label)}</title><desc id="desc">SVG icon exported from ${esc(project.name)}.</desc><defs><linearGradient id="card" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff" stop-opacity=".3"/><stop offset=".25" stop-color="${color}"/><stop offset="1" stop-color="${color}" stop-opacity=".65"/></linearGradient><filter id="shadow" x="-.15" y="-.2" width="1.3" height="1.5" color-interpolation-filters="sRGB"><feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="${color}" flood-opacity=".2"/></filter></defs><rect width="1024" height="1024" rx="150" fill="${bg}"/><circle cx="512" cy="490" r="370" fill="${color}" opacity=".08"/><g transform="${transform}" opacity="${Math.max(0, Math.min(1, valueAt("opacity", currentTime)))}" filter="url(#shadow)"><rect x="-420" y="-170" width="840" height="340" rx="76" fill="url(#card)" stroke="#fff" stroke-opacity=".42" stroke-width="3"/><path d="M-350 -156h700" stroke="#fff" stroke-opacity=".25" stroke-width="2"/><text x="0" y="20" text-anchor="middle" dominant-baseline="middle" fill="#fff" font-family="${esc(font)},Arial,sans-serif" font-size="${Math.round(110 * fit)}" font-weight="800" letter-spacing="-4">${esc(label)}</text></g>${subtitleSvg}</svg>`;
+    download(`${safeName(label)}.svg`, svg, "image/svg+xml;charset=utf-8"); toast("Scalable SVG icon exported for the current scene.");
+  } catch (error) { toast(error.message); }
+}
+const GOOGLE_FONTS = new Set(["Space Grotesk", "DM Sans", "Barlow Condensed", "Bebas Neue", "Archivo Black", "Orbitron", "Sora", "Manrope", "Inter", "Outfit"]);
+function loadFont(name) {
+  const family = String(name ?? "").trim();
+  if (!/^[\p{L}\p{N}][\p{L}\p{N} _.,'-]{0,79}$/u.test(family)) { toast("Enter a valid Google Fonts family name."); return; }
+  if (!GOOGLE_FONTS.has(family) && !$("#field-font-custom").value.trim()) { toast("Choose a listed family or enter a custom Google Fonts name."); return; }
+  const href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(family).replace(/%20/g, "+")}:wght@400&display=swap`;
+  let link = document.querySelector(`link[data-google-font="${CSS.escape(family)}"]`);
+  if (!link) { link = document.createElement("link"); link.rel = "stylesheet"; link.href = href; link.dataset.googleFont = family; document.head.append(link); }
+  project.canvas.fontFamily = family; $("#field-font").value = GOOGLE_FONTS.has(family) ? family : "";
+  document.fonts.load(`700 32px "${family}"`).then(() => toast(`Loaded ${family} from Google Fonts.`)).catch(() => toast(`Using a system fallback for ${family}.`));
+  markDirty(); updateStage();
 }
 function safeName(name) { return String(name || "motion").replace(/[^\p{L}\p{N}_-]+/gu, "-").replace(/^-|-$/g, "").slice(0, 80) || "motion"; }
 function setPanel(panel) {
@@ -492,7 +539,7 @@ document.addEventListener("click", (event) => {
   if (!action) return;
   const actions = {
     "open-project": () => $("#open-file").click(), "open-binary": () => $("#open-binary-file").click(), "save-json": saveJSON, "save-binary": saveMotionBinary,
-    "export-video": exportVideo, "speak": speakNarration, "stop-speech": () => { if ("speechSynthesis" in window) speechSynthesis.cancel(); },
+    "export-video": exportVideo, "export-svg": exportSvgIcon, "load-font": () => loadFont($("#field-font-custom").value || $("#field-font").value), "speak": speakNarration, "stop-speech": () => { if ("speechSynthesis" in window) speechSynthesis.cancel(); },
     "add-scene": addScene, "remove-scene": removeScene,
     "save-binary-file": saveHexCopy, "ai-brief": aiBrief, "rename": () => { const name = prompt("Project name", project.name); if (name?.trim()) { project.name = name.trim().slice(0, 120); markDirty(); renderTimeline(); } },
     "reset-sample": () => { if (confirm("Load the Motion Studio sample? Your current project will be saved for recovery.")) { backupCurrentProject(); project = createSampleMotion(); selectedTrackId = project.tracks[0].id; selectedSceneId = project.scenes?.[0]?.id ?? null; selectedKey = null; currentTime = 0; markDirty(); renderAll(); } },
@@ -551,6 +598,7 @@ document.addEventListener("pointercancel", finishKeyframeDrag);
 $("#ruler-scale").addEventListener("click", (event) => setTimeFromScale(event, event.currentTarget));
 $("#field-name").addEventListener("input", (event) => { project.name = event.target.value.slice(0, 120); $("#heading-name").textContent = project.name || "Sem nome"; $("#project-name").textContent = project.name || "Sem nome"; $("#stage-caption-name").textContent = project.name || "Sem nome"; markDirty(); });
 $("#field-label").addEventListener("input", (event) => { if (!updateSelectedScene("label", event.target.value.slice(0, 24))) { project.canvas.label = event.target.value.slice(0, 24); markDirty(); updateStage(); } });
+$("#field-font").addEventListener("change", (event) => { $("#field-font-custom").value = ""; loadFont(event.target.value); });
 $("#field-subtitle").addEventListener("input", (event) => { if (!updateSelectedScene("subtitle", event.target.value.slice(0, 80))) { project.canvas.subtitle = event.target.value.slice(0, 80); markDirty(); updateStage(); } });
 $("#field-narration").addEventListener("input", (event) => { project.narration ??= { text: "", rate: 1 }; project.narration.text = event.target.value.slice(0, 1000); markDirty(); });
 $("#field-voice").addEventListener("change", (event) => { project.narration ??= { text: "", rate: 1 }; project.narration.voiceURI = event.target.value; markDirty(); });
@@ -564,9 +612,9 @@ for (const field of ["reflection", "contrast", "brightness", "shine", "perspecti
   $("#" + field + "-label").textContent = label; markDirty(); updateStage();
 });
 $("#field-scene").addEventListener("change", (event) => { const scene = project.scenes?.find((item) => item.id === event.target.value); if (!scene) return; selectedSceneId = scene.id; setCurrentTime(scene.startMs); renderTimeline(); });
-$("#field-transition").addEventListener("change", (event) => { const scene = selectedScene(); if (!scene) return; scene.transition ??= { type: "flip", durationMs: 620 }; scene.transition.type = event.target.value; markDirty(); updateStage(); });
-$("#field-transition-duration").addEventListener("input", (event) => { const scene = selectedScene(); if (!scene) return; scene.transition ??= { type: "flip", durationMs: 620 }; scene.transition.durationMs = Number(event.target.value); $("#transition-duration-label").textContent = `${scene.transition.durationMs} ms`; markDirty(); updateStage(); });
-$("#field-duration").addEventListener("change", (event) => { project.durationMs = Math.max(100, Math.min(120000, Number(event.target.value) || 100)); for (const track of project.tracks) for (const frame of track.keyframes) frame.timeMs = Math.min(project.durationMs, frame.timeMs); for (const scene of project.scenes ?? []) scene.startMs = Math.min(project.durationMs - 1, scene.startMs); currentTime = Math.min(currentTime, project.durationMs); markDirty(); renderTimeline(); });
+$("#field-transition").addEventListener("change", (event) => { const scene = selectedScene(); if (!scene) return; scene.transition ??= { type: "flip", durationMs: 620 }; scene.transition.type = event.target.value; if (normalizeSceneTransitions()) toast("Transition timing was adjusted to fit the timeline."); renderSceneControls(scene); markDirty(); updateStage(); });
+$("#field-transition-duration").addEventListener("input", (event) => { const scene = selectedScene(); if (!scene) return; scene.transition ??= { type: "flip", durationMs: 620 }; scene.transition.durationMs = Number(event.target.value); if (normalizeSceneTransitions()) { renderSceneControls(scene); toast("Transition duration was limited to prevent overlap."); } $("#transition-duration-label").textContent = `${scene.transition.durationMs} ms`; markDirty(); updateStage(); });
+$("#field-duration").addEventListener("change", (event) => { project.durationMs = Math.max(100, Math.min(120000, Number(event.target.value) || 100)); for (const track of project.tracks) for (const frame of track.keyframes) frame.timeMs = Math.min(project.durationMs, frame.timeMs); let previousStart = -1; for (const scene of [...(project.scenes ?? [])].sort((a, b) => a.startMs - b.startMs)) { scene.startMs = Math.max(previousStart + 1, Math.min(project.durationMs - 1, scene.startMs)); previousStart = scene.startMs; } const adjusted = normalizeSceneTransitions(); currentTime = Math.min(currentTime, project.durationMs); markDirty(); renderTimeline(); if (adjusted) toast("Scene transitions were resized to fit the new duration."); });
 $("#field-fps").addEventListener("change", (event) => { project.fps = Math.max(1, Math.min(240, Number(event.target.value) || 30)); markDirty(); renderTimeline(); });
 $("#field-width").addEventListener("change", (event) => { project.canvas.width = Math.max(1, Math.min(8192, Number(event.target.value) || 1280)); markDirty(); renderTimeline(); });
 $("#field-height").addEventListener("change", (event) => { project.canvas.height = Math.max(1, Math.min(8192, Number(event.target.value) || 720)); markDirty(); renderTimeline(); });

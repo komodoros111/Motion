@@ -52,20 +52,21 @@ function renderScene(ctx, project, scene, time, width, height) {
   const opacity = Math.max(0, Math.min(1, valueAt(project, "opacity", time)));
   ctx.globalAlpha = opacity;
   ctx.filter = `contrast(${Math.max(0, valueAt(project, "contrast", time))}) brightness(${Math.max(0, valueAt(project, "brightness", time))})`;
-  ctx.font = `800 ${fontSize}px system-ui, sans-serif`; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+  const fontFamily = String(canvas.fontFamily ?? "Space Grotesk").replace(/[^\p{L}\p{N} _.,'-]/gu, "");
+  ctx.font = `800 ${fontSize}px "${fontFamily}", system-ui, sans-serif`; ctx.textAlign = "center"; ctx.textBaseline = "middle";
   const boxWidth = Math.max(fontSize * 3.5, ctx.measureText(label).width + fontSize * 1.35), boxHeight = fontSize * 2.35, radius = Math.min(fontSize * .48, boxHeight / 2);
   const reflection = Math.max(0, Math.min(1, valueAt(project, "reflection", time)));
   const drawFace = () => {
     const gradient = ctx.createLinearGradient(-boxWidth / 2, -boxHeight / 2, boxWidth / 2, boxHeight / 2);
     gradient.addColorStop(0, "#ffffff"); gradient.addColorStop(.14, color); gradient.addColorStop(.55, color); gradient.addColorStop(1, "#17152c");
-    ctx.fillStyle = gradient; ctx.shadowColor = `${color}a8`; ctx.shadowBlur = fontSize * 1.2; ctx.shadowOffsetY = fontSize * .35;
+    ctx.fillStyle = gradient; ctx.shadowColor = `${color}44`; ctx.shadowBlur = fontSize * .28; ctx.shadowOffsetY = fontSize * .12;
     roundedRect(ctx, -boxWidth / 2, -boxHeight / 2, boxWidth, boxHeight, radius); ctx.fill();
     ctx.shadowColor = "transparent"; ctx.shadowBlur = 0; ctx.shadowOffsetY = 0;
     ctx.fillStyle = "#ffffff"; ctx.fillText(label, 0, 1);
   };
   if (reflection > .01) {
-    ctx.save(); ctx.translate(0, boxHeight + 14 * sx); ctx.scale(1, -1); ctx.globalAlpha = opacity * reflection * .54; drawFace(); ctx.restore();
-    const fade = ctx.createLinearGradient(0, boxHeight / 2 + 8, 0, boxHeight * 1.55); fade.addColorStop(0, "#00000000"); fade.addColorStop(.48, "#00000088"); fade.addColorStop(1, "#000000ff");
+    ctx.save(); ctx.translate(0, boxHeight + 8 * sx); ctx.scale(1, -.48); ctx.globalAlpha = opacity * reflection * .14; drawFace(); ctx.restore();
+    const fade = ctx.createLinearGradient(0, boxHeight / 2 + 6, 0, boxHeight * 1.18); fade.addColorStop(0, "#00000000"); fade.addColorStop(.4, "#000000aa"); fade.addColorStop(1, "#000000ff");
     ctx.fillStyle = fade; ctx.fillRect(-boxWidth, boxHeight / 2, boxWidth * 2, boxHeight * 1.1);
   }
   drawFace();
@@ -80,8 +81,8 @@ function renderScene(ctx, project, scene, time, width, height) {
   ctx.restore();
 
   if (scene.subtitle?.trim()) {
-    ctx.save(); ctx.font = `700 ${Math.max(12, Math.min(width * .017, 24))}px system-ui, sans-serif`; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillStyle = "#edf3ff";
-    ctx.shadowColor = "#000000c0"; ctx.shadowBlur = 12; ctx.fillText(scene.subtitle, width / 2, height * .68, width * .84); ctx.restore();
+    ctx.save(); ctx.font = `700 ${Math.max(12, Math.min(width * .017, 24))}px "${fontFamily}", system-ui, sans-serif`; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillStyle = "#edf3ff";
+    ctx.shadowColor = "#00000055"; ctx.shadowBlur = 4; ctx.fillText(scene.subtitle, width / 2, height * .68, width * .84); ctx.restore();
   }
 }
 
