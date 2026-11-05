@@ -1,0 +1,10 @@
+{
+  "name": "motion-ai-studio",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node server.mjs",
+    "check": "node --check src/app.js && node --check src/motion-format.js && node --check server.mjs"
+  }
+}
