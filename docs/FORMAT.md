@@ -1,40 +1,42 @@
-# Formato binário NVMB
+# NVMB Binary Format
 
-`.nvmb` (Nirvy Motion Binary) é o contêiner binário nativo desta ferramenta. A versão 1 contém um JSON UTF-8. Os campos numéricos usam **little-endian**.
+`.nvmb` (Nirvy Motion Binary) is this editor's native binary container. Version 1 stores a UTF-8 JSON project. Numeric header values use little-endian byte order.
 
-## Cabeçalho: 16 bytes
+## 16-byte header
 
-| Offset | Tamanho | Campo | Valor / interpretação |
+| Offset | Size | Field | Value / interpretation |
 |---:|---:|---|---|
 | 0 | 4 | Magic | ASCII `NVMB` (`4E 56 4D 42`) |
-| 4 | 2 | Versão | u16 LE, valor `1` |
-| 6 | 2 | Tamanho do cabeçalho | u16 LE, valor `16` |
-| 8 | 4 | Tamanho do payload | u32 LE em bytes |
-| 12 | 4 | CRC-32 | u32 LE do payload, algoritmo CRC-32/ISO-HDLC |
+| 4 | 2 | Version | u16 LE, value `1` |
+| 6 | 2 | Header size | u16 LE, value `16` |
+| 8 | 4 | Payload length | u32 LE, bytes |
+| 12 | 4 | CRC-32 | u32 LE checksum of payload |
 
-O payload começa no offset 16 e ocupa exatamente o tamanho declarado. Arquivos truncados, com bytes excedentes, magic/versão inválidos ou payload acima de 16 MiB são rejeitados.
+The payload starts at byte 16 and has exactly the declared length. Reject truncated files, trailing bytes, unsupported magic/version, and files over 16 MiB.
 
-## CRC
+## CRC-32
 
-CRC-32/ISO-HDLC: polinômio refletido `0xEDB88320`, valor inicial `0xFFFFFFFF`, xor final `0xFFFFFFFF`. O CRC cobre exclusivamente os bytes do payload. Exemplo de referência: CRC da sequência ASCII `123456789` é `0xCBF43926`.
+CRC-32/ISO-HDLC uses reflected polynomial `0xEDB88320`, initial value `0xFFFFFFFF`, and final XOR `0xFFFFFFFF`. The checksum covers only payload bytes. Reference vector: ASCII `123456789` produces `0xCBF43926`.
 
-## Payload JSON
+## JSON payload
 
-Decodifique o payload como UTF-8 e parseie JSON. O documento deve ter `format: "nirvy.motion"`, `version: 1`, `name`, `durationMs`, `fps`, `canvas` e array `tracks`. O canvas contém `width`, `height`, `background`, além dos campos opcionais `label` e `objectColor`. A validação de aplicação exige propriedades conhecidas, IDs globais únicos, valores finitos e keyframes dentro da duração. Consulte `src/motion-format.js` para os limites executáveis.
+Decode as UTF-8 and parse JSON. A project requires `format: "nirvy.motion"`, `version: 1`, `name`, `durationMs`, `fps`, `canvas`, and a `tracks` array. Optional v1 fields include `scenes`, `canvas.effects`, and `narration`. Existing v1 files without optional fields remain valid. Consult `src/motion-format.js` for the executable schema and bounds.
 
-## Segurança e compatibilidade
+Tracks animate one each of `x`, `y`, `rotation`, `rotationX`, `rotationY`, `screenTurn`, `scale`, `opacity`, `contrast`, `brightness`, `shineSweep`, and `reflection`. Scene transitions support `cut`, `fade`, `flip`, `cube`, `wipe`, `zoom`, `flash`, `reflectionFlip`, and `spin`.
 
-- CRC detecta corrupção acidental; não é assinatura nem prova de autenticidade.
-- JSON válido e CRC válido ainda podem falhar na validação do esquema.
-- O editor hexadecimal não decodifica outros contêineres. Para formatos não reconhecidos, só oferece edição bruta de cópia.
-- Uma futura incompatibilidade estrutural exige nova versão do cabeçalho e estratégia explícita de migração.
+## Safety and compatibility
 
-## Limites do esquema v1
+- CRC detects accidental corruption; it is not a signature or authenticity proof.
+- Valid JSON and CRC can still fail project schema validation.
+- Hex Studio does not decode unknown containers. It edits raw bytes only in memory and exports a separate copy.
+- If a future schema change breaks compatibility, bump the document version and provide an explicit migration.
 
-- `durationMs`: 100–120000; `fps`: 1–240; largura/altura do canvas: 1–8192.
-- Propriedades animáveis: uma track por propriedade entre `x`, `y`, `rotation`, `scale` e `opacity`.
-- Easing: `linear`, `easeIn`, `easeOut`, `easeInOut`. O easing do keyframe de chegada governa a interpolação até ele.
-- Máximo de 64 tracks e 10000 keyframes. IDs de tracks e keyframes devem ser não vazios e globalmente únicos.
-- Keyframe deve ficar em `0..durationMs`. Opacidade: `0..1`; escala: `(0..100]`; posição: `-100000..100000`; rotação: `-360000..360000`.
-- `canvas.label` opcional: texto de até 24 caracteres; `canvas.subtitle` opcional: texto de até 80 caracteres. Cores devem usar `#RRGGBB`.
-- O preview escala X/Y do espaço do canvas para o tamanho visível e posiciona o elemento pelo centro. O renderer mostra somente um elemento estilizado.
+## Schema v1 limits
+
+- `durationMs`: 100–120000; `fps`: 1–240; canvas dimensions: 1–8192.
+- At most 64 tracks, 32 scenes, and 10000 keyframes. Track/keyframe/scene IDs must be globally unique and non-empty.
+- Keyframe time: `0..durationMs`; opacity/reflection: `0..1`; scale: `(0..100]`; contrast/brightness: `0..3`; shine sweep: `-1..1`; positions: `±100000`; rotations and screen turn: `±360000°`.
+- Scene titles: at most 24 characters; subtitles: at most 80; colors use `#RRGGBB`.
+- `canvas.effects.reflection` and `shine`: `0..1`; contrast and brightness: `0..3`; perspective: `100..3000` px.
+- Narration text: at most 1000 characters; speech rate: `0.5..2`. The selected browser voice identifier can vary by device.
+- Scene `startMs` values are strictly increasing. A scene's transition is centered on its start marker; neighboring transition windows must not overlap.

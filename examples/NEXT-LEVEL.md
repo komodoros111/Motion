@@ -1,25 +1,25 @@
-# Next Level — divulgação para Discord
+# Next Level — Discord Promo
 
-Motion curto de 6,2 segundos, 1920 × 1080 a 30 FPS. A direção usa fundo azul-noite, acento índigo luminoso e o nome do servidor como peça principal. A frase de apoio funciona como chamada para ação; não há URL de convite inventada.
+**Afterburn** is a 6.2-second, 1920 × 1080 promo for the Next Level Discord community. It uses three distinct title cards, cool indigo and cyan into a warm magenta finish, a 3D title entrance, restrained contrast pulse, mirrored reflection, a single shine sweep, and two timed screen transitions. It does not invent an invite URL.
 
-## Ritmo
+## Sequence
 
-| Tempo | Acontecimento |
+| Time | Scene / action |
 |---:|---|
-| 0–650 ms | O título começa fora do centro, reduzido, inclinado e invisível. |
-| 650–900 ms | A marca aparece enquanto desliza para o centro e ultrapassa levemente a escala final. |
-| 900–1260 ms | O overshoot assenta em escala 1 e rotação 0. |
-| 1,26–4,3 s | Pausa para leitura do nome e da chamada “ENTRE NO DISCORD · EVOLUA COM A GENTE”. |
-| 4,3–4,7 s | Pulso curto de escala e posição para manter a peça viva. |
-| 4,7–6,2 s | Retorna ao repouso e segura a tela final. |
+| 0–2.2 s | Indigo hook: “NEXT LEVEL” enters with X/Y tilt, a short screen turn, and a settling scale overshoot. |
+| 2.2 s | Reflection flip into cyan: “FIND YOUR PEOPLE.” One white shine sweep crosses the title during the opening hold. |
+| 4.55 s | Zoom through to the magenta CTA: “YOUR NEXT LEVEL.” |
+| 5.0–6.2 s | Hold the final “JOIN OUR DISCORD TODAY” card. |
 
-## Arquivos
+The transition windows are centered on scene markers. The JSON is the editable source; NVMB is the same project in the binary container.
 
-- `next-level-promo.motion.json`: fonte editável e legível por IA.
-- `next-level-promo.nvmb`: a mesma composição codificada no contêiner binário NVMB v1.
+## Files and use
 
-No app, clique em **Exemplo Next Level** para abrir o JSON. O projeto que estava aberto antes fica disponível em **Restaurar anterior**.
+- `next-level-promo.motion.json`: editable source.
+- `next-level-promo.nvmb`: the same composition encoded in NVMB v1.
 
-## Para publicar
+Click **Next Level promo** in the editor to open the JSON. Your previous project can be restored from the top bar. Scrub the orange scene markers and the animation tracks to inspect each transition.
 
-Antes de divulgar, o dono do servidor pode substituir a chamada pela URL de convite permanente do Discord e ajustar o texto ao público e às regras da comunidade. O editor atual não renderiza um arquivo de vídeo; ele prepara e pré-visualiza os dados de motion.
+## Before publishing
+
+Replace the CTA with the server's invite URL if desired, verify the wording against the community rules, and review the exported WebM on target devices. WebM is silent; browser narration preview is not mixed into the export.

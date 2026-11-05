@@ -1,28 +1,28 @@
-# AI motion workflow
+# AI Motion Workflow
 
-This repository separates **creating a motion** from **changing the editor**.
+This repository separates creating a motion from changing the editor.
 
-## Creating a motion with any assistant
+## Create or revise a motion with an AI
 
-1. Open the current JSON using **Abrir** or copy the editor's AI briefing. The JSON is the editable source of truth.
-2. Give the assistant the requested motion, desired duration/loop behavior, and any style reference described in words.
-3. Ask it to follow `AI-INSTRUCTIONS.md`, preserve unrelated IDs/settings, and return the entire JSON document.
-4. Save the returned block as UTF-8 `*.motion.json` and import it in the editor.
-5. Review by scrubbing keyframes and playing the result. If something is off, give the assistant the latest exported JSON and ask for a narrow correction.
-6. Export `.nvmb` only after the JSON preview is correct. NVMB is a compact container, not an AI-readable replacement for the JSON source.
+1. Open the current JSON in the editor or copy its AI brief.
+2. Describe the intended scenes, message, duration, transition style, and movement.
+3. Ask the AI to follow `AI-INSTRUCTIONS.md`, preserve unrelated IDs/settings, and return the complete JSON document.
+4. Save it as UTF-8 `*.motion.json` and open it in the editor.
+5. Scrub every scene marker and keyframe. Check transition timing, contrast, reflection, 3D turns, and the shine sweep.
+6. Export WebM after the preview is correct. Export NVMB if you also want the compact project container.
 
-## Writing better requests
+## Requesting a useful motion
 
-Specify what appears, where it begins and ends, when each phase occurs, how the movement should feel, and whether it must loop. For example:
+Specify the hook, supporting idea, payoff, and call to action. Give the opening and closing pose, scene timing, motion direction, easing, and whether it should loop. Example:
 
-> “In 1.4 s, reveal the logo from 140 px below with opacity 0. Begin at scale 0.9, settle at 1.0 by 0.65 s with ease-out. Hold until the end of the 4 s composition. Keep the canvas and other motion unchanged.”
+> “Create a 6-second Discord promo in three scenes. Start with a restrained 3D title reveal, use a reflection flip into the community message, and finish with a brief magenta zoom transition into a clear join call. Sweep one cool white shine across the main title. Keep contrast high, transitions under 800 ms, and hold the final card for at least one second.”
 
-Use canvas pixels for X/Y. The origin is the center of the stage; positive X is right and positive Y is down. The editor snaps pointer-dragged keyframes to the configured FPS. An AI may return subframe timestamps, but align keyframes to `1000/fps` when frame-accurate timing is requested.
+Use canvas pixels for X/Y. The origin is the canvas center; positive X points right and positive Y points down. The editor snaps pointer-dragged keyframes to the configured FPS.
 
-## When working on application code
+## When editing application code
 
-Read `AGENTS.md` and inspect `src/app.js`, `src/motion-format.js`, and `docs/FORMAT.md` before changing behavior. Keep the schema, validator, sample, import/export, editor and documentation in sync. Run `npm run check` for syntax validation and state clearly if browser interaction was not exercised.
+Read `AGENTS.md` and inspect the owning modules, schema, and example files. Keep validator, editor controls, DOM preview, canvas exporter, AI prompt, docs, and examples aligned. `npm run check` is syntax validation only; it is not browser or visual QA.
 
-## Current renderer boundary
+## Renderer boundaries
 
-The preview currently renders one stylized text element and the five transform/opacity tracks. Requests for multi-layer scenes, footage, masks, effects, paths, or audio need a future schema and renderer change. Do not encode those features as if they already work; describe the closest approximation the current editor can preview.
+The preview renders typographic scenes and supported transitions. The WebM renderer uses canvas projection that approximates CSS 3D faces; compare the preview and exported video manually for transition-specific differences. Browser narration is not muxed into WebM. Imported footage, arbitrary layer stacks, masks, particles, vector paths, and audio tracks are outside the current format.

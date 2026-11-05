@@ -1,100 +1,101 @@
-# Motion editor handoff for AI
+# Motion Authoring Contract
 
-This document is the operating contract for any assistant asked to create, edit, review, or explain a motion in this repository. Read it before editing a motion. For source-code changes, read `AGENTS.md` as well.
+This is the operating contract for assistants that create, edit, review, or explain a motion in this repository. Read it before editing a motion. For application source changes, also read `AGENTS.md`.
 
-## Choose the right mode
+## Select the right task
 
-- **Motion request:** return a complete valid `.motion.json` document in one `json` code block. Do not modify application source files unless the user asked for editor/code changes.
-- **Editor request:** inspect `AGENTS.md`, identify the smallest responsible module, implement the change, update docs/examples, and run `npm run check`.
-- **Binary request:** read `docs/FORMAT.md`. Work from a validated `.motion.json` when possible. Never invent offsets for an unknown format.
+- **Motion request:** return a complete valid `.motion.json` document in one `json` block. Do not change application source unless asked.
+- **Editor request:** inspect `AGENTS.md`, edit the smallest responsible modules, update docs and examples, then run `npm run check`.
+- **Binary request:** read `docs/FORMAT.md`. Prefer a validated JSON source. Never invent offsets for unknown binary formats.
 
-## What the preview can render
+## Renderer capabilities
 
-The current preview represents one centered, stylized text element. It can animate position X/Y, rotation, scale, and opacity. Text and element/background colors are editable canvas settings. It exports silent WebM video and can speak optional narration with browser/system voices, but narration is not mixed into the exported video. It does not render multiple layers, imported footage, masks, particles, arbitrary SVG paths, animated blur/shadows, or compositing effects. Keep the result inside these capabilities; if the request asks for more, say what the editor can represent and give the user an achievable approximation. Never claim unsupported effects are visible in the preview.
+The editor renders typographic promo scenes with per-scene titles, subtitles, backgrounds, accent colors, and overlapping transitions. It previews and exports `cut`, `fade`, `flip`, `cube`, `wipe`, `zoom`, `flash`, `reflectionFlip`, and `spin` scene transitions. Animated tracks support X/Y position, Z/X/Y rotation, whole-screen turn, scale, opacity, contrast, brightness, shine sweep, and reflection. Static look controls set shine intensity and 3D perspective. WebM export is silent; browser voice narration is stored as text and can be previewed, but is not muxed into the video.
 
-## Motion JSON v1 contract
+The editor does not render imported footage, arbitrary multi-layer compositions, masks, particle systems, vector paths, or audio tracks. It uses a 2D canvas exporter, so perspective and transition rendering are approximations of the live CSS preview. Never claim pixel-identical parity or unsupported capabilities.
 
-Top-level structure:
+## Motion JSON v1
+
+The format remains additive and backward-compatible: existing v1 documents without `scenes` or `canvas.effects` continue to load.
 
 ```json
 {
   "format": "nirvy.motion",
   "version": 1,
   "name": "Project name",
-  "durationMs": 4000,
+  "durationMs": 6200,
   "fps": 30,
   "canvas": {
-    "width": 1280,
-    "height": 720,
-    "background": "#090b13",
-    "label": "M",
-    "objectColor": "#b9a3ff",
-    "subtitle": "Optional call to action"
+    "width": 1920,
+    "height": 1080,
+    "background": "#070912",
+    "label": "TITLE",
+    "objectColor": "#727bff",
+    "subtitle": "Supporting line",
+    "effects": { "reflection": 0.42, "contrast": 1.24, "brightness": 1.08, "shine": 0.78, "perspective": 760 }
   },
-  "narration": { "text": "Optional spoken copy", "voiceURI": "Optional browser voice ID", "rate": 1 },
+  "scenes": [
+    { "id": "scene-1", "startMs": 0, "label": "OPEN", "subtitle": "SET THE TONE", "background": "#070912", "objectColor": "#727bff", "transition": { "type": "cut", "durationMs": 620 } },
+    { "id": "scene-2", "startMs": 2600, "label": "THE PAYOFF", "subtitle": "MAKE IT COUNT", "background": "#100817", "objectColor": "#ff5f9b", "transition": { "type": "reflectionFlip", "durationMs": 760 } }
+  ],
   "tracks": []
 }
 ```
 
-Each track contains a unique nonempty `id`, a supported `property`, an optional display `label`, and a `keyframes` array. Each keyframe contains a unique nonempty `id`, `timeMs`, numeric `value`, and `easing`:
+Each scene `startMs` is the transition midpoint and its incoming transition determines the boundary effect. Keep transitions short enough that adjacent transition windows do not overlap. Available transition types: `cut`, `fade`, `flip`, `cube`, `wipe`, `zoom`, `flash`, `reflectionFlip`, and `spin`.
+
+Each track has a unique `id`, supported `property`, optional display `label`, and `keyframes`. A keyframe has a unique global `id`, `timeMs`, numeric `value`, and `easing`. The easing on the arriving keyframe governs interpolation into it.
 
 ```json
 {
-  "id": "track-x",
-  "property": "x",
-  "label": "Posição X",
+  "id": "track-turn",
+  "property": "screenTurn",
+  "label": "Screen turn",
   "keyframes": [
-    { "id": "x-start", "timeMs": 0, "value": -240, "easing": "easeOut" },
-    { "id": "x-rest", "timeMs": 700, "value": 0, "easing": "easeOut" }
+    { "id": "turn-start", "timeMs": 0, "value": -42, "easing": "easeOut" },
+    { "id": "turn-rest", "timeMs": 800, "value": 0, "easing": "easeInOut" }
   ]
 }
 ```
 
-Supported `property`: `x`, `y`, `rotation`, `scale`, `opacity`. Supported `easing`: `linear`, `easeIn`, `easeOut`, `easeInOut`. The easing saved on the right/arriving keyframe controls interpolation into that keyframe.
+## Supported animated properties and bounds
 
-### Numeric and structural bounds
+- `x`, `y`: ±100000 canvas pixels. Origin is the center; positive X is right and positive Y is down.
+- `rotation`, `rotationX`, `rotationY`, `screenTurn`: ±360000 degrees.
+- `scale`: greater than 0 and at most 100.
+- `opacity`, `reflection`: 0–1.
+- `contrast`, `brightness`: 0–3, where 1 is neutral.
+- `shineSweep`: -1–1, left to right across the title.
+- Easing: `linear`, `easeIn`, `easeOut`, `easeInOut`.
+- `durationMs`: 100–120000; `fps`: 1–240; canvas width/height: 1–8192.
+- Up to 64 tracks, 32 scenes, and 10000 keyframes. Track and keyframe IDs are non-empty and globally unique.
+- Canvas colors use `#RRGGBB`; scene title is limited to 24 characters and subtitle to 80.
+- `canvas.effects.reflection`, `shine`: 0–1; `contrast`, `brightness`: 0–3; `perspective`: 100–3000 px.
+- Optional narration text is limited to 1000 characters; rate is 0.5–2. `voiceURI` is system-specific and may not resolve on another device.
 
-- `durationMs`: 100–120000. `fps`: 1–240.
-- `canvas.width` and `canvas.height`: 1–8192 pixels.
-- Canvas colors: six-digit `#RRGGBB`. `label`: up to 24 characters; `subtitle`: up to 80 characters.
-- Optional `narration.text`: up to 1000 characters; `narration.voiceURI` is a browser/system voice identifier and may differ between computers; `narration.rate`: 0.5–2. Narration is previewed through browser speech synthesis, not stored as audio.
-- At most 64 tracks and 10000 keyframes.
-- Keyframe `timeMs`: inclusive 0–`durationMs`.
-- `opacity`: 0–1. `scale`: greater than 0 and at most 100.
-- `x` and `y`: -100000 to 100000 canvas pixels. Zero is center; positive X points right; positive Y points down.
-- `rotation`: -360000° to 360000°. Positive values rotate clockwise in the browser preview.
-- Use stable unique IDs. Preserve unrelated tracks, keyframes, fields, and user settings.
+## Design direction
 
-The preview scales X/Y canvas units to the visible canvas size. Keep positions comfortably inside the canvas unless the user wants an element to enter from or exit beyond an edge. The preview's object is a styled square bearing `canvas.label`; it is not a general text renderer.
+1. Plan the message in scenes: hook, supporting idea, proof or payoff, and a clear call to action.
+2. Give each scene one short title and one supporting line. Keep text away from edges and account for mobile crops.
+3. Use contrasting accent colors to distinguish scenes while preserving a coherent palette. Reserve high contrast for the focal moment.
+4. Use a page turn, cube, wipe, or flash only when it supports the rhythm. Default to one or two intentional transitions; avoid stacking unrelated effects.
+5. For depth, pair a modest X/Y tilt with perspective and a short screen turn, then settle to zero. Use reflection as a low-opacity accent.
+6. Use a single shine sweep with a clear start and end. Keep it short and avoid leaving a bright stripe parked on the title.
+7. Use ease-out to settle, ease-in to accelerate, and ease-in-out for balanced turns. Overshoot should be small and deliberate.
+8. Keep all keyframes inside the project duration. For a loop, align endpoints and velocities.
 
-## Design guidance
+## Editing rules
 
-1. Translate the request into a short motion plan: entrance, hold, emphasis, exit, and loop behavior if needed.
-2. Fit every keyframe inside the existing duration. Change duration only when asked or when required to fit the requested timing; explain the choice.
-3. Keep the start and end poses intentional. For a seamless loop, match the first/last values and easing direction; inspect that no velocity jump is introduced.
-4. Use ease-in for acceleration, ease-out for settling, ease-in-out for balanced movement, and linear only for constant-speed motion.
-5. Use restrained overshoot only when appropriate. Because the easing set has no spring curve, approximate a small bounce with a few scale/position keyframes and label it as an approximation.
-6. Avoid redundant keyframes. A simple move usually needs a start and end; a loop or overshoot may need additional poses.
-7. Preserve style and timing of unrelated properties. Do not silently rewrite the project name, FPS, canvas dimensions, or colors.
-
-## Editing the project
-
-- When given a project, parse it first and edit from that exact document. Do not recreate the whole project from a generic template.
-- Keep `format`, `version`, `durationMs`, `fps`, canvas settings, and unknown fields unless the request requires a change.
-- Preserve all IDs that remain in use. Use fresh IDs for new tracks/keyframes; never derive one by reusing an existing ID.
-- Sort each track's keyframes by `timeMs`.
-- Do not add a second track for a property already present: the current preview resolves one track per property.
-- Never put instructions or prose inside JSON. Return the full document, not a patch or ellipsis.
-- If the request is underspecified, make a conservative choice and list the assumption after the JSON.
+- Start from the exact input document. Preserve unrelated fields, IDs, scenes, timing, and style.
+- Do not add a second track for a property already in use.
+- Use fresh IDs for new objects and sort keyframes by `timeMs` and scenes by `startMs`.
+- Return the complete valid JSON document, never instructions or prose inside JSON.
+- If a request is ambiguous, make a conservative choice and state it after the JSON.
 
 ## Response format
 
-1. One sentence naming the intended visual result.
-2. One complete JSON code block, ready to save as `name.motion.json`.
-3. A concise change summary and any assumption/preview limitation.
+1. One sentence naming the visual result.
+2. One complete JSON code block ready to save as `name.motion.json`.
+3. A concise change summary and any renderer limitations.
 
-Do not claim the project has been imported or visually verified unless you actually used the editor. The user can verify it by opening the JSON in Motion Studio, scrubbing the timeline, pressing Space, and exporting `.nvmb` if desired.
-
-## Example request
-
-“Create a clean logo reveal over 1.2 seconds: start 180 canvas pixels left, opacity 0 and scale 0.82; settle at center with opacity 1, scale 1 and ease-out. Preserve the rest of the 4-second project and its IDs. Return the complete JSON.”
+Never claim the project has been imported or visually verified unless the editor was actually used. Users can import the JSON, scrub scene markers and keyframes, preview with Space, and export WebM.

@@ -6,6 +6,6 @@
   "type": "module",
   "scripts": {
     "dev": "node server.mjs",
-    "check": "node --check src/app.js && node --check src/motion-format.js && node --check server.mjs"
+    "check": "node --check src/app.js && node --check src/motion-format.js && node --check src/video-export.js && node --check server.mjs"
   }
 }

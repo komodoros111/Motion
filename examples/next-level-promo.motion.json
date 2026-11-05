@@ -1,22 +1,23 @@
 {
   "format": "nirvy.motion",
   "version": 1,
-  "name": "NEXT LEVEL • comunidade no Discord",
+  "name": "NEXT LEVEL — Afterburn",
   "durationMs": 6200,
   "fps": 30,
   "canvas": {
     "width": 1920,
     "height": 1080,
-    "background": "#080b16",
+    "background": "#070912",
     "label": "NEXT LEVEL",
-    "objectColor": "#6577f8",
-    "subtitle": "ENTRE NO DISCORD · EVOLUA COM A GENTE"
+    "objectColor": "#727bff",
+    "subtitle": "LEVEL UP TOGETHER",
+    "effects": { "reflection": 0.42, "contrast": 1.24, "brightness": 1.08, "shine": 0.78, "perspective": 760 }
   },
   "tracks": [
     {
       "id": "track-x",
       "property": "x",
-      "label": "Entrada horizontal",
+      "label": "Hero entrance · X",
       "keyframes": [
         { "id": "x-start", "timeMs": 0, "value": -260, "easing": "linear" },
         { "id": "x-arrive", "timeMs": 900, "value": 0, "easing": "easeOut" },
@@ -26,7 +27,7 @@
     {
       "id": "track-y",
       "property": "y",
-      "label": "Assentamento vertical",
+      "label": "Hero settle · Y",
       "keyframes": [
         { "id": "y-start", "timeMs": 0, "value": 72, "easing": "linear" },
         { "id": "y-hit", "timeMs": 820, "value": -8, "easing": "easeOut" },
@@ -39,7 +40,7 @@
     {
       "id": "track-rotation",
       "property": "rotation",
-      "label": "Impacto",
+      "label": "Hero impact · Z",
       "keyframes": [
         { "id": "r-start", "timeMs": 0, "value": -7, "easing": "linear" },
         { "id": "r-hit", "timeMs": 820, "value": 1.2, "easing": "easeOut" },
@@ -50,7 +51,7 @@
     {
       "id": "track-scale",
       "property": "scale",
-      "label": "Pulso da marca",
+      "label": "Scale overshoot",
       "keyframes": [
         { "id": "s-start", "timeMs": 0, "value": 0.72, "easing": "linear" },
         { "id": "s-hit", "timeMs": 820, "value": 1.1, "easing": "easeOut" },
@@ -64,12 +65,58 @@
     {
       "id": "track-opacity",
       "property": "opacity",
-      "label": "Revelação",
+      "label": "Hero reveal",
       "keyframes": [
         { "id": "o-start", "timeMs": 0, "value": 0, "easing": "linear" },
         { "id": "o-reveal", "timeMs": 650, "value": 1, "easing": "easeOut" },
         { "id": "o-hold", "timeMs": 6200, "value": 1, "easing": "linear" }
       ]
+    },
+    {
+      "id": "track-rotation-x", "property": "rotationX", "label": "3D tilt · X",
+      "keyframes": [
+        { "id": "rx-start", "timeMs": 0, "value": 34, "easing": "easeOut" },
+        { "id": "rx-settle", "timeMs": 1100, "value": 0, "easing": "easeOut" },
+        { "id": "rx-end", "timeMs": 6200, "value": 0, "easing": "linear" }
+      ]
+    },
+    {
+      "id": "track-rotation-y", "property": "rotationY", "label": "3D turn · Y",
+      "keyframes": [
+        { "id": "ry-start", "timeMs": 0, "value": -58, "easing": "easeOut" },
+        { "id": "ry-settle", "timeMs": 1050, "value": 0, "easing": "easeOut" },
+        { "id": "ry-end", "timeMs": 6200, "value": 0, "easing": "linear" }
+      ]
+    },
+    {
+      "id": "track-screen-turn", "property": "screenTurn", "label": "Screen turn",
+      "keyframes": [
+        { "id": "st-start", "timeMs": 0, "value": -42, "easing": "easeOut" },
+        { "id": "st-settle", "timeMs": 800, "value": 0, "easing": "easeInOut" },
+        { "id": "st-rest", "timeMs": 6200, "value": 0, "easing": "linear" }
+      ]
+    },
+    {
+      "id": "track-shine-sweep", "property": "shineSweep", "label": "Shine sweep",
+      "keyframes": [
+        { "id": "shine-start", "timeMs": 800, "value": -1, "easing": "linear" },
+        { "id": "shine-mid", "timeMs": 1600, "value": 0, "easing": "easeInOut" },
+        { "id": "shine-end", "timeMs": 2400, "value": 1, "easing": "easeInOut" },
+        { "id": "shine-reset", "timeMs": 6200, "value": -1, "easing": "linear" }
+      ]
+    },
+    {
+      "id": "track-contrast", "property": "contrast", "label": "Contrast pulse",
+      "keyframes": [
+        { "id": "contrast-start", "timeMs": 0, "value": 1.7, "easing": "easeOut" },
+        { "id": "contrast-rest", "timeMs": 1000, "value": 1.24, "easing": "easeOut" },
+        { "id": "contrast-end", "timeMs": 6200, "value": 1.24, "easing": "linear" }
+      ]
     }
+  ],
+  "scenes": [
+    { "id": "scene-entry", "startMs": 0, "label": "NEXT LEVEL", "subtitle": "A BETTER PLACE TO PLAY", "background": "#070912", "objectColor": "#727bff", "transition": { "type": "cut", "durationMs": 620 } },
+    { "id": "scene-community", "startMs": 2200, "label": "FIND YOUR PEOPLE", "subtitle": "GAMES · EVENTS · REAL COMMUNITY", "background": "#080c1a", "objectColor": "#47d9ff", "transition": { "type": "reflectionFlip", "durationMs": 760 } },
+    { "id": "scene-cta", "startMs": 4550, "label": "YOUR NEXT LEVEL", "subtitle": "JOIN OUR DISCORD TODAY", "background": "#110818", "objectColor": "#ff5f9b", "transition": { "type": "zoom", "durationMs": 720 } }
   ]
 }

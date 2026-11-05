@@ -1,12 +1,10 @@
 # Motion Studio AI
 
-Editor local para criar e revisar motions com uma timeline visual e apoio de modelos de IA. O projeto combina preview ao vivo, keyframes editáveis, exportação JSON, contêiner binário próprio e um editor hexadecimal genérico. Todo o trabalho fica no navegador até você exportar ou compartilhar um arquivo.
+Motion Studio AI is a local-first motion design editor with a scene timeline, 3D-inspired transitions, keyframe animation, AI-assisted project editing, binary project support, and silent WebM export. Projects stay in your browser until you choose to export or share them.
 
-> **Estado atual:** editor 2D de um elemento tipográfico estilizado, animado por posição X/Y, rotação, escala e opacidade. O briefing para IA é assistido por copiar/colar; nenhuma IA ou serviço remoto é chamado pelo app.
+## Run locally
 
-## Começar
-
-Requer Node.js 20+. Não há dependências de runtime para instalar.
+Requires Node.js 20+. There are no runtime dependencies.
 
 ```powershell
 git clone https://github.com/komodoros111/Motion.git Motion
@@ -14,76 +12,56 @@ cd Motion
 npm run dev
 ```
 
-Abra <http://127.0.0.1:4173>. O servidor local escuta somente em loopback.
+Open <http://127.0.0.1:4173>. The server listens only on loopback.
 
-## Fluxo recomendado com IA
+## Features
 
-1. Abra o Motion Studio e ajuste texto, cores, duração e FPS.
-2. Selecione a aba **IA**, escolha um exemplo ou descreva o movimento com tempo, direção, intensidade e easing.
-3. Clique em **Copiar briefing + projeto** e cole em uma IA capaz de editar JSON.
-4. Peça para ela ler `AI-INSTRUCTIONS.md` e [`docs/AI-WORKFLOW.md`](docs/AI-WORKFLOW.md). Para alterações de código no repositório, a IA deve ler também `AGENTS.md`.
-5. Salve a resposta como `.motion.json`, abra pelo botão **Abrir** e confira a animação no preview.
-6. Exporte `.nvmb` quando precisar do contêiner binário nativo.
+- Multiple title scenes with per-scene text, background, accent color, and timeline markers.
+- Scene transitions: cut, fade, page flip, cube turn, directional wipe, zoom, flash, reflection flip, and spin.
+- Timeline tracks for position X/Y, Z/X/Y rotation, screen turn, scale, opacity, contrast, brightness, shine sweep, and reflection.
+- Live reflection, contrast, brightness, shine, and perspective controls.
+- Drag keyframes with frame snapping; edit, add, and remove tracks and scenes.
+- Live preview and silent WebM export up to 1920 px per side and 60 FPS.
+- Browser-native speech synthesis for narration previews. It uses installed voices, requires no API key or tokens, and is not mixed into WebM.
+- Local autosave, project recovery, JSON and NVMB import/export, and drag-and-drop project opening.
+- Hex editor for raw binary inspection and copy-only editing.
+- AI handoff prompt copies the current project only after a user click; it never calls an external model.
+- Responsive controls, keyboard shortcuts, focus indicators, and reduced-motion support.
 
-O guia contém um prompt inicial copiável, o esquema exato e critérios de validação. Ele orienta qualquer modelo; não exige uma API ou fornecedor específico.
+## Open a project and export
 
-## Recursos
+Click **Open project** to load a `.motion.json` or `.nvmb` project, or drag a project file into the editor. Use **Next Level promo** to load the included multi-scene example. Scrub the timeline and scene markers, press Space to preview, then click **Export video** for WebM. Export JSON or NVMB to continue editing elsewhere.
 
-- Preview 2D com texto e cores configuráveis, fundo de canvas e controles de reprodução.
-- Timeline com tracks de X, Y, rotação, escala e opacidade.
-- Seleção, criação, edição e exclusão de keyframes; arraste com snap ao frame.
-- Interpolação linear, ease-in, ease-out e ease-in-out.
-- Salvamento automático local, importação por botão ou arrastar e soltar, exportação JSON/NVMB e renderização de vídeo WebM.
-- Narração opcional com as vozes instaladas no navegador, sem conta, chave API ou tokens. A fala pode ser ouvida no editor; o WebM exportado é vídeo sem faixa de áudio.
-- Exportação e validação do formato `.nvmb` com tamanho e CRC-32.
-- Editor hexadecimal de arquivos locais com busca, navegação de offsets, edição de bytes e exportação sempre como cópia.
-- Briefing que inclui o pedido escrito, as regras do esquema e o projeto aberto.
-- Layout adaptável, atalhos de teclado, foco visível e suporte a `prefers-reduced-motion`.
+## AI-assisted editing
 
-## Atalhos
+1. Open the AI tab and describe the intended motion.
+2. Click **Copy brief + project** and paste it into an AI that can edit JSON.
+3. Ask it to read `AI-INSTRUCTIONS.md` and `docs/AI-WORKFLOW.md`.
+4. Save the complete response as UTF-8 `.motion.json`, open it in the editor, and review each scene and transition.
+5. Export WebM after the preview is correct.
 
-| Tecla | Ação |
-|---|---|
-| `Space` | Reproduzir ou pausar |
-| `K` | Criar keyframe na track selecionada |
-| `←` / `→` | Avançar ou voltar um frame |
-| `Delete` | Excluir keyframe selecionado |
+The app does not require an AI API. Project content is copied only after the explicit handoff click.
 
-## Formatos
+## Project formats
 
-- `.motion.json`: documento legível e editável por IA.
-- `.nvmb`: cabeçalho NVMB versão 1, comprimento explícito, checksum CRC-32 e payload JSON UTF-8.
-- Outros binários: bytes brutos no Hex Studio. O app não tenta adivinhar estruturas de formatos desconhecidos.
+- `.motion.json`: editable source of truth for people and AI tools.
+- `.nvmb`: version 1 container with a 16-byte little-endian header, UTF-8 JSON payload, and CRC-32 checksum.
+- Unknown binary files: shown as raw bytes in Hex Studio; their structures are not guessed.
 
-Leia a especificação em [`docs/FORMAT.md`](docs/FORMAT.md) antes de criar ferramentas de compatibilidade.
+See [`docs/FORMAT.md`](docs/FORMAT.md) and [`AI-INSTRUCTIONS.md`](AI-INSTRUCTIONS.md) for schema limits, authoring rules, and safe editing.
 
-## Organização
+## Render boundaries
 
-```text
-assets/             Marca da aplicação
-docs/               Formato binário e fluxo com IA
-examples/            Motion de exemplo
-src/app.js           Interface, timeline e preview
-src/motion-format.js Validação e codec NVMB
-src/styles.css       Interface responsiva
-AGENTS.md            Guia de trabalho para agentes de código
-AI-INSTRUCTIONS.md   Contrato para agentes que editam motions
-```
+The editor is designed for typographic promo scenes. The DOM preview uses CSS perspective and transitions. WebM export uses a 2D canvas compositor that approximates 3D projection and transition faces; it is not pixel-identical to the live preview. Narration is preview-only and does not become an audio track. Imported footage, arbitrary multi-layer layouts, masks, particles, paths, and composited audio are not supported.
 
-## Desenvolver
+## References and implementation
+
+The transition catalog and keyframe controls were informed by public documentation for Remotion, Motion Canvas, and GSAP. This repository contains an original implementation; it does not copy their source code or documentation. See [`docs/REFERENCE-NOTES.md`](docs/REFERENCE-NOTES.md) for links and license notes.
+
+## Development
 
 ```powershell
 npm run check
 ```
 
-Use JavaScript ES modules e APIs nativas; se introduzir dependências, explique o motivo e atualize este guia. Preserve projetos anteriores ou inclua migração explícita ao alterar o esquema. Não faça commit de mídia pessoal, `.nvmb` de usuário, credenciais ou arquivos `.env`.
-
-## Limitações conhecidas
-
-O preview atual mostra um único elemento estilizado. O exportador cria WebM silencioso do motion; narração usa síntese local do navegador para prévia e não é incorporada ao vídeo. Não renderiza mídia importada, texto em múltiplas camadas, máscaras, partículas, paths vetoriais ou efeitos de composição. O editor binário é de uso geral para inspeção bruta, mas só decodifica NVMB. CRC detecta corrupção acidental; não autentica o arquivo.
-
-O exemplo `examples/next-level-promo.motion.json` demonstra a divulgação do servidor Next Level com entrada, overshoot curto, acomodação e chamada para ação. Há uma cópia NVMB em `examples/next-level-promo.nvmb` e a descrição do ritmo em [`examples/NEXT-LEVEL.md`](examples/NEXT-LEVEL.md). No editor, use **Exemplo Next Level**; o projeto aberto fica disponível pelo botão **Restaurar anterior**.
-
-## Segurança dos arquivos
-
-O editor hexadecimal importa os bytes para memória e exporta outra cópia; não sobrescreve o original. Ainda assim, uma edição inválida pode inutilizar a cópia. Teste a validação NVMB e o projeto JSON antes de usar o resultado.
+The check validates JavaScript syntax only. Keep the schema, validator, editor, preview, video renderer, examples, and AI guidance aligned. Do not commit user media, credentials, `.env` files, or personal `.nvmb` projects.
