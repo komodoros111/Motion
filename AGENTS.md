@@ -19,7 +19,7 @@ The AI handoff copies user-authored text and project JSON to the clipboard only 
 
 ## Motion model v1
 
-The JSON document uses `format: "nirvy.motion"`, `version: 1`, `name`, `durationMs`, `fps`, `canvas`, and `tracks`. Canvas currently has `width`, `height`, `background`, optional `label`, and optional `objectColor`. A track has a stable `id`, `property`, optional `label`, and `keyframes`. A keyframe has a unique `id`, `timeMs`, numeric `value`, and `easing`.
+The JSON document uses `format: "nirvy.motion"`, `version: 1`, `name`, `durationMs`, `fps`, `canvas`, and `tracks`. Canvas currently has `width`, `height`, `background`, optional `label`, `subtitle`, and `objectColor`. A track has a stable `id`, `property`, optional `label`, and `keyframes`. A keyframe has a unique `id`, `timeMs`, numeric `value`, and `easing`.
 
 Supported properties are `x`, `y`, `rotation`, `scale`, and `opacity`. Supported easing values: `linear`, `easeIn`, `easeOut`, `easeInOut`. Bounds are enforced in `validateMotionDocument`. Keep interpolation, controls, schema validation, sample data, prompt, example, and documentation in sync when adding a property.
 

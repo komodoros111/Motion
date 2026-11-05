@@ -36,5 +36,5 @@ Decodifique o payload como UTF-8 e parseie JSON. O documento deve ter `format: "
 - Easing: `linear`, `easeIn`, `easeOut`, `easeInOut`. O easing do keyframe de chegada governa a interpolação até ele.
 - Máximo de 64 tracks e 10000 keyframes. IDs de tracks e keyframes devem ser não vazios e globalmente únicos.
 - Keyframe deve ficar em `0..durationMs`. Opacidade: `0..1`; escala: `(0..100]`; posição: `-100000..100000`; rotação: `-360000..360000`.
-- `canvas.label` opcional: texto de até 24 caracteres. Cores devem usar `#RRGGBB`.
+- `canvas.label` opcional: texto de até 24 caracteres; `canvas.subtitle` opcional: texto de até 80 caracteres. Cores devem usar `#RRGGBB`.
 - O preview escala X/Y do espaço do canvas para o tamanho visível e posiciona o elemento pelo centro. O renderer mostra somente um elemento estilizado.

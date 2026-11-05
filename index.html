@@ -36,17 +36,18 @@
       <section class="editor-panel" id="motion-panel" aria-label="Editor visual de motion">
         <div class="editor-heading">
           <div><span class="eyebrow">PROJETO LOCAL <i></i> MOTION</span><h1 id="heading-name">Aurora — entrada</h1></div>
-          <div class="heading-tools"><button class="quiet-button" data-action="rename">✎ <span>Renomear</span></button><button class="quiet-button" data-action="reset-sample" title="Carregar exemplo"><span>↺</span></button></div>
+          <div class="heading-tools"><button class="quiet-button" data-action="restore-previous" id="restore-previous" hidden>↶ <span>Restaurar anterior</span></button><button class="quiet-button" data-action="open-next-level">✦ <span>Exemplo Next Level</span></button><button class="quiet-button" data-action="rename">✎ <span>Renomear</span></button><button class="quiet-button" data-action="reset-sample" title="Carregar exemplo Motion Studio"><span>↺</span></button></div>
         </div>
         <section class="stage-wrap" aria-label="Prévia da animação">
           <div class="stage-topline"><span><span class="stage-led"></span> PRÉVIA AO VIVO</span><span id="stage-size">1280 × 720 · 30 FPS</span></div>
           <div class="stage" id="stage">
             <div class="stage-grid"></div><div class="stage-glow"></div>
             <div class="motion-object" id="motion-object"><div class="motion-object__shine"></div><span>M</span></div>
-            <div class="stage-caption"><span>NV</span><span id="stage-caption-name">Aurora — entrada</span></div>
+            <div class="stage-subtitle" id="stage-subtitle" hidden></div>
+            <div class="stage-caption"><span id="stage-caption-badge">NV</span><span id="stage-caption-name">Aurora — entrada</span></div>
             <div class="stage-corner stage-corner--tl"></div><div class="stage-corner stage-corner--tr"></div><div class="stage-corner stage-corner--bl"></div><div class="stage-corner stage-corner--br"></div>
           </div>
-          <div class="stage-controls"><div class="playback-group"><button class="play-button" data-action="toggle-play" aria-label="Reproduzir" title="Reproduzir (Espaço)">▶</button><button class="quiet-button" data-action="stop" title="Parar">■</button><span class="time-display"><strong id="time-current">00:00.000</strong><span>/</span><span id="time-total">00:04.000</span></span></div><div class="stage-controls__right"><span class="render-status"><i></i> 60 FPS preview</span><button class="quiet-button" data-action="fit-stage">⛶ <span>Ajustar</span></button></div></div>
+          <div class="stage-controls"><div class="playback-group"><button class="play-button" data-action="toggle-play" aria-label="Reproduzir" title="Reproduzir (Espaço)">▶</button><button class="quiet-button" data-action="stop" title="Parar">■</button><span class="time-display"><strong id="time-current">00:00.000</strong><span>/</span><span id="time-total">00:04.000</span></span></div><div class="stage-controls__right"><span class="render-status"><i></i> Preview em tempo real</span><button class="quiet-button" data-action="fit-stage">⛶ <span>Tela cheia</span></button></div></div>
         </section>
 
         <section class="timeline-panel" aria-label="Timeline e keyframes">
@@ -62,6 +63,7 @@
           <div class="inspector-section"><div class="inspector-section__title"><span>COMPOSIÇÃO</span><span class="keyframe-state">CANVAS</span></div>
             <label class="field-label">Nome do motion<input id="field-name" type="text" maxlength="120" value="Aurora — entrada"></label>
             <label class="field-label">Texto do elemento<input id="field-label" type="text" maxlength="24" value="M" placeholder="Ex.: NIRVY"></label>
+            <label class="field-label">Frase de apoio / convite<input id="field-subtitle" type="text" maxlength="80" value="" placeholder="Ex.: Entre no Discord e evolua junto"></label>
             <div class="field-grid"><label class="field-label">Fundo<input id="field-background" type="color" value="#090b13"></label><label class="field-label">Elemento<input id="field-object-color" type="color" value="#b9a3ff"></label></div>
             <div class="field-grid"><label class="field-label">Duração <span class="field-suffix">ms</span><input id="field-duration" type="number" min="100" max="120000" step="100" value="4000"></label><label class="field-label">Frame rate <span class="field-suffix">fps</span><input id="field-fps" type="number" min="1" max="240" value="30"></label></div>
             <div class="field-grid"><label class="field-label">Largura<input id="field-width" type="number" min="1" max="8192" value="1280"></label><label class="field-label">Altura<input id="field-height" type="number" min="1" max="8192" value="720"></label></div>

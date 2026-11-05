@@ -10,3 +10,4 @@ coverage/
 *.nvmb
 *.motion.json
 !examples/*.motion.json
+!examples/*.nvmb

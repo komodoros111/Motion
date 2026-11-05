@@ -1,0 +1,75 @@
+{
+  "format": "nirvy.motion",
+  "version": 1,
+  "name": "NEXT LEVEL • comunidade no Discord",
+  "durationMs": 6200,
+  "fps": 30,
+  "canvas": {
+    "width": 1920,
+    "height": 1080,
+    "background": "#080b16",
+    "label": "NEXT LEVEL",
+    "objectColor": "#6577f8",
+    "subtitle": "ENTRE NO DISCORD · EVOLUA COM A GENTE"
+  },
+  "tracks": [
+    {
+      "id": "track-x",
+      "property": "x",
+      "label": "Entrada horizontal",
+      "keyframes": [
+        { "id": "x-start", "timeMs": 0, "value": -260, "easing": "linear" },
+        { "id": "x-arrive", "timeMs": 900, "value": 0, "easing": "easeOut" },
+        { "id": "x-hold", "timeMs": 6200, "value": 0, "easing": "linear" }
+      ]
+    },
+    {
+      "id": "track-y",
+      "property": "y",
+      "label": "Assentamento vertical",
+      "keyframes": [
+        { "id": "y-start", "timeMs": 0, "value": 72, "easing": "linear" },
+        { "id": "y-hit", "timeMs": 820, "value": -8, "easing": "easeOut" },
+        { "id": "y-settle", "timeMs": 1180, "value": 0, "easing": "easeOut" },
+        { "id": "y-breathe", "timeMs": 4300, "value": -4, "easing": "easeInOut" },
+        { "id": "y-rest", "timeMs": 4700, "value": 0, "easing": "easeOut" },
+        { "id": "y-end", "timeMs": 6200, "value": 0, "easing": "linear" }
+      ]
+    },
+    {
+      "id": "track-rotation",
+      "property": "rotation",
+      "label": "Impacto",
+      "keyframes": [
+        { "id": "r-start", "timeMs": 0, "value": -7, "easing": "linear" },
+        { "id": "r-hit", "timeMs": 820, "value": 1.2, "easing": "easeOut" },
+        { "id": "r-settle", "timeMs": 1180, "value": 0, "easing": "easeOut" },
+        { "id": "r-end", "timeMs": 6200, "value": 0, "easing": "linear" }
+      ]
+    },
+    {
+      "id": "track-scale",
+      "property": "scale",
+      "label": "Pulso da marca",
+      "keyframes": [
+        { "id": "s-start", "timeMs": 0, "value": 0.72, "easing": "linear" },
+        { "id": "s-hit", "timeMs": 820, "value": 1.1, "easing": "easeOut" },
+        { "id": "s-settle", "timeMs": 1020, "value": 0.97, "easing": "easeOut" },
+        { "id": "s-rest", "timeMs": 1260, "value": 1, "easing": "easeOut" },
+        { "id": "s-breathe", "timeMs": 4300, "value": 1.025, "easing": "easeInOut" },
+        { "id": "s-breathe-rest", "timeMs": 4700, "value": 1, "easing": "easeOut" },
+        { "id": "s-end", "timeMs": 6200, "value": 1, "easing": "linear" }
+      ]
+    },
+    {
+      "id": "track-opacity",
+      "property": "opacity",
+      "label": "Revelação",
+      "keyframes": [
+        { "id": "o-start", "timeMs": 0, "value": 0, "easing": "linear" },
+        { "id": "o-reveal", "timeMs": 650, "value": 1, "easing": "easeOut" },
+        { "id": "o-hold", "timeMs": 6200, "value": 1, "easing": "linear" }
+      ]
+    }
+  ]
+}

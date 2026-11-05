@@ -81,6 +81,8 @@ Use JavaScript ES modules e APIs nativas; se introduzir dependências, explique 
 
 O preview atual mostra um único elemento estilizado. Não renderiza vídeo, áudio, texto multi-camada, máscaras, partículas, paths vetoriais ou efeitos de composição. O editor binário é de uso geral para inspeção bruta, mas só decodifica NVMB. CRC detecta corrupção acidental; não autentica o arquivo.
 
+O exemplo `examples/next-level-promo.motion.json` demonstra a divulgação do servidor Next Level com entrada, overshoot curto, acomodação e chamada para ação. Há uma cópia NVMB em `examples/next-level-promo.nvmb` e a descrição do ritmo em [`examples/NEXT-LEVEL.md`](examples/NEXT-LEVEL.md). No editor, use **Exemplo Next Level**; o projeto aberto fica disponível pelo botão **Restaurar anterior**.
+
 ## Segurança dos arquivos
 
 O editor hexadecimal importa os bytes para memória e exporta outra cópia; não sobrescreve o original. Ainda assim, uma edição inválida pode inutilizar a cópia. Teste a validação NVMB e o projeto JSON antes de usar o resultado.

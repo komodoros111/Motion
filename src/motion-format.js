@@ -24,7 +24,7 @@ export function createSampleMotion() {
     name: "Aurora — entrada",
     durationMs: 4000,
     fps: 30,
-    canvas: { width: 1280, height: 720, background: "#090b13", label: "M", objectColor: "#b9a3ff" },
+    canvas: { width: 1280, height: 720, background: "#090b13", label: "M", objectColor: "#b9a3ff", subtitle: "" },
     tracks: [
       { id: "track-x", property: "x", label: "Posição X", keyframes: [{ id: "x0", timeMs: 0, value: -210, easing: "easeOut" }, { id: "x1", timeMs: 1250, value: 0, easing: "easeInOut" }, { id: "x2", timeMs: 4000, value: 170, easing: "easeIn" }] },
       { id: "track-y", property: "y", label: "Posição Y", keyframes: [{ id: "y0", timeMs: 0, value: 85, easing: "easeOut" }, { id: "y1", timeMs: 1250, value: 0, easing: "easeInOut" }, { id: "y2", timeMs: 4000, value: -60, easing: "easeIn" }] },
@@ -43,6 +43,7 @@ export function validateMotionDocument(value) {
   if (!Number.isFinite(value.fps) || value.fps < 1 || value.fps > 240) throw new Error("FPS deve ficar entre 1 e 240.");
   if (!value.canvas || !Number.isFinite(value.canvas.width) || !Number.isFinite(value.canvas.height) || value.canvas.width < 1 || value.canvas.width > 8192 || value.canvas.height < 1 || value.canvas.height > 8192) throw new Error("Canvas inválido: largura e altura devem ficar entre 1 e 8192 px.");
   if (value.canvas.label !== undefined && (typeof value.canvas.label !== "string" || value.canvas.label.length > 24)) throw new Error("O texto do elemento deve ter até 24 caracteres.");
+  if (value.canvas.subtitle !== undefined && (typeof value.canvas.subtitle !== "string" || value.canvas.subtitle.length > 80)) throw new Error("A frase de apoio deve ter até 80 caracteres.");
   for (const key of ["background", "objectColor"]) if (value.canvas[key] !== undefined && (typeof value.canvas[key] !== "string" || !/^#[\da-f]{6}$/i.test(value.canvas[key]))) throw new Error(`Cor ${key} inválida; use hexadecimal no formato #RRGGBB.`);
   if (!Array.isArray(value.tracks) || value.tracks.length > 64) throw new Error("Lista de trilhas inválida ou longa demais.");
   const properties = new Set(["x", "y", "rotation", "scale", "opacity"]);

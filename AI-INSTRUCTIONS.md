@@ -28,7 +28,8 @@ Top-level structure:
     "height": 720,
     "background": "#090b13",
     "label": "M",
-    "objectColor": "#b9a3ff"
+    "objectColor": "#b9a3ff",
+    "subtitle": "Optional call to action"
   },
   "tracks": []
 }
@@ -54,7 +55,7 @@ Supported `property`: `x`, `y`, `rotation`, `scale`, `opacity`. Supported `easin
 
 - `durationMs`: 100–120000. `fps`: 1–240.
 - `canvas.width` and `canvas.height`: 1–8192 pixels.
-- Canvas colors: six-digit `#RRGGBB`. `label`: up to 24 characters.
+- Canvas colors: six-digit `#RRGGBB`. `label`: up to 24 characters; `subtitle`: up to 80 characters.
 - At most 64 tracks and 10000 keyframes.
 - Keyframe `timeMs`: inclusive 0–`durationMs`.
 - `opacity`: 0–1. `scale`: greater than 0 and at most 100.

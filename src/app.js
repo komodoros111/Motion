@@ -3,6 +3,7 @@ import { createSampleMotion, validateMotionDocument, encodeMotionBinary, decodeM
 const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => [...document.querySelectorAll(selector)];
 const STORAGE_KEY = "motion-studio-ai-project-v1";
+const BACKUP_KEY = "motion-studio-ai-project-backup-v1";
 const colors = { x: "#a78bfa", y: "#56d7de", rotation: "#ff9b70", scale: "#57d7a2", opacity: "#f4c96b" };
 const defaults = { x: 0, y: 0, rotation: 0, scale: 1, opacity: 1 };
 let project = createSampleMotion();
@@ -84,6 +85,7 @@ function renderTimeline() {
   $("#stage-caption-name").textContent = project.name;
   $("#field-name").value = project.name;
   $("#field-label").value = project.canvas.label ?? "M";
+  $("#field-subtitle").value = project.canvas.subtitle ?? "";
   $("#field-background").value = project.canvas.background ?? "#090b13";
   $("#field-object-color").value = project.canvas.objectColor ?? "#b9a3ff";
   $("#field-duration").value = project.durationMs;
@@ -92,9 +94,15 @@ function renderTimeline() {
   $("#field-height").value = project.canvas.height;
   $("#stage-size").textContent = `${project.canvas.width} × ${project.canvas.height} · ${project.fps} FPS`;
   $("#motion-object > span").textContent = project.canvas.label ?? "M";
+  const badge = (project.canvas.label ?? "M").trim().split(/\s+/).map((part) => part[0] ?? "").join("").slice(0, 2).toUpperCase() || "M";
+  $("#stage-caption-badge").textContent = badge;
+  $("#stage-subtitle").textContent = project.canvas.subtitle ?? "";
+  $("#stage-subtitle").hidden = !(project.canvas.subtitle ?? "").trim();
   $("#motion-object").style.setProperty("--object-color", project.canvas.objectColor ?? "#b9a3ff");
   $("#stage").style.setProperty("--stage-bg", project.canvas.background ?? "#090b13");
+  $("#stage").style.setProperty("--object-color", project.canvas.objectColor ?? "#b9a3ff");
   $("#stage").style.setProperty("--canvas-ratio", `${project.canvas.width} / ${project.canvas.height}`);
+  $("#restore-previous").hidden = !localStorage.getItem(BACKUP_KEY);
   $("#track-count").textContent = `${project.tracks.length} trilhas`;
   $("#zoom-label").textContent = `${Math.round(zoom * 100)}%`;
 
@@ -231,6 +239,7 @@ function openProjectFile(file) {
       next = validateMotionDocument(JSON.parse(new TextDecoder().decode(bytes)));
       toast("Motion JSON carregado.");
     }
+    backupCurrentProject();
     project = next; selectedTrackId = project.tracks[0]?.id ?? null; selectedKey = null; currentTime = 0; markDirty(); setPanel("timeline"); renderAll();
   }).catch((error) => toast(`Não consegui abrir: ${error.message}`));
 }
@@ -291,13 +300,33 @@ function crcRepair() {
 }
 function importCurrentBinary() {
   if (!hexBytes) { toast("Abra um arquivo primeiro."); return; }
-  try { const next = decodeMotionBinary(hexBytes); project = next; selectedTrackId = project.tracks[0]?.id ?? null; selectedKey = null; currentTime = 0; markDirty(); setPanel("timeline"); renderAll(); toast("NVMB validado e aberto na timeline."); }
+  try { const next = decodeMotionBinary(hexBytes); backupCurrentProject(); project = next; selectedTrackId = project.tracks[0]?.id ?? null; selectedKey = null; currentTime = 0; markDirty(); setPanel("timeline"); renderAll(); toast("NVMB validado e aberto na timeline."); }
   catch (error) { toast(error.message); }
+}
+function backupCurrentProject() { try { localStorage.setItem(BACKUP_KEY, JSON.stringify(project)); } catch { toast("Não consegui criar uma cópia de recuperação local."); } }
+function restorePreviousProject() {
+  try {
+    const previous = localStorage.getItem(BACKUP_KEY);
+    if (!previous) { toast("Não há projeto anterior salvo."); return; }
+    const restored = validateMotionDocument(JSON.parse(previous));
+    localStorage.setItem(BACKUP_KEY, JSON.stringify(project));
+    project = restored; selectedTrackId = project.tracks[0]?.id ?? null; selectedKey = null; currentTime = 0;
+    markDirty(); renderAll(); toast("Projeto anterior restaurado. O projeto atual ficou como cópia de recuperação.");
+  } catch (error) { toast(`Não consegui restaurar: ${error.message}`); }
+}
+async function openNextLevelPromo() {
+  try {
+    const response = await fetch("/examples/next-level-promo.motion.json", { cache: "no-store" });
+    if (!response.ok) throw new Error("O exemplo promocional não foi encontrado.");
+    const next = validateMotionDocument(await response.json());
+    backupCurrentProject(); project = next; selectedTrackId = project.tracks[0]?.id ?? null; selectedKey = null; currentTime = 0;
+    markDirty(); renderAll(); toast("Motion Next Level carregado. Seu projeto anterior pode ser restaurado pelo botão no topo.");
+  } catch (error) { toast(`Não consegui abrir o exemplo: ${error.message}`); }
 }
 function aiBrief() {
   const request = $("#ai-request").value.trim();
   if (!request) { $("#ai-request").focus(); toast("Descreva a alteração desejada ou escolha um exemplo."); return; }
-  const prompt = `Você é Motion Editor, uma IA especializada em motion design e neste repositório. Siga AI-INSTRUCTIONS.md e docs/FORMAT.md.\n\nTAREFA DO USUÁRIO\n${request}\n\nCRITÉRIOS DE ENTREGA\n- Edite o documento atual sem apagar campos desconhecidos e preserve version, format, IDs e propriedades não relacionadas ao pedido.\n- Retorne um JSON completo e válido, sem comentários ou reticências, em um único bloco json. Não retorne NVMB em base64.\n- Valide: duração 100–120000 ms; FPS 1–240; canvas 1–8192 px; até 64 tracks e 10000 keyframes; IDs não vazios e únicos; tempos entre 0 e durationMs; easing linear/easeIn/easeOut/easeInOut.\n- Para opacity use 0–1; scale maior que 0 e até 100; posições até ±100000 px; rotação até ±360000°.\n- Preserve a intenção visual, use keyframes suficientes para suavidade e evite movimentos bruscos ou tracks redundantes. Se a solicitação for ambígua, escolha uma interpretação conservadora e informe a suposição.\n- Não alegue que o preview renderiza mais do que realmente suporta.\n\nDOCUMENTO ATUAL (nirvy.motion v1)\n${JSON.stringify(project, null, 2)}\n\nDepois do JSON, resuma em até 5 itens o que mudou e como verificar na timeline.`;
+  const prompt = `Você é Motion Editor, uma IA especializada em motion design e neste repositório. Siga AI-INSTRUCTIONS.md e docs/FORMAT.md.\n\nTAREFA DO USUÁRIO\n${request}\n\nCRITÉRIOS DE ENTREGA\n- Edite o documento atual sem apagar campos desconhecidos e preserve version, format, IDs e propriedades não relacionadas ao pedido.\n- Retorne um JSON completo e válido, sem comentários ou reticências, em um único bloco json. Não retorne NVMB em base64.\n- Valide: duração 100–120000 ms; FPS 1–240; canvas 1–8192 px; até 64 tracks e 10000 keyframes; label até 24 e subtitle até 80 caracteres; cores #RRGGBB; IDs não vazios e únicos; tempos entre 0 e durationMs; easing linear/easeIn/easeOut/easeInOut.\n- Para opacity use 0–1; scale maior que 0 e até 100; posições até ±100000 px; rotação até ±360000°.\n- Preserve a intenção visual, use keyframes suficientes para suavidade e evite movimentos bruscos ou tracks redundantes. Se a solicitação for ambígua, escolha uma interpretação conservadora e informe a suposição.\n- Não alegue que o preview renderiza mais do que realmente suporta.\n\nDOCUMENTO ATUAL (nirvy.motion v1)\n${JSON.stringify(project, null, 2)}\n\nDepois do JSON, resuma em até 5 itens o que mudou e como verificar na timeline.`;
   navigator.clipboard?.writeText(prompt).then(() => toast("Briefing e projeto copiados. Cole-os na IA e reimporte o JSON final."), () => toast("O navegador bloqueou a área de transferência."));
 }
 
@@ -318,7 +347,8 @@ document.addEventListener("click", (event) => {
   const actions = {
     "open-project": () => $("#open-file").click(), "open-binary": () => $("#open-binary-file").click(), "save-json": saveJSON, "save-binary": saveMotionBinary,
     "save-binary-file": saveHexCopy, "ai-brief": aiBrief, "rename": () => { const name = prompt("Nome do motion", project.name); if (name?.trim()) { project.name = name.trim().slice(0, 120); markDirty(); renderTimeline(); } },
-    "reset-sample": () => { if (confirm("Carregar o exemplo? As alterações atuais ficam salvas no histórico do navegador?")) { project = createSampleMotion(); selectedTrackId = project.tracks[0].id; selectedKey = null; currentTime = 0; markDirty(); renderAll(); } },
+    "reset-sample": () => { if (confirm("Carregar o Motion Studio demo? O projeto atual será guardado para restauração.")) { backupCurrentProject(); project = createSampleMotion(); selectedTrackId = project.tracks[0].id; selectedKey = null; currentTime = 0; markDirty(); renderAll(); } },
+    "open-next-level": openNextLevelPromo, "restore-previous": restorePreviousProject,
     "toggle-play": togglePlay, "stop": stopPlayback, "add-keyframe": addKeyframe, "delete-keyframe": deleteKeyframe, "add-track": addTrack,
     "zoom-in": () => { zoom = Math.min(3, zoom + .15); renderTimeline(); }, "zoom-out": () => { zoom = Math.max(.45, zoom - .15); renderTimeline(); },
     "fit-stage": async () => { try { if (document.fullscreenElement) await document.exitFullscreen(); else await $("#stage").requestFullscreen(); } catch { toast("O navegador não permitiu abrir o palco em tela cheia."); } }, "hex-prev": () => { if (hexBytes) { hexOffset = Math.max(0, hexOffset - 256); renderHex(); } },
@@ -372,7 +402,8 @@ document.addEventListener("pointerup", finishKeyframeDrag);
 document.addEventListener("pointercancel", finishKeyframeDrag);
 $("#ruler-scale").addEventListener("click", (event) => setTimeFromScale(event, event.currentTarget));
 $("#field-name").addEventListener("input", (event) => { project.name = event.target.value.slice(0, 120); $("#heading-name").textContent = project.name || "Sem nome"; $("#project-name").textContent = project.name || "Sem nome"; $("#stage-caption-name").textContent = project.name || "Sem nome"; markDirty(); });
-$("#field-label").addEventListener("input", (event) => { project.canvas.label = event.target.value.slice(0, 24); $("#motion-object > span").textContent = project.canvas.label || " "; markDirty(); });
+$("#field-label").addEventListener("input", (event) => { project.canvas.label = event.target.value.slice(0, 24); $("#motion-object > span").textContent = project.canvas.label || " "; $("#stage-caption-badge").textContent = project.canvas.label.trim().split(/\s+/).map((part) => part[0] ?? "").join("").slice(0, 2).toUpperCase() || "M"; markDirty(); });
+$("#field-subtitle").addEventListener("input", (event) => { project.canvas.subtitle = event.target.value.slice(0, 80); $("#stage-subtitle").textContent = project.canvas.subtitle; $("#stage-subtitle").hidden = !project.canvas.subtitle.trim(); markDirty(); });
 $("#field-background").addEventListener("input", (event) => { project.canvas.background = event.target.value; $("#stage").style.setProperty("--stage-bg", event.target.value); markDirty(); });
 $("#field-object-color").addEventListener("input", (event) => { project.canvas.objectColor = event.target.value; $("#motion-object").style.setProperty("--object-color", event.target.value); markDirty(); });
 $("#field-duration").addEventListener("change", (event) => { project.durationMs = Math.max(100, Math.min(120000, Number(event.target.value) || 100)); for (const track of project.tracks) for (const frame of track.keyframes) frame.timeMs = Math.min(project.durationMs, frame.timeMs); currentTime = Math.min(currentTime, project.durationMs); markDirty(); renderTimeline(); });
