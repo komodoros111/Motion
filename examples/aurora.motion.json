@@ -4,7 +4,7 @@
   "name": "Aurora / título",
   "durationMs": 6000,
   "fps": 30,
-  "canvas": { "width": 1920, "height": 1080, "background": "#090b13" },
+  "canvas": { "width": 1920, "height": 1080, "background": "#090b13", "label": "NV", "objectColor": "#b8adff" },
   "tracks": [
     { "id": "track-x", "property": "x", "label": "Posição X", "keyframes": [{ "id": "x0", "timeMs": 0, "value": -300, "easing": "easeOut" }, { "id": "x1", "timeMs": 1200, "value": 0, "easing": "easeOut" }] },
     { "id": "track-y", "property": "y", "label": "Posição Y", "keyframes": [{ "id": "y0", "timeMs": 0, "value": 0, "easing": "linear" }, { "id": "y1", "timeMs": 6000, "value": -28, "easing": "easeInOut" }] },

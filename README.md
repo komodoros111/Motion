@@ -1,43 +1,86 @@
 # Motion Studio AI
 
-Editor independente para criar e editar motion graphics com assistência de IA. O projeto oferece uma timeline visual e um editor hexadecimal genérico para inspecionar e alterar cópias de arquivos binários. Ele não envia projetos a um modelo: o botão **Briefing IA** prepara instruções e o JSON atual para você usar no assistente de sua escolha.
+Editor local para criar e revisar motions com uma timeline visual e apoio de modelos de IA. O projeto combina preview ao vivo, keyframes editáveis, exportação JSON, contêiner binário próprio e um editor hexadecimal genérico. Todo o trabalho fica no navegador até você exportar ou compartilhar um arquivo.
 
-## Iniciar
+> **Estado atual:** editor 2D de um elemento tipográfico estilizado, animado por posição X/Y, rotação, escala e opacidade. O briefing para IA é assistido por copiar/colar; nenhuma IA ou serviço remoto é chamado pelo app.
 
-Requer Node.js 20 ou mais recente. Não há dependências externas nem etapa de instalação.
+## Começar
+
+Requer Node.js 20+. Não há dependências de runtime para instalar.
 
 ```powershell
-cd motion-ai-studio
+git clone https://github.com/komodoros111/Motion.git Motion
+cd Motion
 npm run dev
 ```
 
-Abra <http://localhost:4173>. O servidor escuta apenas em `127.0.0.1`.
+Abra <http://127.0.0.1:4173>. O servidor local escuta somente em loopback.
 
-## O que dá para fazer
+## Fluxo recomendado com IA
 
-- Editar keyframes de posição, rotação, escala e opacidade na timeline.
-- Visualizar uma composição 2D, controlar tempo e reprodução.
-- Importar e exportar projetos JSON e o formato binário documentado `.nvmb`.
-- Abrir qualquer arquivo como bytes, buscar valores hexadecimais e exportar uma cópia editada.
-- Validar e reparar o CRC-32 de um `.nvmb` depois de uma edição binária.
-- Copiar um briefing para pedir alterações a uma IA, sem credenciais ou envio automático.
+1. Abra o Motion Studio e ajuste texto, cores, duração e FPS.
+2. Selecione a aba **IA**, escolha um exemplo ou descreva o movimento com tempo, direção, intensidade e easing.
+3. Clique em **Copiar briefing + projeto** e cole em uma IA capaz de editar JSON.
+4. Peça para ela ler `AI-INSTRUCTIONS.md` e [`docs/AI-WORKFLOW.md`](docs/AI-WORKFLOW.md). Para alterações de código no repositório, a IA deve ler também `AGENTS.md`.
+5. Salve a resposta como `.motion.json`, abra pelo botão **Abrir** e confira a animação no preview.
+6. Exporte `.nvmb` quando precisar do contêiner binário nativo.
 
-## Arquivos principais
+O guia contém um prompt inicial copiável, o esquema exato e critérios de validação. Ele orienta qualquer modelo; não exige uma API ou fornecedor específico.
 
-- `src/app.js`: interface, timeline, preview, importação e exportação.
-- `src/motion-format.js`: validação e codificação do formato `.nvmb`.
-- `src/styles.css`: layout responsivo e estilos.
-- `AGENTS.md` e `AI-INSTRUCTIONS.md`: orientação para agentes e modelos de IA.
-- `docs/FORMAT.md`: especificação binária completa.
+## Recursos
 
-## Cuidados com arquivos binários
+- Preview 2D com texto e cores configuráveis, fundo de canvas e controles de reprodução.
+- Timeline com tracks de X, Y, rotação, escala e opacidade.
+- Seleção, criação, edição e exclusão de keyframes; arraste com snap ao frame.
+- Interpolação linear, ease-in, ease-out e ease-in-out.
+- Salvamento automático local no navegador e importação/exportação de projeto JSON.
+- Exportação e validação do formato `.nvmb` com tamanho e CRC-32.
+- Editor hexadecimal de arquivos locais com busca, navegação de offsets, edição de bytes e exportação sempre como cópia.
+- Briefing que inclui o pedido escrito, as regras do esquema e o projeto aberto.
+- Layout adaptável, atalhos de teclado, foco visível e suporte a `prefers-reduced-motion`.
 
-O editor hexadecimal trabalha com uma cópia em memória e exporta um arquivo separado. Ele não interpreta automaticamente formatos desconhecidos. Alterações arbitrárias podem invalidar a estrutura de um arquivo; `.nvmb` é o único formato binário compreendido pelo editor. Consulte [docs/FORMAT.md](docs/FORMAT.md).
+## Atalhos
 
-## Verificação de sintaxe
+| Tecla | Ação |
+|---|---|
+| `Space` | Reproduzir ou pausar |
+| `K` | Criar keyframe na track selecionada |
+| `←` / `→` | Avançar ou voltar um frame |
+| `Delete` | Excluir keyframe selecionado |
+
+## Formatos
+
+- `.motion.json`: documento legível e editável por IA.
+- `.nvmb`: cabeçalho NVMB versão 1, comprimento explícito, checksum CRC-32 e payload JSON UTF-8.
+- Outros binários: bytes brutos no Hex Studio. O app não tenta adivinhar estruturas de formatos desconhecidos.
+
+Leia a especificação em [`docs/FORMAT.md`](docs/FORMAT.md) antes de criar ferramentas de compatibilidade.
+
+## Organização
+
+```text
+assets/             Marca da aplicação
+docs/               Formato binário e fluxo com IA
+examples/            Motion de exemplo
+src/app.js           Interface, timeline e preview
+src/motion-format.js Validação e codec NVMB
+src/styles.css       Interface responsiva
+AGENTS.md            Guia de trabalho para agentes de código
+AI-INSTRUCTIONS.md   Contrato para agentes que editam motions
+```
+
+## Desenvolver
 
 ```powershell
 npm run check
 ```
 
-Este projeto é uma ferramenta independente e não usa APIs privadas ou conteúdo de terceiros.
+Use JavaScript ES modules e APIs nativas; se introduzir dependências, explique o motivo e atualize este guia. Preserve projetos anteriores ou inclua migração explícita ao alterar o esquema. Não faça commit de mídia pessoal, `.nvmb` de usuário, credenciais ou arquivos `.env`.
+
+## Limitações conhecidas
+
+O preview atual mostra um único elemento estilizado. Não renderiza vídeo, áudio, texto multi-camada, máscaras, partículas, paths vetoriais ou efeitos de composição. O editor binário é de uso geral para inspeção bruta, mas só decodifica NVMB. CRC detecta corrupção acidental; não autentica o arquivo.
+
+## Segurança dos arquivos
+
+O editor hexadecimal importa os bytes para memória e exporta outra cópia; não sobrescreve o original. Ainda assim, uma edição inválida pode inutilizar a cópia. Teste a validação NVMB e o projeto JSON antes de usar o resultado.

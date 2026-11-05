@@ -24,7 +24,7 @@ export function createSampleMotion() {
     name: "Aurora — entrada",
     durationMs: 4000,
     fps: 30,
-    canvas: { width: 1280, height: 720, background: "#090b13" },
+    canvas: { width: 1280, height: 720, background: "#090b13", label: "M", objectColor: "#b9a3ff" },
     tracks: [
       { id: "track-x", property: "x", label: "Posição X", keyframes: [{ id: "x0", timeMs: 0, value: -210, easing: "easeOut" }, { id: "x1", timeMs: 1250, value: 0, easing: "easeInOut" }, { id: "x2", timeMs: 4000, value: 170, easing: "easeIn" }] },
       { id: "track-y", property: "y", label: "Posição Y", keyframes: [{ id: "y0", timeMs: 0, value: 85, easing: "easeOut" }, { id: "y1", timeMs: 1250, value: 0, easing: "easeInOut" }, { id: "y2", timeMs: 4000, value: -60, easing: "easeIn" }] },
@@ -41,20 +41,30 @@ export function validateMotionDocument(value) {
   if (typeof value.name !== "string" || value.name.length > 120) throw new Error("Nome inválido.");
   if (!Number.isFinite(value.durationMs) || value.durationMs < 100 || value.durationMs > 120000) throw new Error("Duração deve ficar entre 100 ms e 120 s.");
   if (!Number.isFinite(value.fps) || value.fps < 1 || value.fps > 240) throw new Error("FPS deve ficar entre 1 e 240.");
-  if (!value.canvas || !Number.isFinite(value.canvas.width) || !Number.isFinite(value.canvas.height)) throw new Error("Canvas inválido.");
+  if (!value.canvas || !Number.isFinite(value.canvas.width) || !Number.isFinite(value.canvas.height) || value.canvas.width < 1 || value.canvas.width > 8192 || value.canvas.height < 1 || value.canvas.height > 8192) throw new Error("Canvas inválido: largura e altura devem ficar entre 1 e 8192 px.");
+  if (value.canvas.label !== undefined && (typeof value.canvas.label !== "string" || value.canvas.label.length > 24)) throw new Error("O texto do elemento deve ter até 24 caracteres.");
+  for (const key of ["background", "objectColor"]) if (value.canvas[key] !== undefined && (typeof value.canvas[key] !== "string" || !/^#[\da-f]{6}$/i.test(value.canvas[key]))) throw new Error(`Cor ${key} inválida; use hexadecimal no formato #RRGGBB.`);
   if (!Array.isArray(value.tracks) || value.tracks.length > 64) throw new Error("Lista de trilhas inválida ou longa demais.");
   const properties = new Set(["x", "y", "rotation", "scale", "opacity"]);
   const easing = new Set(["linear", "easeIn", "easeOut", "easeInOut"]);
   const ids = new Set();
+  const usedProperties = new Set();
   let keyframeCount = 0;
   for (const track of value.tracks) {
     if (!track || typeof track !== "object" || !properties.has(track.property) || !Array.isArray(track.keyframes)) throw new Error("Trilha inválida.");
-    if (ids.has(track.id)) throw new Error("IDs de trilha duplicados.");
+    if (typeof track.id !== "string" || !track.id || ids.has(track.id)) throw new Error("ID de trilha vazio ou duplicado.");
+    if (usedProperties.has(track.property)) throw new Error(`Já existe uma trilha para ${track.property}; o preview anima uma trilha por propriedade.`);
+    usedProperties.add(track.property);
     ids.add(track.id);
     keyframeCount += track.keyframes.length;
     if (keyframeCount > 10000) throw new Error("O projeto excede 10.000 keyframes.");
     for (const frame of track.keyframes) {
-      if (!frame || typeof frame.id !== "string" || !Number.isFinite(frame.timeMs) || frame.timeMs < 0 || frame.timeMs > value.durationMs || !Number.isFinite(frame.value) || !easing.has(frame.easing)) throw new Error("Keyframe inválido.");
+      if (!frame || typeof frame.id !== "string" || !frame.id || ids.has(frame.id) || !Number.isFinite(frame.timeMs) || frame.timeMs < 0 || frame.timeMs > value.durationMs || !Number.isFinite(frame.value) || !easing.has(frame.easing)) throw new Error("Keyframe inválido: confira IDs únicos, tempo, valor e interpolação.");
+      ids.add(frame.id);
+      if (track.property === "opacity" && (frame.value < 0 || frame.value > 1)) throw new Error("Opacidade precisa ficar entre 0 e 1.");
+      if (track.property === "scale" && (frame.value <= 0 || frame.value > 100)) throw new Error("Escala precisa ser maior que 0 e no máximo 100.");
+      if (["x", "y"].includes(track.property) && Math.abs(frame.value) > 100000) throw new Error("Posições precisam ficar entre -100000 e 100000.");
+      if (track.property === "rotation" && Math.abs(frame.value) > 360000) throw new Error("Rotação precisa ficar entre -360000° e 360000°.");
     }
   }
   return structuredClone(value);

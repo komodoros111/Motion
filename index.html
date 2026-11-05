@@ -4,8 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
-  <meta name="description" content="Editor local de motions com timeline visual, formato binário aberto e fluxo assistido por IA.">
-  <title>Motion Studio AI</title>
+  <meta name="description" content="Editor local de motion design com preview, timeline de keyframes, briefing para IA e edição binária NVMB.">
+  <meta name="theme-color" content="#0b0c10">
+  <title>Motion Studio AI — Editor local de motion design</title>
   <link rel="icon" href="/assets/mark.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/src/styles.css">
   <script type="module" src="/src/app.js"></script>
@@ -58,8 +59,10 @@
       <aside class="inspector" aria-label="Inspetor de propriedades">
         <div class="inspector-tabs"><button class="is-active" data-inspector="motion">Propriedades</button><button data-inspector="ai">IA</button></div>
         <div class="inspector-content" id="inspector-motion">
-          <div class="inspector-section"><div class="inspector-section__title"><span>COMPOSIÇÃO</span><button class="dots-button" aria-label="Mais opções">···</button></div>
+          <div class="inspector-section"><div class="inspector-section__title"><span>COMPOSIÇÃO</span><span class="keyframe-state">CANVAS</span></div>
             <label class="field-label">Nome do motion<input id="field-name" type="text" maxlength="120" value="Aurora — entrada"></label>
+            <label class="field-label">Texto do elemento<input id="field-label" type="text" maxlength="24" value="M" placeholder="Ex.: NIRVY"></label>
+            <div class="field-grid"><label class="field-label">Fundo<input id="field-background" type="color" value="#090b13"></label><label class="field-label">Elemento<input id="field-object-color" type="color" value="#b9a3ff"></label></div>
             <div class="field-grid"><label class="field-label">Duração <span class="field-suffix">ms</span><input id="field-duration" type="number" min="100" max="120000" step="100" value="4000"></label><label class="field-label">Frame rate <span class="field-suffix">fps</span><input id="field-fps" type="number" min="1" max="240" value="30"></label></div>
             <div class="field-grid"><label class="field-label">Largura<input id="field-width" type="number" min="1" max="8192" value="1280"></label><label class="field-label">Altura<input id="field-height" type="number" min="1" max="8192" value="720"></label></div>
           </div>
@@ -69,7 +72,7 @@
           </div>
           <div class="inspector-section inspector-help"><span class="help-icon">✳</span><div><strong>Assistente de motion</strong><p>Gere um briefing com o projeto e peça para uma IA editar o arquivo <code>.motion.json</code>.</p><button class="text-link" data-action="ai-brief">Copiar briefing →</button></div></div>
         </div>
-        <div class="inspector-content" id="inspector-ai" hidden><div class="ai-card"><div class="ai-card__icon">✳</div><h2>Seu copiloto criativo</h2><p>Descreva a mudança que quer. A IA pode editar o JSON do motion seguindo as instruções deste repositório.</p><div class="ai-prompt"><span>EXEMPLO DE PEDIDO</span><p>“Faça a entrada mais suave, com bounce no final e duração de 1,8 segundos.”</p></div><button class="button-primary" data-action="ai-brief">Copiar briefing + projeto <span>↗</span></button><small>Este app não envia seus arquivos para nenhum serviço de IA.</small></div><div class="ai-format-link"><span>Instruções do projeto</span><a href="/AI-INSTRUCTIONS.md" target="_blank" rel="noreferrer">Ler guia da IA →</a></div></div>
+        <div class="inspector-content" id="inspector-ai" hidden><div class="ai-card"><div class="ai-card__icon">✳</div><h2>Preparar edição com IA</h2><p>Descreva o resultado visual. O briefing inclui o projeto atual e as regras do formato.</p><label class="field-label ai-request-label">O que você quer animar?<textarea id="ai-request" rows="5" maxlength="1600" placeholder="Ex.: Revele o título com uma entrada curta da esquerda, desacelere no final e faça um pequeno overshoot."></textarea></label><div class="prompt-presets" aria-label="Exemplos de pedidos"><button type="button" data-prompt="Crie uma entrada de logo: comece com opacidade 0 e escala 0,72; entre em 700 ms com easeOut e assente em escala 1 com um overshoot discreto. Mantenha o centro e deixe o restante do motion intacto.">Logo</button><button type="button" data-prompt="Anime uma entrada de título elegante: deslize 90 px de baixo para cima em 500 ms, opacidade 0 para 1 e easeOut. Adicione uma pausa e saída curta no final da duração. Preserve o canvas.">Título</button><button type="button" data-prompt="Faça um loop suave de 3 segundos: movimento vertical de 0 a -18 px e de volta a 0, com easeInOut e keyframes distribuídos simetricamente. Evite saltos no ponto de emenda.">Loop</button></div><button class="button-primary" data-action="ai-brief">Copiar briefing + projeto <span>↗</span></button><small>Se a IA devolver JSON completo, use <b>Abrir</b> para importar. Nada é enviado automaticamente.</small></div><div class="ai-format-link"><span>Guias da IA</span><a href="/AI-INSTRUCTIONS.md" target="_blank" rel="noreferrer">Contrato →</a><a href="/docs/AI-WORKFLOW.md" target="_blank" rel="noreferrer">Fluxo →</a></div></div>
       </aside>
     </main>
     <section class="hex-panel" id="hex-panel" hidden aria-label="Editor binário hexadecimal">

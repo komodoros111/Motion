@@ -14,7 +14,7 @@ createServer(async (request, response) => {
     const target = resolve(root, relative);
     if (target !== root && !target.startsWith(`${root}${sep}`)) { response.writeHead(403).end("Forbidden"); return; }
     const body = await readFile(target);
-    response.writeHead(200, { "content-type": types[extname(target)] ?? "application/octet-stream", "cache-control": "no-store", "x-content-type-options": "nosniff", "referrer-policy": "no-referrer", "access-control-allow-origin": "*" });
+    response.writeHead(200, { "content-type": types[extname(target)] ?? "application/octet-stream", "cache-control": "no-store", "x-content-type-options": "nosniff", "referrer-policy": "no-referrer" });
     response.end(body);
   } catch {
     response.writeHead(404, { "content-type": "text/plain; charset=utf-8" }).end("Not found");

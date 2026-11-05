@@ -1,6 +1,7 @@
 {
   "name": "motion-ai-studio",
   "version": "0.1.0",
+  "description": "Local-first visual motion editor with AI handoff and a documented binary container.",
   "private": true,
   "type": "module",
   "scripts": {

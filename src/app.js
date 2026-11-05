@@ -66,7 +66,10 @@ function updateStage() {
   const rotation = valueAt("rotation", currentTime);
   const scale = valueAt("scale", currentTime);
   const opacity = valueAt("opacity", currentTime);
-  $("#motion-object").style.transform = `translate(${x}px,${y}px) rotate(${rotation}deg) scale(${scale})`;
+  const stage = $("#stage");
+  const scaleX = stage.clientWidth / project.canvas.width;
+  const scaleY = stage.clientHeight / project.canvas.height;
+  $("#motion-object").style.transform = `translate(${x * scaleX}px,${y * scaleY}px) rotate(${rotation}deg) scale(${scale})`;
   $("#motion-object").style.opacity = String(Math.max(0, Math.min(1, opacity)));
   $("#time-current").textContent = formatTime(currentTime);
   $("#time-total").textContent = formatTime(project.durationMs);
@@ -80,11 +83,18 @@ function renderTimeline() {
   $("#heading-name").textContent = project.name;
   $("#stage-caption-name").textContent = project.name;
   $("#field-name").value = project.name;
+  $("#field-label").value = project.canvas.label ?? "M";
+  $("#field-background").value = project.canvas.background ?? "#090b13";
+  $("#field-object-color").value = project.canvas.objectColor ?? "#b9a3ff";
   $("#field-duration").value = project.durationMs;
   $("#field-fps").value = project.fps;
   $("#field-width").value = project.canvas.width;
   $("#field-height").value = project.canvas.height;
   $("#stage-size").textContent = `${project.canvas.width} × ${project.canvas.height} · ${project.fps} FPS`;
+  $("#motion-object > span").textContent = project.canvas.label ?? "M";
+  $("#motion-object").style.setProperty("--object-color", project.canvas.objectColor ?? "#b9a3ff");
+  $("#stage").style.setProperty("--stage-bg", project.canvas.background ?? "#090b13");
+  $("#stage").style.setProperty("--canvas-ratio", `${project.canvas.width} / ${project.canvas.height}`);
   $("#track-count").textContent = `${project.tracks.length} trilhas`;
   $("#zoom-label").textContent = `${Math.round(zoom * 100)}%`;
 
@@ -285,11 +295,15 @@ function importCurrentBinary() {
   catch (error) { toast(error.message); }
 }
 function aiBrief() {
-  const prompt = `Você é uma IA editora de motion no Motion Studio AI. Edite somente um documento compatível com AI-INSTRUCTIONS.md e docs/FORMAT.md. Preserve format/version, valide IDs únicos, keyframes dentro de durationMs e interpolações permitidas. Não invente bytes de formatos desconhecidos.\n\nPEDIDO: descreva a alteração desejada aqui.\n\nPROJETO ATUAL (nirvy.motion v1):\n${JSON.stringify(project, null, 2)}\n\nResponda com o JSON completo e uma lista curta de alterações.`;
-  navigator.clipboard?.writeText(prompt).then(() => toast("Briefing e projeto copiados. Cole-os na IA que você usa."), () => toast("O navegador bloqueou a área de transferência."));
+  const request = $("#ai-request").value.trim();
+  if (!request) { $("#ai-request").focus(); toast("Descreva a alteração desejada ou escolha um exemplo."); return; }
+  const prompt = `Você é Motion Editor, uma IA especializada em motion design e neste repositório. Siga AI-INSTRUCTIONS.md e docs/FORMAT.md.\n\nTAREFA DO USUÁRIO\n${request}\n\nCRITÉRIOS DE ENTREGA\n- Edite o documento atual sem apagar campos desconhecidos e preserve version, format, IDs e propriedades não relacionadas ao pedido.\n- Retorne um JSON completo e válido, sem comentários ou reticências, em um único bloco json. Não retorne NVMB em base64.\n- Valide: duração 100–120000 ms; FPS 1–240; canvas 1–8192 px; até 64 tracks e 10000 keyframes; IDs não vazios e únicos; tempos entre 0 e durationMs; easing linear/easeIn/easeOut/easeInOut.\n- Para opacity use 0–1; scale maior que 0 e até 100; posições até ±100000 px; rotação até ±360000°.\n- Preserve a intenção visual, use keyframes suficientes para suavidade e evite movimentos bruscos ou tracks redundantes. Se a solicitação for ambígua, escolha uma interpretação conservadora e informe a suposição.\n- Não alegue que o preview renderiza mais do que realmente suporta.\n\nDOCUMENTO ATUAL (nirvy.motion v1)\n${JSON.stringify(project, null, 2)}\n\nDepois do JSON, resuma em até 5 itens o que mudou e como verificar na timeline.`;
+  navigator.clipboard?.writeText(prompt).then(() => toast("Briefing e projeto copiados. Cole-os na IA e reimporte o JSON final."), () => toast("O navegador bloqueou a área de transferência."));
 }
 
 document.addEventListener("click", (event) => {
+  const preset = event.target.closest("[data-prompt]");
+  if (preset) { $("#ai-request").value = preset.dataset.prompt; $("#ai-request").focus(); return; }
   const panel = event.target.closest("[data-panel]");
   if (panel) { setPanel(panel.dataset.panel); return; }
   const inspector = event.target.closest("[data-inspector]");
@@ -307,7 +321,7 @@ document.addEventListener("click", (event) => {
     "reset-sample": () => { if (confirm("Carregar o exemplo? As alterações atuais ficam salvas no histórico do navegador?")) { project = createSampleMotion(); selectedTrackId = project.tracks[0].id; selectedKey = null; currentTime = 0; markDirty(); renderAll(); } },
     "toggle-play": togglePlay, "stop": stopPlayback, "add-keyframe": addKeyframe, "delete-keyframe": deleteKeyframe, "add-track": addTrack,
     "zoom-in": () => { zoom = Math.min(3, zoom + .15); renderTimeline(); }, "zoom-out": () => { zoom = Math.max(.45, zoom - .15); renderTimeline(); },
-    "fit-stage": () => toast("A prévia já está ajustada ao palco."), "hex-prev": () => { if (hexBytes) { hexOffset = Math.max(0, hexOffset - 256); renderHex(); } },
+    "fit-stage": async () => { try { if (document.fullscreenElement) await document.exitFullscreen(); else await $("#stage").requestFullscreen(); } catch { toast("O navegador não permitiu abrir o palco em tela cheia."); } }, "hex-prev": () => { if (hexBytes) { hexOffset = Math.max(0, hexOffset - 256); renderHex(); } },
     "hex-next": () => { if (hexBytes) { hexOffset = Math.min(Math.max(0, hexBytes.length - 1), hexOffset + 256); renderHex(); } }, "hex-jump": jumpHex, "hex-search": searchHex,
     "repair-crc": crcRepair, "import-current-binary": importCurrentBinary,
   };
@@ -324,8 +338,43 @@ document.addEventListener("click", (event) => {
   if (frame) setCurrentTime(frame.timeMs);
   renderTimeline();
 });
+document.addEventListener("pointerdown", (event) => {
+  const key = event.target.closest(".keyframe");
+  if (!key || event.button !== 0) return;
+  dragKey = { trackId: key.dataset.trackId, frameId: key.dataset.frameId, pointerId: event.pointerId, point: key, scale: key.closest(".lane-scale") };
+  key.setPointerCapture(event.pointerId);
+});
+document.addEventListener("pointermove", (event) => {
+  if (!dragKey || event.pointerId !== dragKey.pointerId) return;
+  const rect = dragKey.scale.getBoundingClientRect();
+  const rawTime = Math.max(0, Math.min(project.durationMs, (event.clientX - rect.left) / rect.width * project.durationMs));
+  const frameStep = 1000 / project.fps;
+  const time = Math.min(project.durationMs, Math.round(rawTime / frameStep) * frameStep);
+  const track = project.tracks.find((item) => item.id === dragKey.trackId);
+  const frame = track?.keyframes.find((item) => item.id === dragKey.frameId);
+  if (!frame) return;
+  frame.timeMs = Math.round(time * 1000) / 1000;
+  dragKey.point.style.left = `${frame.timeMs / project.durationMs * 100}%`;
+  currentTime = frame.timeMs;
+  updateStage();
+});
+function finishKeyframeDrag(event) {
+  if (!dragKey || (event && event.pointerId !== dragKey.pointerId)) return;
+  const track = project.tracks.find((item) => item.id === dragKey.trackId);
+  if (track) track.keyframes.sort((a, b) => a.timeMs - b.timeMs);
+  selectedTrackId = dragKey.trackId;
+  selectedKey = { trackId: dragKey.trackId, frameId: dragKey.frameId };
+  dragKey = null;
+  markDirty();
+  renderTimeline();
+}
+document.addEventListener("pointerup", finishKeyframeDrag);
+document.addEventListener("pointercancel", finishKeyframeDrag);
 $("#ruler-scale").addEventListener("click", (event) => setTimeFromScale(event, event.currentTarget));
 $("#field-name").addEventListener("input", (event) => { project.name = event.target.value.slice(0, 120); $("#heading-name").textContent = project.name || "Sem nome"; $("#project-name").textContent = project.name || "Sem nome"; $("#stage-caption-name").textContent = project.name || "Sem nome"; markDirty(); });
+$("#field-label").addEventListener("input", (event) => { project.canvas.label = event.target.value.slice(0, 24); $("#motion-object > span").textContent = project.canvas.label || " "; markDirty(); });
+$("#field-background").addEventListener("input", (event) => { project.canvas.background = event.target.value; $("#stage").style.setProperty("--stage-bg", event.target.value); markDirty(); });
+$("#field-object-color").addEventListener("input", (event) => { project.canvas.objectColor = event.target.value; $("#motion-object").style.setProperty("--object-color", event.target.value); markDirty(); });
 $("#field-duration").addEventListener("change", (event) => { project.durationMs = Math.max(100, Math.min(120000, Number(event.target.value) || 100)); for (const track of project.tracks) for (const frame of track.keyframes) frame.timeMs = Math.min(project.durationMs, frame.timeMs); currentTime = Math.min(currentTime, project.durationMs); markDirty(); renderTimeline(); });
 $("#field-fps").addEventListener("change", (event) => { project.fps = Math.max(1, Math.min(240, Number(event.target.value) || 30)); markDirty(); renderTimeline(); });
 $("#field-width").addEventListener("change", (event) => { project.canvas.width = Math.max(1, Math.min(8192, Number(event.target.value) || 1280)); markDirty(); renderTimeline(); });
