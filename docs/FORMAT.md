@@ -20,9 +20,9 @@ CRC-32/ISO-HDLC uses reflected polynomial `0xEDB88320`, initial value `0xFFFFFFF
 
 ## JSON payload
 
-Decode as UTF-8 and parse JSON. A project requires `format: "nirvy.motion"`, `version: 1`, `name`, `durationMs`, `fps`, `canvas`, and a `tracks` array. Optional v1 fields include `scenes`, `canvas.effects`, and `narration`. Existing v1 files without optional fields remain valid. Consult `src/motion-format.js` for the executable schema and bounds.
+Decode as UTF-8 and parse JSON. A project requires `format: "nirvy.motion"`, `version: 1`, `name`, `durationMs`, `fps`, `canvas`, and a `tracks` array. Optional v1 fields include `scenes`, `canvas.effects`, `canvas.decorations`, `canvas.fontFamily`, scene entrances, and `narration`. Existing v1 files without optional fields remain valid. Consult `src/motion-format.js` for the executable schema and bounds.
 
-Tracks animate one each of `x`, `y`, `rotation`, `rotationX`, `rotationY`, `screenTurn`, `scale`, `opacity`, `contrast`, `brightness`, `shineSweep`, and `reflection`. Scene transitions support `cut`, `fade`, `flip`, `cube`, `wipe`, `zoom`, `flash`, `reflectionFlip`, and `spin`.
+Tracks animate one each of `x`, `y`, `rotation`, `rotationX`, `rotationY`, `screenTurn`, `scale`, `opacity`, `contrast`, `brightness`, `shineSweep`, and `reflection`. Scene transitions support `cut`, `fade`, `push`, `wipe`, `curtain`, `iris`, `flip`, `cube`, `zoom`, `flash`, `reflectionFlip`, and `spin`. Scene entrance presets support `none`, `fadeUp`, `pop`, `rotateIn`, `blurIn`, `reveal`, and `bounce`. Canvas decorations can contain up to 40 `line` items with dotted strokes and `icon` items with `spark`, `star`, `bolt`, `arrow`, or `ring` glyphs. Accent x/y coordinates are offsets from the canvas center.
 
 ## Safety and compatibility
 

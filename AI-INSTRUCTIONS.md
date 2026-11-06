@@ -10,13 +10,13 @@ This is the operating contract for assistants that create, edit, review, or expl
 
 ## Renderer capabilities
 
-The editor renders typographic promo scenes with per-scene titles, subtitles, backgrounds, accent colors, and overlapping transitions. It previews and exports `cut`, `fade`, `flip`, `cube`, `wipe`, `zoom`, `flash`, `reflectionFlip`, and `spin` scene transitions. Animated tracks support X/Y position, Z/X/Y rotation, whole-screen turn, scale, opacity, contrast, brightness, shine sweep, and reflection. Static look controls set shine intensity and 3D perspective. WebM export is silent; browser voice narration is stored as text and can be previewed, but is not muxed into the video.
+The editor renders typographic promo scenes with per-scene titles, subtitles, backgrounds, accent colors, preset SVG accents, dotted strokes, and overlapping transitions. It previews and exports `cut`, `fade`, `push`, `wipe`, `curtain`, `iris`, `flip`, `cube`, `zoom`, `flash`, `reflectionFlip`, and `spin` scene transitions. Entrance presets are `none`, `fadeUp`, `pop`, `rotateIn`, `blurIn`, `reveal`, and `bounce`. Animated tracks support X/Y position, Z/X/Y rotation, whole-screen turn, scale, opacity, contrast, brightness, shine sweep, and reflection. Static look controls set shine intensity and 3D perspective. WebM export is silent; browser voice narration is stored as text and can be previewed, but is not muxed into the video.
 
-The editor does not render imported footage, arbitrary multi-layer compositions, masks, particle systems, vector paths, or audio tracks. It uses a 2D canvas exporter, so perspective and transition rendering are approximations of the live CSS preview. Never claim pixel-identical parity or unsupported capabilities.
+The editor does not render imported footage, arbitrary multi-layer compositions, masks, particle systems, custom SVG path authoring, or audio tracks. It uses a 2D canvas exporter, so perspective and transition rendering are approximations of the live CSS preview. Never claim pixel-identical parity or unsupported capabilities.
 
 ## Motion JSON v1
 
-The format remains additive and backward-compatible: existing v1 documents without `scenes` or `canvas.effects` continue to load.
+The format remains additive and backward-compatible: existing v1 documents without `scenes`, `canvas.effects`, `canvas.decorations`, or scene entrances continue to load.
 
 ```json
 {
@@ -32,17 +32,21 @@ The format remains additive and backward-compatible: existing v1 documents witho
     "label": "TITLE",
     "objectColor": "#727bff",
     "subtitle": "Supporting line",
-    "effects": { "reflection": 0.42, "contrast": 1.24, "brightness": 1.08, "shine": 0.78, "perspective": 760 }
+    "effects": { "reflection": 0.42, "contrast": 1.24, "brightness": 1.08, "shine": 0.78, "perspective": 760 },
+    "decorations": [
+      { "id": "accent-1", "type": "line", "direction": "horizontal", "x": 0, "y": -160, "size": 840, "color": "#78dfff", "rotation": -8 },
+      { "id": "accent-2", "type": "icon", "icon": "spark", "x": 500, "y": -150, "size": 80, "color": "#ffffff", "rotation": 0 }
+    ]
   },
   "scenes": [
     { "id": "scene-1", "startMs": 0, "label": "OPEN", "subtitle": "SET THE TONE", "background": "#070912", "objectColor": "#727bff", "transition": { "type": "cut", "durationMs": 620 } },
-    { "id": "scene-2", "startMs": 2600, "label": "THE PAYOFF", "subtitle": "MAKE IT COUNT", "background": "#100817", "objectColor": "#ff5f9b", "transition": { "type": "reflectionFlip", "durationMs": 760 } }
+    { "id": "scene-2", "startMs": 2600, "label": "THE PAYOFF", "subtitle": "MAKE IT COUNT", "background": "#100817", "objectColor": "#ff5f9b", "transition": { "type": "iris", "durationMs": 760 }, "entrance": { "type": "pop", "durationMs": 560 } }
   ],
   "tracks": []
 }
 ```
 
-Each scene `startMs` is the transition midpoint and its incoming transition determines the boundary effect. Keep transitions short enough that adjacent transition windows do not overlap. Available transition types: `cut`, `fade`, `flip`, `cube`, `wipe`, `zoom`, `flash`, `reflectionFlip`, and `spin`.
+Each scene `startMs` is the transition midpoint and its incoming transition determines the boundary effect. Keep transitions short enough that adjacent transition windows do not overlap. Available transition types: `cut`, `fade`, `push`, `wipe`, `curtain`, `iris`, `flip`, `cube`, `zoom`, `flash`, `reflectionFlip`, and `spin`. Optional scene entrances are `none`, `fadeUp`, `pop`, `rotateIn`, `blurIn`, `reveal`, or `bounce`, with a duration from 180 to 1800 ms. Optional canvas decorations support up to 40 SVG accents: dotted `line` items or `icon` items (`spark`, `star`, `bolt`, `arrow`, `ring`); their positions are offsets from the canvas center.
 
 Each track has a unique `id`, supported `property`, optional display `label`, and `keyframes`. A keyframe has a unique global `id`, `timeMs`, numeric `value`, and `easing`. The easing on the arriving keyframe governs interpolation into it.
 
@@ -78,11 +82,12 @@ Each track has a unique `id`, supported `property`, optional display `label`, an
 1. Plan the message in scenes: hook, supporting idea, proof or payoff, and a clear call to action.
 2. Give each scene one short title and one supporting line. Keep text away from edges and account for mobile crops.
 3. Use contrasting accent colors to distinguish scenes while preserving a coherent palette. Reserve high contrast for the focal moment.
-4. Use a page turn, cube, wipe, or flash only when it supports the rhythm. Default to one or two intentional transitions; avoid stacking unrelated effects.
-5. For depth, pair a modest X/Y tilt with perspective and a short screen turn, then settle to zero. Use reflection as a low-opacity accent.
-6. Use a single shine sweep with a clear start and end. Keep it short and avoid leaving a bright stripe parked on the title.
-7. Use ease-out to settle, ease-in to accelerate, and ease-in-out for balanced turns. Overshoot should be small and deliberate.
-8. Keep all keyframes inside the project duration. For a loop, align endpoints and velocities.
+4. Choose push, iris, curtain, page turn, cube, wipe, or flash only when it supports the rhythm. Default to one or two intentional transitions; avoid stacking unrelated effects.
+5. Pair one entrance with the scene's transition at most. Keep accent lines thin, use only a few dots or icons, and leave clear space around the title.
+6. For depth, pair a modest X/Y tilt with perspective and a short screen turn, then settle to zero. Use reflection as a low-opacity accent.
+7. Use a single shine sweep with a clear start and end. Keep it short and avoid leaving a bright stripe parked on the title.
+8. Use ease-out to settle, ease-in to accelerate, and ease-in-out for balanced turns. Overshoot should be small and deliberate.
+9. Keep all keyframes inside the project duration. For a loop, align endpoints and velocities.
 
 ## Editing rules
 

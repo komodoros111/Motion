@@ -15,4 +15,11 @@ The editor's scene/timeline vocabulary was informed by public documentation for 
 - The font picker loads families from the **Google Fonts CSS2 API** at runtime and uses a system-font fallback offline. It needs no API key and does not download or vendor font binaries in this repository. See [CSS API documentation](https://developers.google.com/fonts/docs/css2).
 - Curated families are sourced from the public [google/fonts GitHub repository](https://github.com/google/fonts). Check each family directory for its license before redistributing font files or embedding them in exported assets. SVG icons reference the selected family name; they remain scalable, but the font must be installed or available to the viewer to render identically.
 
+## Transitions and vector motion
+
+- [Remotion transitions](https://www.remotion.dev/docs/transitions/) and its [open-source slide presentation](https://github.com/remotion-dev/remotion/blob/main/packages/transitions/src/presentations/slide.tsx) helped review centered scene timing and directional movement.
+- [Motion Canvas tweening](https://motioncanvas.io/docs/tweening/) informed the entrance presets' eased progress and small, damped overshoot.
+- [GSAP DrawSVG documentation](https://gsap.com/docs/v3/Plugins/DrawSVGPlugin/) describes stroke reveal using dash properties; the editor uses native SVG dash strokes for its dotted-line accent, with an independently authored small feature set.
+- Public GitHub projects [Animora](https://github.com/itsrajverma/animora) and [My Motion Studio](https://github.com/rodolphe37/my-motion-studio) were reviewed for SVG and animation-editor affordances. No source code, assets, or product instructions were copied; this implementation remains dependency-free and original.
+
 These are design/behavior references, not copied implementation. Remotion uses its own license with eligibility and company-use conditions; the project does not import Remotion code. Motion Canvas is MIT-licensed; no Motion Canvas source is included. GSAP is documentation-only inspiration; no GSAP package is bundled. Check each upstream license before copying source code or adding a dependency.

@@ -11,7 +11,12 @@
     "label": "NEXT LEVEL",
     "objectColor": "#727bff",
     "subtitle": "LEVEL UP TOGETHER",
-    "effects": { "reflection": 0.42, "contrast": 1.24, "brightness": 1.08, "shine": 0.78, "perspective": 760 }
+    "effects": { "reflection": 0.24, "contrast": 1.12, "brightness": 1.04, "shine": 0.58, "perspective": 760 },
+    "decorations": [
+      { "id": "accent-dashes", "type": "line", "direction": "horizontal", "x": 0, "y": -178, "size": 980, "color": "#727bff", "rotation": -8 },
+      { "id": "accent-spark", "type": "icon", "icon": "spark", "x": -575, "y": -160, "size": 90, "color": "#ffffff", "rotation": -12 },
+      { "id": "accent-star", "type": "icon", "icon": "star", "x": 575, "y": 142, "size": 66, "color": "#47d9ff", "rotation": 12 }
+    ]
   },
   "tracks": [
     {
@@ -115,8 +120,8 @@
     }
   ],
   "scenes": [
-    { "id": "scene-entry", "startMs": 0, "label": "NEXT LEVEL", "subtitle": "A BETTER PLACE TO PLAY", "background": "#070912", "objectColor": "#727bff", "transition": { "type": "cut", "durationMs": 620 } },
-    { "id": "scene-community", "startMs": 2200, "label": "FIND YOUR PEOPLE", "subtitle": "GAMES · EVENTS · REAL COMMUNITY", "background": "#080c1a", "objectColor": "#47d9ff", "transition": { "type": "reflectionFlip", "durationMs": 760 } },
-    { "id": "scene-cta", "startMs": 4550, "label": "YOUR NEXT LEVEL", "subtitle": "JOIN OUR DISCORD TODAY", "background": "#110818", "objectColor": "#ff5f9b", "transition": { "type": "zoom", "durationMs": 720 } }
+    { "id": "scene-entry", "startMs": 0, "label": "NEXT LEVEL", "subtitle": "A BETTER PLACE TO PLAY", "background": "#070912", "objectColor": "#727bff", "transition": { "type": "cut", "durationMs": 620 }, "entrance": { "type": "rotateIn", "durationMs": 760 } },
+    { "id": "scene-community", "startMs": 2200, "label": "FIND YOUR PEOPLE", "subtitle": "GAMES · EVENTS · REAL COMMUNITY", "background": "#080c1a", "objectColor": "#47d9ff", "transition": { "type": "iris", "durationMs": 760 }, "entrance": { "type": "fadeUp", "durationMs": 620 } },
+    { "id": "scene-cta", "startMs": 4550, "label": "YOUR NEXT LEVEL", "subtitle": "JOIN OUR DISCORD TODAY", "background": "#110818", "objectColor": "#ff5f9b", "transition": { "type": "push", "durationMs": 720 }, "entrance": { "type": "pop", "durationMs": 520 } }
   ]
 }

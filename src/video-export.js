@@ -20,6 +20,8 @@ function valueAt(project, property, time) {
 function sceneAtTime(project, time) {
   const scenes = project.scenes?.length ? project.scenes : [{ id: "base", startMs: 0, label: project.canvas.label || "M", subtitle: project.canvas.subtitle || "", background: project.canvas.background || "#090b13", objectColor: project.canvas.objectColor || "#b9a3ff", transition: { type: "cut", durationMs: 0 } }];
   let index = scenes.findLastIndex((scene) => scene.startMs <= time); if (index < 0) index = 0;
+  const next = scenes[index + 1], nextHalf = next?.transition?.type === "cut" ? 0 : (next?.transition?.durationMs ?? 0) / 2;
+  if (next && nextHalf > 0 && time >= next.startMs - nextHalf) index += 1;
   const incoming = scenes[index], outgoing = scenes[index - 1], transition = incoming.transition ?? { type: "cut", durationMs: 0 }, half = transition.type === "cut" ? 0 : transition.durationMs / 2;
   if (outgoing && half && time >= incoming.startMs - half && time <= incoming.startMs + half) return { incoming, outgoing, type: transition.type, progress: Math.max(0, Math.min(1, (time - incoming.startMs + half) / (half * 2))) };
   return { incoming, outgoing: null, type: "cut", progress: 1 };
@@ -40,21 +42,36 @@ function renderScene(ctx, project, scene, time, width, height) {
   for (let y = 0; y < height; y += height / 26) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(width, y); ctx.stroke(); }
   ctx.restore();
 
+  const paths = { spark: "M50 2 61 37 96 50 61 63 50 98 39 63 4 50 39 37Z", star: "m50 4 11 31 33 1-26 20 9 32-27-19-27 19 9-32L6 36l33-1Z", bolt: "M58 2 18 56h26l-6 42 44-58H54Z", arrow: "M14 50h66 M55 24l27 26-27 26", ring: "M50 7a43 43 0 1 0 0 86 43 43 0 0 0 0-86 M50 20a30 30 0 1 1 0 60 30 30 0 0 1 0-60" };
+  for (const item of canvas.decorations ?? []) {
+    const x = width / 2 + item.x * sx, y = height / 2 + item.y * sy;
+    ctx.save(); ctx.translate(x, y); ctx.rotate((item.rotation ?? 0) * Math.PI / 180); ctx.globalAlpha = .82; ctx.strokeStyle = item.color; ctx.fillStyle = item.color; ctx.lineWidth = Math.max(2, width / 640); ctx.lineCap = "round"; ctx.lineJoin = "round";
+    if (item.type === "line") { ctx.setLineDash([Math.max(1, width / 960), Math.max(8, width / 96)]); ctx.lineDashOffset = -time * .035; ctx.beginPath(); ctx.moveTo(-item.size * sx / 2, 0); ctx.lineTo(item.size * sx / 2, 0); ctx.stroke(); }
+    else { const iconScale = item.size / 100; ctx.scale(iconScale, iconScale); const path = new Path2D(paths[item.icon] ?? paths.spark); if (["arrow", "ring"].includes(item.icon)) ctx.stroke(path); else ctx.fill(path); }
+    ctx.restore();
+  }
+
   const label = scene.label || "M", color = scene.objectColor || canvas.objectColor || "#b9a3ff";
   const fontSize = Math.max(20, Math.min(width * .066, height * .12));
-  const centerX = width / 2 + valueAt(project, "x", time) * sx, centerY = height / 2 + valueAt(project, "y", time) * sy;
+  const entrance = scene.entrance ?? { type: "none", durationMs: 700 }, half = scene.transition?.type === "cut" ? 0 : (scene.transition?.durationMs ?? 0) / 2;
+  const entranceStart = scene.startMs === 0 ? 0 : scene.startMs - half, entryRaw = Math.max(0, Math.min(1, (time - entranceStart) / (entrance.durationMs || 700))), entry = 1 - (1 - entryRaw) ** 3;
+  const entryScale = entrance.type === "pop" ? .78 + .22 * entry + .11 * Math.sin(entry * Math.PI) * (1 - entry) : entrance.type === "rotateIn" ? .88 + .12 * entry : entrance.type === "bounce" ? .92 + .08 * entry + .07 * Math.sin(entry * Math.PI) * (1 - entry) : 1;
+  const entryY = entrance.type === "fadeUp" ? 38 * (1 - entry) : entrance.type === "bounce" ? -62 * (1 - entry) + 18 * Math.sin(entry * Math.PI) * (1 - entry) : 0;
+  const entryRotation = entrance.type === "rotateIn" ? -18 * (1 - entry) : 0;
+  const centerX = width / 2 + valueAt(project, "x", time) * sx, centerY = height / 2 + (valueAt(project, "y", time) + entryY) * sy;
   ctx.save(); ctx.translate(centerX, centerY);
   const rotX = valueAt(project, "rotationX", time), rotY = valueAt(project, "rotationY", time);
   ctx.scale(Math.cos(rotY * Math.PI / 180), Math.cos(rotX * Math.PI / 180));
-  ctx.rotate(valueAt(project, "rotation", time) * Math.PI / 180);
+  ctx.rotate((valueAt(project, "rotation", time) + entryRotation) * Math.PI / 180);
   const itemScale = valueAt(project, "scale", time);
-  ctx.scale(itemScale, itemScale);
-  const opacity = Math.max(0, Math.min(1, valueAt(project, "opacity", time)));
+  ctx.scale(itemScale * entryScale, itemScale * entryScale);
+  const opacity = Math.max(0, Math.min(1, valueAt(project, "opacity", time))) * (["fadeUp", "blurIn"].includes(entrance.type) ? entry : 1);
   ctx.globalAlpha = opacity;
-  ctx.filter = `contrast(${Math.max(0, valueAt(project, "contrast", time))}) brightness(${Math.max(0, valueAt(project, "brightness", time))})`;
+  ctx.filter = `contrast(${Math.max(0, valueAt(project, "contrast", time))}) brightness(${Math.max(0, valueAt(project, "brightness", time))})${entrance.type === "blurIn" ? ` blur(${(1 - entry) * 12 * sx}px)` : ""}`;
   const fontFamily = String(canvas.fontFamily ?? "Space Grotesk").replace(/[^\p{L}\p{N} _.,'-]/gu, "");
   ctx.font = `800 ${fontSize}px "${fontFamily}", system-ui, sans-serif`; ctx.textAlign = "center"; ctx.textBaseline = "middle";
   const boxWidth = Math.max(fontSize * 3.5, ctx.measureText(label).width + fontSize * 1.35), boxHeight = fontSize * 2.35, radius = Math.min(fontSize * .48, boxHeight / 2);
+  if (entrance.type === "reveal" && entryRaw < 1) { ctx.beginPath(); ctx.rect(-boxWidth / 2, -boxHeight / 2, boxWidth * entry, boxHeight); ctx.clip(); }
   const reflection = Math.max(0, Math.min(1, valueAt(project, "reflection", time)));
   const drawFace = () => {
     const gradient = ctx.createLinearGradient(-boxWidth / 2, -boxHeight / 2, boxWidth / 2, boxHeight / 2);
@@ -92,6 +109,12 @@ function drawTransition(ctx, image, role, type, progress, width, height, screenT
   ctx.translate(width / 2, height / 2); ctx.scale(Math.max(.025, Math.cos(screenTurn * Math.PI / 180)), 1); ctx.translate(-width / 2, -height / 2);
   if (type === "wipe") {
     const reveal = outgoing ? 1 - t : t; ctx.beginPath(); ctx.rect(0, 0, width * reveal, height); ctx.clip();
+  } else if (type === "push") {
+    ctx.translate((outgoing ? -t : 1 - t) * width, 0);
+  } else if (type === "curtain") {
+    const inset = (outgoing ? t : 1 - t) * .5; ctx.beginPath(); ctx.rect(width * inset, 0, width * (1 - inset * 2), height); ctx.clip();
+  } else if (type === "iris") {
+    const radius = (outgoing ? 1 - t : t) * Math.hypot(width, height) * .72; ctx.beginPath(); ctx.arc(width / 2, height / 2, radius, 0, Math.PI * 2); ctx.clip();
   } else if (["flip", "reflectionFlip", "cube", "spin"].includes(type)) {
     const angle = outgoing ? t * Math.PI / 2 : (1 - t) * Math.PI / 2;
     ctx.translate(width / 2, 0); ctx.scale(Math.max(.025, Math.cos(angle)), 1); ctx.translate(-width / 2, 0);

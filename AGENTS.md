@@ -4,7 +4,7 @@ Read this file before changing application code. For motion-document edits, also
 
 ## Product contract
 
-Motion Studio AI is an original, local-first motion editor. The live preview supports stylized title scenes, scene transitions, transforms, 3D turns, reflection, contrast, brightness, and shine sweeps. The silent WebM exporter implements a matching 2D canvas approximation. It does not support imported footage, arbitrary layer stacks, masks, particles, paths, or audio tracks.
+Motion Studio AI is an original, local-first motion editor. The live preview supports typographic scenes, preset SVG accents, dotted strokes, scene transitions, transforms, 3D turns, reflection, contrast, brightness, and shine sweeps. The silent WebM exporter implements a matching 2D canvas approximation. It does not support imported footage, arbitrary layer stacks, masks, particle systems, user-authored SVG paths, or audio tracks.
 
 The AI handoff copies user-authored text and project JSON only after an explicit click. Never send project data to a service, add hidden telemetry, or add credentials without explicit user authorization.
 
@@ -24,7 +24,7 @@ The document uses `format: "nirvy.motion"`, `version: 1`, `name`, `durationMs`, 
 
 Track properties: `x`, `y`, `rotation`, `rotationX`, `rotationY`, `screenTurn`, `scale`, `opacity`, `contrast`, `brightness`, `shineSweep`, `reflection`. Easing values: `linear`, `easeIn`, `easeOut`, `easeInOut`. There is one track per property. Keep app interpolation, sample, editor controls, validator, AI prompt, exporter, examples, and docs in sync.
 
-Scenes are sorted by `startMs`. A scene transition is centered on its `startMs`; adjacent transition windows must not overlap. Transition types: `cut`, `fade`, `flip`, `cube`, `wipe`, `zoom`, `flash`, `reflectionFlip`, `spin`. Preserve the meaning of v1 fields and add explicit migrations only if compatibility is broken.
+Scenes are sorted by `startMs`. A scene transition is centered on its `startMs`; adjacent transition windows must not overlap. Transition types: `cut`, `fade`, `push`, `wipe`, `curtain`, `iris`, `flip`, `cube`, `zoom`, `flash`, `reflectionFlip`, `spin`. Optional `scene.entrance` supports `none`, `fadeUp`, `pop`, `rotateIn`, `blurIn`, `reveal`, and `bounce`. Optional `canvas.decorations` stores up to 40 editable SVG icons and dotted lines. Keep the live preview and canvas export aligned, and preserve the meaning of v1 fields.
 
 ## Binary and file safety
 

@@ -17,7 +17,9 @@ Open <http://127.0.0.1:4173>. The server listens only on loopback.
 ## Features
 
 - Multiple title scenes with per-scene text, background, accent color, and timeline markers.
-- Scene transitions: cut, fade, page flip, cube turn, directional wipe, zoom, flash, reflection flip, and spin.
+- Scene transitions: cut, fade, cinematic push, directional wipe, center curtain, radial iris, page flip, cube turn, zoom, flash, reflection flip, and spin.
+- Scene entrance presets: fade + rise, soft pop, tilt settle, focus reveal, wipe reveal, and spring drop.
+- Editable SVG spark, star, bolt, arrow, and orbit accents plus animated dotted or diagonal lines.
 - Timeline tracks for position X/Y, Z/X/Y rotation, screen turn, scale, opacity, contrast, brightness, shine sweep, and reflection.
 - Live reflection, contrast, brightness, shine, and perspective controls.
 - Drag keyframes with frame snapping; edit, add, and remove tracks and scenes.
@@ -54,11 +56,11 @@ See [`docs/FORMAT.md`](docs/FORMAT.md) and [`AI-INSTRUCTIONS.md`](AI-INSTRUCTION
 
 ## Render boundaries
 
-The editor is designed for typographic promo scenes. The DOM preview uses CSS perspective and transitions. WebM export uses a 2D canvas compositor that approximates 3D projection and transition faces; it is not pixel-identical to the live preview. Narration is preview-only and does not become an audio track. Imported footage, arbitrary multi-layer layouts, masks, particles, paths, and composited audio are not supported.
+The editor is designed for typographic promo scenes and vector accents. The DOM preview uses CSS perspective and transitions. WebM export uses a 2D canvas compositor that approximates 3D projection and transition faces; it is not pixel-identical to the live preview. Narration is preview-only and does not become an audio track. Imported footage, arbitrary multi-layer layouts, masks, particle systems, arbitrary user SVG path editing, and composited audio are not supported.
 
 ## References and implementation
 
-The transition catalog and keyframe controls were informed by public documentation for Remotion, Motion Canvas, and GSAP. Typography uses the public Google Fonts CSS2 API and its [google/fonts GitHub library](https://github.com/google/fonts). This repository contains an original implementation; it does not copy their source code or documentation. See [`docs/REFERENCE-NOTES.md`](docs/REFERENCE-NOTES.md) for links and license notes.
+The transition catalog and keyframe controls were informed by public documentation for Remotion, Motion Canvas, GSAP, and public SVG editor repositories. Typography uses the public Google Fonts CSS2 API and its [google/fonts GitHub library](https://github.com/google/fonts). This repository contains an original implementation; it does not copy their source code or documentation. See [`docs/REFERENCE-NOTES.md`](docs/REFERENCE-NOTES.md) for links and license notes.
 
 ## Development
 

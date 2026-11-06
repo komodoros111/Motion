@@ -53,6 +53,14 @@ export function validateMotionDocument(value) {
   if (value.canvas.label !== undefined && (typeof value.canvas.label !== "string" || value.canvas.label.length > 24)) throw new Error("Scene title must be 24 characters or fewer.");
   if (value.canvas.subtitle !== undefined && (typeof value.canvas.subtitle !== "string" || value.canvas.subtitle.length > 80)) throw new Error("Subtitle must be 80 characters or fewer.");
   if (value.canvas.fontFamily !== undefined && (typeof value.canvas.fontFamily !== "string" || value.canvas.fontFamily.length > 80 || !/^[\p{L}\p{N}][\p{L}\p{N} _.,'-]{0,79}$/u.test(value.canvas.fontFamily))) throw new Error("Font family must be a valid name of at most 80 characters.");
+  if (value.canvas.decorations !== undefined && (!Array.isArray(value.canvas.decorations) || value.canvas.decorations.length > 40)) throw new Error("A project can contain up to 40 vector accents.");
+  const decorationIds = new Set();
+  for (const item of value.canvas.decorations ?? []) {
+    if (!item || typeof item.id !== "string" || !item.id || decorationIds.has(item.id) || !["line", "icon"].includes(item.type) || !Number.isFinite(item.x) || Math.abs(item.x) > 8192 || !Number.isFinite(item.y) || Math.abs(item.y) > 8192 || !Number.isFinite(item.size) || item.size < 8 || item.size > 1200 || typeof item.color !== "string" || !/^#[\da-f]{6}$/i.test(item.color) || !Number.isFinite(item.rotation ?? 0) || Math.abs(item.rotation ?? 0) > 360) throw new Error("Invalid SVG accent: check unique ID, type, position, size, color, and rotation.");
+    if (item.type === "icon" && !["spark", "star", "bolt", "arrow", "ring"].includes(item.icon)) throw new Error("Unsupported SVG accent icon.");
+    if (item.type === "line" && !["horizontal", "diagonal"].includes(item.direction ?? "horizontal")) throw new Error("Unsupported dotted line direction.");
+    decorationIds.add(item.id);
+  }
   if (value.canvas.effects !== undefined) {
     const effects = value.canvas.effects;
     if (!effects || typeof effects !== "object" || (effects.reflection !== undefined && (!Number.isFinite(effects.reflection) || effects.reflection < 0 || effects.reflection > 1)) || (effects.contrast !== undefined && (!Number.isFinite(effects.contrast) || effects.contrast < 0 || effects.contrast > 3)) || (effects.brightness !== undefined && (!Number.isFinite(effects.brightness) || effects.brightness < 0 || effects.brightness > 3)) || (effects.shine !== undefined && (!Number.isFinite(effects.shine) || effects.shine < 0 || effects.shine > 1)) || (effects.perspective !== undefined && (!Number.isFinite(effects.perspective) || effects.perspective < 100 || effects.perspective > 3000))) throw new Error("Invalid visual effects: check reflection, contrast, brightness, shine, and perspective ranges.");
@@ -63,7 +71,8 @@ export function validateMotionDocument(value) {
     for (const scene of value.scenes) {
       if (!scene || typeof scene.id !== "string" || !scene.id || sceneIds.has(scene.id) || !Number.isFinite(scene.startMs) || scene.startMs < 0 || scene.startMs >= value.durationMs || scene.startMs <= previousStart || typeof scene.label !== "string" || scene.label.length > 24 || typeof scene.subtitle !== "string" || scene.subtitle.length > 80 || typeof scene.background !== "string" || !/^#[\da-f]{6}$/i.test(scene.background) || typeof scene.objectColor !== "string" || !/^#[\da-f]{6}$/i.test(scene.objectColor)) throw new Error("Invalid scene: use unique IDs, ordered start times, supported text, and #RRGGBB colors.");
       sceneIds.add(scene.id); previousStart = scene.startMs;
-      if (scene.transition !== undefined && (!scene.transition || !["cut", "fade", "flip", "cube", "wipe", "zoom", "flash", "reflectionFlip", "spin"].includes(scene.transition.type) || !Number.isFinite(scene.transition.durationMs) || scene.transition.durationMs < 100 || scene.transition.durationMs > 4000 || scene.startMs + (scene.transition.type === "cut" ? 0 : scene.transition.durationMs / 2) > value.durationMs)) throw new Error("Invalid scene transition type, duration, or timeline position.");
+      if (scene.transition !== undefined && (!scene.transition || !["cut", "fade", "push", "wipe", "curtain", "iris", "flip", "cube", "zoom", "flash", "reflectionFlip", "spin"].includes(scene.transition.type) || !Number.isFinite(scene.transition.durationMs) || scene.transition.durationMs < 100 || scene.transition.durationMs > 4000 || scene.startMs + (scene.transition.type === "cut" ? 0 : scene.transition.durationMs / 2) > value.durationMs)) throw new Error("Invalid scene transition type, duration, or timeline position.");
+      if (scene.entrance !== undefined && (!scene.entrance || !["none", "fadeUp", "pop", "rotateIn", "blurIn", "reveal", "bounce"].includes(scene.entrance.type) || !Number.isFinite(scene.entrance.durationMs) || scene.entrance.durationMs < 180 || scene.entrance.durationMs > 1800)) throw new Error("Invalid scene entrance animation or duration.");
     }
     const transitionHalf = (scene) => scene.transition?.type === "cut" ? 0 : (scene.transition?.durationMs ?? 0) / 2;
     for (let i = 1; i < value.scenes.length; i++) {
@@ -75,7 +84,7 @@ export function validateMotionDocument(value) {
   if (!Array.isArray(value.tracks) || value.tracks.length > 64) throw new Error("Track list is invalid or exceeds the 64-track limit.");
   const properties = new Set(["x", "y", "rotation", "rotationX", "rotationY", "screenTurn", "scale", "opacity", "contrast", "brightness", "shineSweep", "reflection"]);
   const easing = new Set(["linear", "easeIn", "easeOut", "easeInOut"]);
-  const ids = new Set();
+  const ids = new Set(decorationIds);
   const usedProperties = new Set();
   let keyframeCount = 0;
   for (const track of value.tracks) {

@@ -7,8 +7,16 @@ const STORAGE_KEY = "motion-studio-ai-project-v1";
 const BACKUP_KEY = "motion-studio-ai-project-backup-v1";
 const colors = { x: "#a78bfa", y: "#56d7de", rotation: "#ff9b70", rotationX: "#ff7cc7", rotationY: "#a88cff", screenTurn: "#c7a4ff", scale: "#57d7a2", opacity: "#f4c96b", contrast: "#ffb86a", brightness: "#fff19a", shineSweep: "#70e8ff", reflection: "#91a8ff" };
 const defaults = { x: 0, y: 0, rotation: 0, rotationX: 0, rotationY: 0, screenTurn: 0, scale: 1, opacity: 1, contrast: 1, brightness: 1, shineSweep: -1, reflection: 0.36 };
+const iconPaths = {
+  spark: "M50 2 61 37 96 50 61 63 50 98 39 63 4 50 39 37Z M80 4v20 M70 14h20 M18 75v17 M9.5 83.5h17",
+  star: "m50 4 11 31 33 1-26 20 9 32-27-19-27 19 9-32L6 36l33-1Z",
+  bolt: "M58 2 18 56h26l-6 42 44-58H54Z",
+  arrow: "M14 50h66 M55 24l27 26-27 26",
+  ring: "M50 7a43 43 0 1 0 0 86 43 43 0 0 0 0-86 M50 20a30 30 0 1 1 0 60 30 30 0 0 1 0-60"
+};
 let project = createSampleMotion();
 let selectedSceneId = project.scenes?.[0]?.id ?? null;
+let selectedDecorationId = null;
 let activePanel = "timeline";
 let selectedTrackId = project.tracks[0]?.id ?? null;
 let selectedKey = null;
@@ -80,8 +88,8 @@ function updateStage() {
   const scaleX = stage.clientWidth / project.canvas.width;
   const scaleY = stage.clientHeight / project.canvas.height;
   const state = sceneAtTime(currentTime);
-  setSceneVisual($("#scene-in"), state.incoming, x, y, rotation, rotationX, rotationY, screenTurn, scale, opacity, contrast, brightness, shineSweep, reflection, false, state, scaleX, scaleY);
-  setSceneVisual($("#scene-out"), state.outgoing, x, y, rotation, rotationX, rotationY, screenTurn, scale, opacity, contrast, brightness, shineSweep, reflection, true, state, scaleX, scaleY);
+  setSceneVisual($("#scene-in"), state.incoming, x, y, rotation, rotationX, rotationY, screenTurn, scale, opacity, contrast, brightness, shineSweep, reflection, false, state, scaleX, scaleY, currentTime);
+  setSceneVisual($("#scene-out"), state.outgoing, x, y, rotation, rotationX, rotationY, screenTurn, scale, opacity, contrast, brightness, shineSweep, reflection, true, state, scaleX, scaleY, currentTime);
   $("#transition-flash").style.opacity = state.type === "flash" ? String(Math.max(0, 1 - Math.abs(state.progress - .5) * 2)) : "0";
   $("#transition-flash").style.background = state.incoming?.background ?? project.canvas.background;
   $("#time-current").textContent = formatTime(currentTime);
@@ -95,13 +103,39 @@ function sceneAtTime(time) {
   const scenes = project.scenes?.length ? project.scenes : [{ id: "base", startMs: 0, label: project.canvas.label ?? "M", subtitle: project.canvas.subtitle ?? "", background: project.canvas.background ?? "#090b13", objectColor: project.canvas.objectColor ?? "#b9a3ff", transition: { type: "cut", durationMs: 0 } }];
   let index = scenes.findLastIndex((scene) => scene.startMs <= time);
   if (index < 0) index = 0;
+  const next = scenes[index + 1], nextHalf = next?.transition?.type === "cut" ? 0 : (next?.transition?.durationMs ?? 0) / 2;
+  if (next && nextHalf > 0 && time >= next.startMs - nextHalf) index += 1;
   const incoming = scenes[index], outgoing = scenes[index - 1], transition = incoming.transition ?? { type: "cut", durationMs: 0 };
   const half = transition.type === "cut" ? 0 : transition.durationMs / 2;
   if (outgoing && half > 0 && time >= incoming.startMs - half && time <= incoming.startMs + half) return { incoming, outgoing, type: transition.type, progress: Math.max(0, Math.min(1, (time - incoming.startMs + half) / (2 * half))) };
   return { incoming, outgoing: null, type: "cut", progress: 1 };
 }
 
-function setSceneVisual(element, scene, x, y, rotation, rotationX, rotationY, screenTurn, scale, opacity, contrast, brightness, shineSweep, reflection, isOutgoing, state, scaleX, scaleY) {
+function renderDecorations(svg, time = currentTime) {
+  if (!svg) return;
+  const NS = "http://www.w3.org/2000/svg", { width, height } = project.canvas;
+  svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+  const signature = JSON.stringify([width, height, project.canvas.decorations ?? []]);
+  if (svg.dataset.signature !== signature) { svg.replaceChildren(); svg.dataset.signature = signature;
+  for (const item of project.canvas.decorations ?? []) {
+    const group = document.createElementNS(NS, "g");
+    group.setAttribute("transform", `translate(${width / 2 + item.x} ${height / 2 + item.y}) rotate(${item.rotation ?? 0})`); group.setAttribute("opacity", "0.82");
+    if (item.type === "line") {
+      const path = document.createElementNS(NS, "path"), half = item.size / 2;
+      path.setAttribute("d", item.direction === "diagonal" ? `M ${-half} ${half * .45} L ${half} ${-half * .45}` : `M ${-half} 0 H ${half}`);
+      path.classList.add("dotted-line"); path.setAttribute("fill", "none"); path.setAttribute("stroke", item.color); path.setAttribute("stroke-width", String(Math.max(2, width / 640))); path.setAttribute("stroke-linecap", "round"); path.setAttribute("stroke-dasharray", `${Math.max(1, width / 960)} ${Math.max(8, width / 96)}`); group.append(path);
+    } else {
+      const path = document.createElementNS(NS, "path"), scale = item.size / 100;
+      group.setAttribute("transform", `${group.getAttribute("transform")} scale(${scale})`);
+      path.setAttribute("d", iconPaths[item.icon] ?? iconPaths.spark); path.setAttribute("fill", ["arrow", "ring"].includes(item.icon) ? "none" : item.color); path.setAttribute("stroke", item.color); path.setAttribute("stroke-width", "6"); path.setAttribute("stroke-linecap", "round"); path.setAttribute("stroke-linejoin", "round"); group.append(path);
+    }
+    svg.append(group);
+  }
+  }
+  svg.querySelectorAll(".dotted-line").forEach((path) => path.setAttribute("stroke-dashoffset", String(-time * .035)));
+}
+
+function setSceneVisual(element, scene, x, y, rotation, rotationX, rotationY, screenTurn, scale, opacity, contrast, brightness, shineSweep, reflection, isOutgoing, state, scaleX, scaleY, time) {
   if (!scene) { element.hidden = true; return; }
   element.hidden = false;
   const card = element.querySelector(".motion-object");
@@ -121,6 +155,9 @@ function setSceneVisual(element, scene, x, y, rotation, rotationX, rotationY, sc
       layerTransform = `perspective(${project.canvas.effects?.perspective ?? 900}px) rotateY(${(isOutgoing ? 1 : -1) * t * (type === "cube" ? 96 : 88)}deg) ${type === "cube" ? `translateZ(${$("#stage").clientWidth / 2}px)` : ""}`;
     } else if (type === "spin") { layerTransform = `perspective(${project.canvas.effects?.perspective ?? 900}px) rotateY(${(isOutgoing ? progress : 1 - progress) * 180}deg)`; layerOpacity = isOutgoing ? 1 - progress * .35 : .65 + progress * .35; }
     else if (type === "zoom") { layerTransform = `scale(${isOutgoing ? 1 + progress * .22 : .78 + progress * .22})`; layerOpacity = isOutgoing ? 1 - progress : progress; }
+    else if (type === "push") layerTransform = `translateX(${isOutgoing ? -progress * 100 : (1 - progress) * 100}%)`;
+    else if (type === "curtain") { const inset = (isOutgoing ? progress : 1 - progress) * 50; element.style.clipPath = `inset(0 ${inset}% 0 ${inset}%)`; }
+    else if (type === "iris") element.style.clipPath = `circle(${(isOutgoing ? 1 - progress : progress) * 72}% at 50% 50%)`;
     else if (["fade", "flash"].includes(type)) layerOpacity = isOutgoing ? 1 - progress : progress;
     else if (type === "wipe") element.style.clipPath = `inset(0 ${isOutgoing ? progress * 100 : (1 - progress) * 100}% 0 0)`;
   }
@@ -134,6 +171,21 @@ function setSceneVisual(element, scene, x, y, rotation, rotationX, rotationY, sc
   const reflectionAmount = type === "reflectionFlip" ? Math.max(.7, reflection) : Math.max(0, Math.min(1, reflection));
   content.style.setProperty("--reflection-opacity", String(reflectionAmount * .16));
   content.style.setProperty("--motion-font", `"${project.canvas.fontFamily ?? "Space Grotesk"}", sans-serif`);
+  renderDecorations(element.querySelector(".scene-decorations"), time);
+  const entrance = scene.entrance ?? { type: "none", durationMs: 700 };
+  const half = scene.transition?.type === "cut" ? 0 : (scene.transition?.durationMs ?? 0) / 2;
+  const entryStart = scene.startMs === 0 ? 0 : scene.startMs - half;
+  const raw = Math.max(0, Math.min(1, (time - entryStart) / (entrance.durationMs || 700))), p = 1 - (1 - raw) ** 3;
+  if (!isOutgoing && entrance.type !== "none" && raw < 1) {
+    const entryScale = entrance.type === "pop" ? .78 + .22 * p + .11 * Math.sin(p * Math.PI) * (1 - p) : entrance.type === "rotateIn" ? .88 + .12 * p : entrance.type === "bounce" ? .92 + .08 * p + .07 * Math.sin(p * Math.PI) * (1 - p) : 1;
+    const entryY = entrance.type === "fadeUp" ? 38 * (1 - p) : entrance.type === "bounce" ? -62 * (1 - p) + 18 * Math.sin(p * Math.PI) * (1 - p) : 0;
+    const entryRotation = entrance.type === "rotateIn" ? -18 * (1 - p) : 0;
+    card.style.transform = `translateY(${entryY}px) rotate(${entryRotation}deg) scale(${entryScale})`;
+    card.style.opacity = String(["fadeUp", "blurIn"].includes(entrance.type) ? p : 1);
+    card.style.filter = entrance.type === "blurIn" ? `blur(${(1 - p) * 12}px)` : "none";
+    card.style.clipPath = entrance.type === "reveal" ? `inset(0 ${(1 - p) * 100}% 0 0)` : "none";
+    subtitle.style.opacity = String(["fadeUp", "blurIn"].includes(entrance.type) ? p : 1);
+  } else { card.style.transform = "none"; card.style.opacity = "1"; card.style.filter = "none"; card.style.clipPath = "none"; subtitle.style.opacity = "1"; }
 }
 
 function normalizeSceneTransitions() {
@@ -183,6 +235,7 @@ function renderTimeline() {
   $("#track-count").textContent = `${project.tracks.length} tracks`;
   $("#zoom-label").textContent = `${Math.round(zoom * 100)}%`;
   renderSceneControls(selectedScene);
+  renderDecorationControls();
 
   const laneWidth = Math.max(380, Math.round(project.durationMs / 1000 * 175 * zoom));
   const template = `118px ${laneWidth}px`;
@@ -224,7 +277,38 @@ function renderSceneControls(scene) {
   $("#field-transition").value = scene?.transition?.type ?? "cut";
   $("#field-transition-duration").value = scene?.transition?.durationMs ?? 620;
   $("#transition-duration-label").textContent = `${scene?.transition?.durationMs ?? 620} ms`;
+  $("#field-entrance").value = scene?.entrance?.type ?? "none";
+  $("#field-entrance-duration").value = scene?.entrance?.durationMs ?? 700;
+  $("#entrance-duration-label").textContent = `${scene?.entrance?.durationMs ?? 700} ms`;
   $("[data-action='remove-scene']").disabled = scenes.length < 2;
+}
+
+function renderDecorationControls() {
+  const decorations = project.canvas.decorations ?? [], selected = decorations.find((item) => item.id === selectedDecorationId) ?? decorations.at(-1) ?? null;
+  selectedDecorationId = selected?.id ?? null;
+  $("#decor-count").textContent = `${decorations.length} ${decorations.length === 1 ? "ITEM" : "ITEMS"}`;
+  const select = $("#field-decor"); select.replaceChildren();
+  for (const item of decorations) { const option = document.createElement("option"); option.value = item.id; option.textContent = item.type === "line" ? "Dotted line" : `SVG · ${item.icon}`; select.append(option); }
+  select.value = selected?.id ?? "";
+  for (const [field, key] of [["x", "x"], ["y", "y"], ["size", "size"], ["color", "color"]]) $("#field-decor-" + field).value = selected?.[key] ?? (key === "color" ? "#ffffff" : key === "size" ? 96 : 0);
+  $("#field-decor-rotation").value = selected?.rotation ?? 0;
+  $("#remove-decoration").disabled = !selected;
+  $("#field-decor-icon").value = selected?.icon ?? "spark";
+}
+
+function addDecoration(type) {
+  project.canvas.decorations ??= [];
+  if (project.canvas.decorations.length >= 40) { toast("A project can contain up to 40 SVG accents."); return; }
+  const isLine = type === "line", item = { id: `accent-${crypto.randomUUID()}`, type, x: 0, y: isLine ? -180 : -155, size: isLine ? Math.min(project.canvas.width * .48, 800) : 96, color: isLine ? "#8bdcff" : "#ffffff", rotation: isLine ? -8 : 0 };
+  if (isLine) item.direction = "horizontal"; else item.icon = $("#field-decor-icon").value;
+  project.canvas.decorations.push(item); selectedDecorationId = item.id; markDirty(); renderTimeline(); toast(isLine ? "Animated dotted line added." : "Scalable SVG accent added.");
+}
+
+function updateSelectedDecoration(field, value) {
+  const item = project.canvas.decorations?.find((entry) => entry.id === selectedDecorationId); if (!item) return;
+  if (field === "color") item.color = /^#[\da-f]{6}$/i.test(value) ? value : "#ffffff";
+  else item[field] = Math.max(field === "size" ? 8 : field === "rotation" ? -360 : -8192, Math.min(field === "size" ? 1200 : field === "rotation" ? 360 : 8192, Number(value) || 0));
+  markDirty(); updateStage();
 }
 
 function addScene() {
@@ -355,7 +439,13 @@ function exportSvgIcon() {
     const fit = Math.min(1, 800 / Math.max(label.length * 54, 350));
     const transform = `translate(${centerX} ${centerY}) rotate(${valueAt("rotation", currentTime)}) scale(${valueAt("scale", currentTime) * fit})`;
     const subtitleSvg = subtitle ? `<text x="512" y="755" text-anchor="middle" fill="#e9eaf6" font-family="${esc(font)},Arial,sans-serif" font-size="22" font-weight="700" letter-spacing="3">${esc(subtitle)}</text>` : "";
-    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc"><title id="title">${esc(label)}</title><desc id="desc">SVG icon exported from ${esc(project.name)}.</desc><defs><linearGradient id="card" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff" stop-opacity=".3"/><stop offset=".25" stop-color="${color}"/><stop offset="1" stop-color="${color}" stop-opacity=".65"/></linearGradient><filter id="shadow" x="-.15" y="-.2" width="1.3" height="1.5" color-interpolation-filters="sRGB"><feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="${color}" flood-opacity=".2"/></filter></defs><rect width="1024" height="1024" rx="150" fill="${bg}"/><circle cx="512" cy="490" r="370" fill="${color}" opacity=".08"/><g transform="${transform}" opacity="${Math.max(0, Math.min(1, valueAt("opacity", currentTime)))}" filter="url(#shadow)"><rect x="-420" y="-170" width="840" height="340" rx="76" fill="url(#card)" stroke="#fff" stroke-opacity=".42" stroke-width="3"/><path d="M-350 -156h700" stroke="#fff" stroke-opacity=".25" stroke-width="2"/><text x="0" y="20" text-anchor="middle" dominant-baseline="middle" fill="#fff" font-family="${esc(font)},Arial,sans-serif" font-size="${Math.round(110 * fit)}" font-weight="800" letter-spacing="-4">${esc(label)}</text></g>${subtitleSvg}</svg>`;
+    const decorSvg = (project.canvas.decorations ?? []).map((item) => {
+      const x = 512 + item.x / project.canvas.width * 880, y = 490 + item.y / project.canvas.height * 500, size = item.size / project.canvas.width * 1024, accent = /^#[\da-f]{6}$/i.test(item.color) ? item.color : "#ffffff";
+      if (item.type === "line") return `<path d="M${x - size / 2} ${y}H${x + size / 2}" fill="none" stroke="${accent}" stroke-width="4" stroke-linecap="round" stroke-dasharray="2 14" transform="rotate(${item.rotation ?? 0} ${x} ${y})"/>`;
+      const d = iconPaths[item.icon] ?? iconPaths.spark;
+      return `<path d="${d}" transform="translate(${x - size / 2} ${y - size / 2}) scale(${size / 100}) rotate(${item.rotation ?? 0} 50 50)" fill="${["arrow", "ring"].includes(item.icon) ? "none" : accent}" stroke="${accent}" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" opacity=".86"/>`;
+    }).join("");
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc"><title id="title">${esc(label)}</title><desc id="desc">SVG icon exported from ${esc(project.name)}.</desc><defs><linearGradient id="card" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff" stop-opacity=".3"/><stop offset=".25" stop-color="${color}"/><stop offset="1" stop-color="${color}" stop-opacity=".65"/></linearGradient><filter id="shadow" x="-.15" y="-.2" width="1.3" height="1.5" color-interpolation-filters="sRGB"><feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="${color}" flood-opacity=".2"/></filter></defs><rect width="1024" height="1024" rx="150" fill="${bg}"/><circle cx="512" cy="490" r="370" fill="${color}" opacity=".08"/>${decorSvg}<g transform="${transform}" opacity="${Math.max(0, Math.min(1, valueAt("opacity", currentTime)))}" filter="url(#shadow)"><rect x="-420" y="-170" width="840" height="340" rx="76" fill="url(#card)" stroke="#fff" stroke-opacity=".42" stroke-width="3"/><path d="M-350 -156h700" stroke="#fff" stroke-opacity=".25" stroke-width="2"/><text x="0" y="20" text-anchor="middle" dominant-baseline="middle" fill="#fff" font-family="${esc(font)},Arial,sans-serif" font-size="${Math.round(110 * fit)}" font-weight="800" letter-spacing="-4">${esc(label)}</text></g>${subtitleSvg}</svg>`;
     download(`${safeName(label)}.svg`, svg, "image/svg+xml;charset=utf-8"); toast("Scalable SVG icon exported for the current scene.");
   } catch (error) { toast(error.message); }
 }
@@ -514,10 +604,26 @@ async function openNextLevelPromo() {
     markDirty(); renderAll(); toast("Next Level motion loaded. Restore your previous project from the top bar.");
   } catch (error) { toast(`Could not open the example: ${error.message}`); }
 }
+async function upgradeSavedNextLevelPromo() {
+  if (project.name !== "NEXT LEVEL — Afterburn" || project.canvas.decorations?.length || !project.scenes?.some((scene) => scene.id === "scene-entry")) return;
+  try {
+    const response = await fetch("/examples/next-level-promo.motion.json", { cache: "no-store" }); if (!response.ok) return;
+    const sample = validateMotionDocument(await response.json());
+    if (project.name !== "NEXT LEVEL — Afterburn" || project.canvas.decorations?.length) return;
+    backupCurrentProject(); project.canvas.decorations = sample.canvas.decorations;
+    for (let i = 0; i < project.scenes.length; i++) {
+      const oldScene = project.scenes[i], freshScene = sample.scenes[i]; if (!freshScene) continue;
+      if (!oldScene.entrance) oldScene.entrance = freshScene.entrance;
+      if (i === 1 && oldScene.transition?.type === "reflectionFlip") oldScene.transition = structuredClone(freshScene.transition);
+      if (i === 2 && oldScene.transition?.type === "zoom") oldScene.transition = structuredClone(freshScene.transition);
+    }
+    selectedSceneId = project.scenes[0]?.id ?? selectedSceneId; markDirty(); renderTimeline(); toast("Next Level updated with dotted SVG accents and new scene motion. The previous project is backed up.");
+  } catch { /* Keep the saved project intact if the local example is unavailable. */ }
+}
 function aiBrief() {
   const request = $("#ai-request").value.trim();
   if (!request) { $("#ai-request").focus(); toast("Describe the requested change or choose a prompt example."); return; }
-  const prompt = `You are Motion Editor, an AI specialized in motion design and this repository. Follow AI-INSTRUCTIONS.md and docs/FORMAT.md.\n\nUSER REQUEST\n${request}\n\nDELIVERY REQUIREMENTS\n- Edit the current document without deleting unknown fields. Preserve format, version, IDs, scenes, effects, and properties unrelated to the request.\n- Return one complete valid JSON document in a single json code block. No comments, ellipses, or base64 NVMB.\n- Validate: duration 100–120000 ms; FPS 1–240; canvas 1–8192 px; up to 64 tracks, 32 scenes, and 10000 keyframes; label up to 24 chars; subtitle up to 80 chars; colors #RRGGBB; unique nonempty IDs; keyframe times within duration; easing linear/easeIn/easeOut/easeInOut.\n- Supported properties: x, y, rotation, rotationX, rotationY, screenTurn, scale, opacity, contrast, brightness, shineSweep, reflection. Follow AI-INSTRUCTIONS.md for bounds.\n- Scene transitions: cut, fade, flip, cube, wipe, zoom, flash, reflectionFlip, spin. Use restrained timing and avoid overlapping transition windows.\n- Preserve the visual intent. Use enough keyframes for smooth motion and avoid sudden movement or redundant tracks. If the request is ambiguous, choose a conservative interpretation and state the assumption.\n- Never claim the preview renders features it does not support.\n\nCURRENT DOCUMENT (nirvy.motion v1)\n${JSON.stringify(project, null, 2)}\n\nAfter the JSON, summarize up to 5 changes and how to review them on the timeline.`;
+  const prompt = `You are Motion Editor, an AI specialized in motion design and this repository. Follow AI-INSTRUCTIONS.md and docs/FORMAT.md.\n\nUSER REQUEST\n${request}\n\nDELIVERY REQUIREMENTS\n- Edit the current document without deleting unknown fields. Preserve format, version, IDs, scenes, effects, and properties unrelated to the request.\n- Return one complete valid JSON document in a single json code block. No comments, ellipses, or base64 NVMB.\n- Validate: duration 100–120000 ms; FPS 1–240; canvas 1–8192 px; up to 64 tracks, 32 scenes, 10000 keyframes, and 40 SVG accents; label up to 24 chars; subtitle up to 80 chars; colors #RRGGBB; unique nonempty IDs; keyframe times within duration; easing linear/easeIn/easeOut/easeInOut.\n- Supported properties: x, y, rotation, rotationX, rotationY, screenTurn, scale, opacity, contrast, brightness, shineSweep, reflection. Follow AI-INSTRUCTIONS.md for bounds.\n- Scene transitions: cut, fade, push, wipe, curtain, iris, flip, cube, zoom, flash, reflectionFlip, spin. Entrances: none, fadeUp, pop, rotateIn, blurIn, reveal, bounce. SVG accents: dotted lines or spark/star/bolt/arrow/ring icons. Use restrained timing and avoid overlapping transition windows.\n- Preserve the visual intent. Use enough keyframes for smooth motion and avoid sudden movement or redundant tracks. If the request is ambiguous, choose a conservative interpretation and state the assumption.\n- Never claim the preview renders features it does not support.\n\nCURRENT DOCUMENT (nirvy.motion v1)\n${JSON.stringify(project, null, 2)}\n\nAfter the JSON, summarize up to 5 changes and how to review them on the timeline.`;
   navigator.clipboard?.writeText(prompt).then(() => toast("Project brief copied. Paste it into an AI and import the finished JSON."), () => toast("The browser blocked clipboard access."));
 }
 
@@ -539,7 +645,7 @@ document.addEventListener("click", (event) => {
   if (!action) return;
   const actions = {
     "open-project": () => $("#open-file").click(), "open-binary": () => $("#open-binary-file").click(), "save-json": saveJSON, "save-binary": saveMotionBinary,
-    "export-video": exportVideo, "export-svg": exportSvgIcon, "load-font": () => loadFont($("#field-font-custom").value || $("#field-font").value), "speak": speakNarration, "stop-speech": () => { if ("speechSynthesis" in window) speechSynthesis.cancel(); },
+    "export-video": exportVideo, "export-svg": exportSvgIcon, "load-font": () => loadFont($("#field-font-custom").value || $("#field-font").value), "add-svg-icon": () => addDecoration("icon"), "add-dotted-line": () => addDecoration("line"), "remove-decoration": () => { project.canvas.decorations = (project.canvas.decorations ?? []).filter((item) => item.id !== selectedDecorationId); selectedDecorationId = null; markDirty(); renderTimeline(); }, "speak": speakNarration, "stop-speech": () => { if ("speechSynthesis" in window) speechSynthesis.cancel(); },
     "add-scene": addScene, "remove-scene": removeScene,
     "save-binary-file": saveHexCopy, "ai-brief": aiBrief, "rename": () => { const name = prompt("Project name", project.name); if (name?.trim()) { project.name = name.trim().slice(0, 120); markDirty(); renderTimeline(); } },
     "reset-sample": () => { if (confirm("Load the Motion Studio sample? Your current project will be saved for recovery.")) { backupCurrentProject(); project = createSampleMotion(); selectedTrackId = project.tracks[0].id; selectedSceneId = project.scenes?.[0]?.id ?? null; selectedKey = null; currentTime = 0; markDirty(); renderAll(); } },
@@ -613,6 +719,12 @@ for (const field of ["reflection", "contrast", "brightness", "shine", "perspecti
 });
 $("#field-scene").addEventListener("change", (event) => { const scene = project.scenes?.find((item) => item.id === event.target.value); if (!scene) return; selectedSceneId = scene.id; setCurrentTime(scene.startMs); renderTimeline(); });
 $("#field-transition").addEventListener("change", (event) => { const scene = selectedScene(); if (!scene) return; scene.transition ??= { type: "flip", durationMs: 620 }; scene.transition.type = event.target.value; if (normalizeSceneTransitions()) toast("Transition timing was adjusted to fit the timeline."); renderSceneControls(scene); markDirty(); updateStage(); });
+$("#field-entrance").addEventListener("change", (event) => { const scene = selectedScene(); if (!scene) return; scene.entrance = { type: event.target.value, durationMs: Number($("#field-entrance-duration").value) || 700 }; markDirty(); updateStage(); });
+$("#field-entrance-duration").addEventListener("input", (event) => { const scene = selectedScene(); if (!scene) return; scene.entrance ??= { type: "fadeUp", durationMs: 700 }; scene.entrance.durationMs = Number(event.target.value); $("#entrance-duration-label").textContent = `${scene.entrance.durationMs} ms`; markDirty(); updateStage(); });
+$("#field-decor").addEventListener("change", (event) => { selectedDecorationId = event.target.value; renderDecorationControls(); });
+$("#field-decor-icon").addEventListener("change", (event) => { const item = project.canvas.decorations?.find((entry) => entry.id === selectedDecorationId); if (!item || item.type !== "icon") return; item.icon = event.target.value; markDirty(); renderTimeline(); });
+for (const field of ["x", "y", "size", "color"]) $("#field-decor-" + field).addEventListener("input", (event) => updateSelectedDecoration(field, event.target.value));
+$("#field-decor-rotation").addEventListener("input", (event) => updateSelectedDecoration("rotation", event.target.value));
 $("#field-transition-duration").addEventListener("input", (event) => { const scene = selectedScene(); if (!scene) return; scene.transition ??= { type: "flip", durationMs: 620 }; scene.transition.durationMs = Number(event.target.value); if (normalizeSceneTransitions()) { renderSceneControls(scene); toast("Transition duration was limited to prevent overlap."); } $("#transition-duration-label").textContent = `${scene.transition.durationMs} ms`; markDirty(); updateStage(); });
 $("#field-duration").addEventListener("change", (event) => { project.durationMs = Math.max(100, Math.min(120000, Number(event.target.value) || 100)); for (const track of project.tracks) for (const frame of track.keyframes) frame.timeMs = Math.min(project.durationMs, frame.timeMs); let previousStart = -1; for (const scene of [...(project.scenes ?? [])].sort((a, b) => a.startMs - b.startMs)) { scene.startMs = Math.max(previousStart + 1, Math.min(project.durationMs - 1, scene.startMs)); previousStart = scene.startMs; } const adjusted = normalizeSceneTransitions(); currentTime = Math.min(currentTime, project.durationMs); markDirty(); renderTimeline(); if (adjusted) toast("Scene transitions were resized to fit the new duration."); });
 $("#field-fps").addEventListener("change", (event) => { project.fps = Math.max(1, Math.min(240, Number(event.target.value) || 30)); markDirty(); renderTimeline(); });
@@ -658,3 +770,4 @@ try {
 selectedTrackId = project.tracks[0]?.id ?? null; selectedSceneId = project.scenes?.[0]?.id ?? null;
 renderAll();
 if (project.name === "NEXT LEVEL • comunidade no Discord" && !project.scenes?.length) openNextLevelPromo();
+else upgradeSavedNextLevelPromo();
