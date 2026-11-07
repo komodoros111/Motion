@@ -4,7 +4,7 @@ Read this file before changing application code. For motion-document edits, also
 
 ## Product contract
 
-Motion Studio AI is an original, local-first motion editor. The live preview supports typographic scenes, preset SVG accents, dotted strokes, scene transitions, transforms, 3D turns, reflection, contrast, brightness, and shine sweeps. The silent WebM exporter implements a matching 2D canvas approximation. It does not support imported footage, arbitrary layer stacks, masks, particle systems, user-authored SVG paths, or audio tracks.
+Motion Studio AI is an original, local-first motion editor. The live preview supports typographic scenes, preset SVG accents, dotted strokes, independent vector motion objects with gradient/glow text, scene transitions, transforms, 3D turns, reflection, contrast, brightness, and shine sweeps. The silent WebM exporter implements a matching 2D canvas approximation. It does not support imported footage, arbitrary layer stacks, masks, particle systems, user-authored SVG paths, or audio tracks.
 
 The AI handoff copies user-authored text and project JSON only after an explicit click. Never send project data to a service, add hidden telemetry, or add credentials without explicit user authorization.
 
@@ -15,16 +15,17 @@ The AI handoff copies user-authored text and project JSON only after an explicit
 - `src/motion-format.js`: v1 schema validation and NVMB codec.
 - `src/video-export.js`: canvas scene compositor and WebM recording.
 - `src/styles.css`: responsive UI and live CSS scene transitions.
+- `assets/fonts/library.css` and `assets/fonts/files/`: self-hosted WOFF2 families. Read `assets/fonts/CATALOG.md` and keep each upstream license file when adding or replacing a family.
 - `server.mjs`: static local server bound to `127.0.0.1`; preserve path traversal protections and loopback binding.
 - No runtime dependencies. Avoid adding a framework for targeted editor changes.
 
 ## Motion document v1
 
-The document uses `format: "nirvy.motion"`, `version: 1`, `name`, `durationMs`, `fps`, `canvas`, and `tracks`, with optional `scenes` and `narration`. `canvas.effects` is also optional. Keep old v1 documents valid; optional additions must be backward-compatible and preserved by import/export.
+The document uses `format: "nirvy.motion"`, `version: 1`, `name`, `durationMs`, `fps`, `canvas`, and `tracks`, with optional `scenes`, `objects`, and `narration`. `canvas.effects` is also optional. Keep old v1 documents valid; optional additions must be backward-compatible and preserved by import/export.
 
-Track properties: `x`, `y`, `rotation`, `rotationX`, `rotationY`, `screenTurn`, `scale`, `opacity`, `contrast`, `brightness`, `shineSweep`, `reflection`. Easing values: `linear`, `easeIn`, `easeOut`, `easeInOut`. There is one track per property. Keep app interpolation, sample, editor controls, validator, AI prompt, exporter, examples, and docs in sync.
+Track properties: `x`, `y`, `rotation`, `rotationX`, `rotationY`, `screenTurn`, `scale`, `opacity`, `contrast`, `brightness`, `shineSweep`, `reflection`. Easing values are defined in `src/easing.js` (`linear`, polynomial/exponential/back, elastic, bounce, spring, and hold curves). The easing on the arriving keyframe controls the incoming segment. There is one track per property. Reusable Enter, Exit, and Accent/loop keyframe recipes live in `src/presets.js`. Keep app interpolation, sample, editor controls, validator, AI prompt, exporter, examples, tests, and docs in sync.
 
-Scenes are sorted by `startMs`. A scene transition is centered on its `startMs`; adjacent transition windows must not overlap. Transition types: `cut`, `fade`, `push`, `wipe`, `curtain`, `iris`, `flip`, `cube`, `zoom`, `flash`, `reflectionFlip`, `spin`. Optional `scene.entrance` supports `none`, `fadeUp`, `pop`, `rotateIn`, `blurIn`, `reveal`, and `bounce`. Optional `canvas.decorations` stores up to 40 editable SVG icons and dotted lines. Keep the live preview and canvas export aligned, and preserve the meaning of v1 fields.
+Scenes are sorted by `startMs`. A scene transition is centered on its `startMs`; adjacent transition windows must not overlap. Transition types: `cut`, `fade`, `push`, `wipe`, `curtain`, `iris`, `flip`, `cube`, `zoom`, `flash`, `reflectionFlip`, `spin`. Optional `scene.entrance` supports `none`, `fadeUp`, `pop`, `rotateIn`, `blurIn`, `reveal`, and `bounce`. Optional `canvas.decorations` stores up to 40 editable SVG icons and dotted lines. Optional top-level `objects` stores up to 24 independent vector layers with their own position, scale, rotation, opacity, shape or text style, gradient, and glow. Keep the live preview and canvas export aligned, and preserve the meaning of v1 fields.
 
 ## Binary and file safety
 
@@ -37,6 +38,7 @@ Scenes are sorted by `startMs`. A scene transition is centered on its `startMs`;
 ## Interaction and accessibility
 
 - Preserve keyboard shortcuts, visible focus, labels, reduced-motion preferences, and narrow-screen layouts.
+- Keep the live preview reviewable: frame stepping, playback speed, frame/time readout, scene/transition context, and timeline timing bands must stay synchronized with project FPS and scene timing.
 - Snap dragged keyframes to frame boundaries and clamp them to project duration.
 - Do not discard edits when an import fails. Show a concise actionable error.
 - Use the existing live-region toast for status changes.

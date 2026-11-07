@@ -12,8 +12,9 @@ The editor's scene/timeline vocabulary was informed by public documentation for 
 
 ## Typography references
 
-- The font picker loads families from the **Google Fonts CSS2 API** at runtime and uses a system-font fallback offline. It needs no API key and does not download or vendor font binaries in this repository. See [CSS API documentation](https://developers.google.com/fonts/docs/css2).
-- Curated families are sourced from the public [google/fonts GitHub repository](https://github.com/google/fonts). Check each family directory for its license before redistributing font files or embedding them in exported assets. SVG icons reference the selected family name; they remain scalable, but the font must be installed or available to the viewer to render identically.
+- The editor bundles 21 Latin/Latin-Extended WOFF2 families from [Fontsource](https://github.com/fontsource/fontsource) version 5.3.0. Fonts are self-hosted and work offline; the bundled files are about 1.8 MB. Search/filter, specimen preview, and weight selection use the local `assets/fonts/library.css` collection.
+- Fontsource packages identify each typeface's own license; all 21 included packages currently specify the SIL Open Font License 1.1. License copies and package/version/source attribution are kept in [`assets/fonts/CATALOG.md`](../assets/fonts/CATALOG.md) and the per-family `*.LICENSE.txt` files. The Fontsource repository describes the package collection and warns that individual font licenses must be checked.
+- Custom family loading remains an optional, explicit Google Fonts CSS2 request; it is not used by the bundled collection. See [CSS API documentation](https://developers.google.com/fonts/docs/css2). Exported SVGs retain family names, so viewers need the font installed or available to render text identically.
 
 ## Transitions and vector motion
 
@@ -21,5 +22,6 @@ The editor's scene/timeline vocabulary was informed by public documentation for 
 - [Motion Canvas tweening](https://motioncanvas.io/docs/tweening/) informed the entrance presets' eased progress and small, damped overshoot.
 - [GSAP DrawSVG documentation](https://gsap.com/docs/v3/Plugins/DrawSVGPlugin/) describes stroke reveal using dash properties; the editor uses native SVG dash strokes for its dotted-line accent, with an independently authored small feature set.
 - Public GitHub projects [Animora](https://github.com/itsrajverma/animora) and [My Motion Studio](https://github.com/rodolphe37/my-motion-studio) were reviewed for SVG and animation-editor affordances. No source code, assets, or product instructions were copied; this implementation remains dependency-free and original.
+- The 45-second Next Level promo's storyboard pacing was informed by the public Short [“Claude Code Made These Motion Graphics From ONE Prompt” by @edita.visuals](https://www.youtube.com/shorts/uGoQJJ76tSE) (51.56 seconds). Visible beats were sampled at roughly five-second intervals. This was not an exhaustive frame-by-frame extraction. Only pacing and broad structure were used; no footage, frames, logo, or text was copied.
 
 These are design/behavior references, not copied implementation. Remotion uses its own license with eligibility and company-use conditions; the project does not import Remotion code. Motion Canvas is MIT-licensed; no Motion Canvas source is included. GSAP is documentation-only inspiration; no GSAP package is bundled. Check each upstream license before copying source code or adding a dependency.

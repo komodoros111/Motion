@@ -1,127 +1,5851 @@
 {
   "format": "nirvy.motion",
   "version": 1,
-  "name": "NEXT LEVEL — Afterburn",
-  "durationMs": 6200,
+  "name": "NEXT LEVEL — Kinetic Community Film (45s)",
+  "durationMs": 45000,
   "fps": 30,
   "canvas": {
-    "width": 1920,
-    "height": 1080,
-    "background": "#070912",
+    "width": 1080,
+    "height": 1920,
+    "background": "#050610",
     "label": "NEXT LEVEL",
-    "objectColor": "#727bff",
-    "subtitle": "LEVEL UP TOGETHER",
-    "effects": { "reflection": 0.24, "contrast": 1.12, "brightness": 1.04, "shine": 0.58, "perspective": 760 },
+    "objectColor": "#a88aff",
+    "subtitle": "YOUR PEOPLE. YOUR GAMES. YOUR LOBBY.",
+    "fontFamily": "Anton",
+    "effects": {
+      "reflection": 0.06,
+      "contrast": 1.08,
+      "brightness": 1,
+      "shine": 0.42,
+      "perspective": 900
+    },
     "decorations": [
-      { "id": "accent-dashes", "type": "line", "direction": "horizontal", "x": 0, "y": -178, "size": 980, "color": "#727bff", "rotation": -8 },
-      { "id": "accent-spark", "type": "icon", "icon": "spark", "x": -575, "y": -160, "size": 90, "color": "#ffffff", "rotation": -12 },
-      { "id": "accent-star", "type": "icon", "icon": "star", "x": 575, "y": 142, "size": 66, "color": "#47d9ff", "rotation": 12 }
+      {
+        "id": "nl-dots-top",
+        "type": "line",
+        "direction": "diagonal",
+        "x": 0,
+        "y": -720,
+        "size": 980,
+        "color": "#aa8cff",
+        "rotation": -13
+      },
+      {
+        "id": "nl-dots-mid",
+        "type": "line",
+        "direction": "horizontal",
+        "x": 0,
+        "y": 690,
+        "size": 760,
+        "color": "#64dff0",
+        "rotation": 0
+      },
+      {
+        "id": "nl-icon-star",
+        "type": "icon",
+        "icon": "star",
+        "x": 430,
+        "y": -480,
+        "size": 62,
+        "color": "#ff75aa",
+        "rotation": 14
+      },
+      {
+        "id": "nl-icon-bolt",
+        "type": "icon",
+        "icon": "bolt",
+        "x": -430,
+        "y": 445,
+        "size": 56,
+        "color": "#f4bd68",
+        "rotation": -12
+      }
     ]
   },
   "tracks": [
     {
       "id": "track-x",
       "property": "x",
-      "label": "Hero entrance · X",
+      "label": "x",
       "keyframes": [
-        { "id": "x-start", "timeMs": 0, "value": -260, "easing": "linear" },
-        { "id": "x-arrive", "timeMs": 900, "value": 0, "easing": "easeOut" },
-        { "id": "x-hold", "timeMs": 6200, "value": 0, "easing": "linear" }
+        {
+          "id": "x-0",
+          "timeMs": 0,
+          "value": 0,
+          "easing": "linear"
+        },
+        {
+          "id": "x-1",
+          "timeMs": 160,
+          "value": -36,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "x-2",
+          "timeMs": 720,
+          "value": -12,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "x-3",
+          "timeMs": 2450,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "x-4",
+          "timeMs": 2960,
+          "value": 24,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "x-5",
+          "timeMs": 3520,
+          "value": 8,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "x-6",
+          "timeMs": 5250,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "x-7",
+          "timeMs": 5760,
+          "value": -18,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "x-8",
+          "timeMs": 6320,
+          "value": -6,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "x-9",
+          "timeMs": 8050,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "x-10",
+          "timeMs": 8560,
+          "value": 32,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "x-11",
+          "timeMs": 9120,
+          "value": 10.666666666666666,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "x-12",
+          "timeMs": 10850,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "x-13",
+          "timeMs": 11360,
+          "value": -24,
+          "easing": "easeOutExpo"
+        },
+        {
+          "id": "x-14",
+          "timeMs": 11920,
+          "value": -8,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "x-15",
+          "timeMs": 13650,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "x-16",
+          "timeMs": 14160,
+          "value": 18,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "x-17",
+          "timeMs": 14720,
+          "value": 6,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "x-18",
+          "timeMs": 16450,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "x-19",
+          "timeMs": 16960,
+          "value": -28,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "x-20",
+          "timeMs": 17520,
+          "value": -9.333333333333334,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "x-21",
+          "timeMs": 19250,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "x-22",
+          "timeMs": 19760,
+          "value": 26,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "x-23",
+          "timeMs": 20320,
+          "value": 8.666666666666666,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "x-24",
+          "timeMs": 22050,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "x-25",
+          "timeMs": 22560,
+          "value": -16,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "x-26",
+          "timeMs": 23120,
+          "value": -5.333333333333333,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "x-27",
+          "timeMs": 24850,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "x-28",
+          "timeMs": 25360,
+          "value": 30,
+          "easing": "easeOutExpo"
+        },
+        {
+          "id": "x-29",
+          "timeMs": 25920,
+          "value": 10,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "x-30",
+          "timeMs": 27650,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "x-31",
+          "timeMs": 28160,
+          "value": -22,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "x-32",
+          "timeMs": 28720,
+          "value": -7.333333333333333,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "x-33",
+          "timeMs": 30450,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "x-34",
+          "timeMs": 30960,
+          "value": 20,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "x-35",
+          "timeMs": 31520,
+          "value": 6.666666666666667,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "x-36",
+          "timeMs": 33250,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "x-37",
+          "timeMs": 33760,
+          "value": -14,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "x-38",
+          "timeMs": 34320,
+          "value": -4.666666666666667,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "x-39",
+          "timeMs": 36050,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "x-40",
+          "timeMs": 36560,
+          "value": 22,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "x-41",
+          "timeMs": 37120,
+          "value": 7.333333333333333,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "x-42",
+          "timeMs": 38850,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "x-43",
+          "timeMs": 39360,
+          "value": -10,
+          "easing": "easeOutExpo"
+        },
+        {
+          "id": "x-44",
+          "timeMs": 39920,
+          "value": -3.3333333333333335,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "x-45",
+          "timeMs": 41650,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "x-46",
+          "timeMs": 42160,
+          "value": 0,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "x-47",
+          "timeMs": 42720,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "x-48",
+          "timeMs": 44450,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "x-49",
+          "timeMs": 45000,
+          "value": 0,
+          "easing": "linear"
+        }
       ]
     },
     {
       "id": "track-y",
       "property": "y",
-      "label": "Hero settle · Y",
+      "label": "y",
       "keyframes": [
-        { "id": "y-start", "timeMs": 0, "value": 72, "easing": "linear" },
-        { "id": "y-hit", "timeMs": 820, "value": -8, "easing": "easeOut" },
-        { "id": "y-settle", "timeMs": 1180, "value": 0, "easing": "easeOut" },
-        { "id": "y-breathe", "timeMs": 4300, "value": -4, "easing": "easeInOut" },
-        { "id": "y-rest", "timeMs": 4700, "value": 0, "easing": "easeOut" },
-        { "id": "y-end", "timeMs": 6200, "value": 0, "easing": "linear" }
+        {
+          "id": "y-0",
+          "timeMs": 0,
+          "value": 0,
+          "easing": "linear"
+        },
+        {
+          "id": "y-1",
+          "timeMs": 160,
+          "value": 38,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "y-2",
+          "timeMs": 720,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "y-3",
+          "timeMs": 2450,
+          "value": -4.56,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "y-4",
+          "timeMs": 2960,
+          "value": -22,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "y-5",
+          "timeMs": 3520,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "y-6",
+          "timeMs": 5250,
+          "value": 2.6399999999999997,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "y-7",
+          "timeMs": 5760,
+          "value": 28,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "y-8",
+          "timeMs": 6320,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "y-9",
+          "timeMs": 8050,
+          "value": -3.36,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "y-10",
+          "timeMs": 8560,
+          "value": -30,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "y-11",
+          "timeMs": 9120,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "y-12",
+          "timeMs": 10850,
+          "value": 3.5999999999999996,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "y-13",
+          "timeMs": 11360,
+          "value": 18,
+          "easing": "easeOutExpo"
+        },
+        {
+          "id": "y-14",
+          "timeMs": 11920,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "y-15",
+          "timeMs": 13650,
+          "value": -2.16,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "y-16",
+          "timeMs": 14160,
+          "value": -25,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "y-17",
+          "timeMs": 14720,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "y-18",
+          "timeMs": 16450,
+          "value": 3,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "y-19",
+          "timeMs": 16960,
+          "value": 34,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "y-20",
+          "timeMs": 17520,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "y-21",
+          "timeMs": 19250,
+          "value": -4.08,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "y-22",
+          "timeMs": 19760,
+          "value": -20,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "y-23",
+          "timeMs": 20320,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "y-24",
+          "timeMs": 22050,
+          "value": 2.4,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "y-25",
+          "timeMs": 22560,
+          "value": 16,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "y-26",
+          "timeMs": 23120,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "y-27",
+          "timeMs": 24850,
+          "value": -1.92,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "y-28",
+          "timeMs": 25360,
+          "value": -28,
+          "easing": "easeOutExpo"
+        },
+        {
+          "id": "y-29",
+          "timeMs": 25920,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "y-30",
+          "timeMs": 27650,
+          "value": 3.36,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "y-31",
+          "timeMs": 28160,
+          "value": 24,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "y-32",
+          "timeMs": 28720,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "y-33",
+          "timeMs": 30450,
+          "value": -2.88,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "y-34",
+          "timeMs": 30960,
+          "value": -16,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "y-35",
+          "timeMs": 31520,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "y-36",
+          "timeMs": 33250,
+          "value": 1.92,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "y-37",
+          "timeMs": 33760,
+          "value": 18,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "y-38",
+          "timeMs": 34320,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "y-39",
+          "timeMs": 36050,
+          "value": -2.16,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "y-40",
+          "timeMs": 36560,
+          "value": -24,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "y-41",
+          "timeMs": 37120,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "y-42",
+          "timeMs": 38850,
+          "value": 2.88,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "y-43",
+          "timeMs": 39360,
+          "value": 10,
+          "easing": "easeOutExpo"
+        },
+        {
+          "id": "y-44",
+          "timeMs": 39920,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "y-45",
+          "timeMs": 41650,
+          "value": -1.2,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "y-46",
+          "timeMs": 42160,
+          "value": 0,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "y-47",
+          "timeMs": 42720,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "y-48",
+          "timeMs": 44450,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "y-49",
+          "timeMs": 45000,
+          "value": 0,
+          "easing": "linear"
+        }
       ]
     },
     {
       "id": "track-rotation",
       "property": "rotation",
-      "label": "Hero impact · Z",
+      "label": "rotation",
       "keyframes": [
-        { "id": "r-start", "timeMs": 0, "value": -7, "easing": "linear" },
-        { "id": "r-hit", "timeMs": 820, "value": 1.2, "easing": "easeOut" },
-        { "id": "r-settle", "timeMs": 1180, "value": 0, "easing": "easeOut" },
-        { "id": "r-end", "timeMs": 6200, "value": 0, "easing": "linear" }
+        {
+          "id": "rotation-0",
+          "timeMs": 0,
+          "value": 0,
+          "easing": "linear"
+        },
+        {
+          "id": "rotation-1",
+          "timeMs": 160,
+          "value": -2,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "rotation-2",
+          "timeMs": 720,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotation-3",
+          "timeMs": 2450,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotation-4",
+          "timeMs": 2960,
+          "value": 2,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "rotation-5",
+          "timeMs": 3520,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotation-6",
+          "timeMs": 5250,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotation-7",
+          "timeMs": 5760,
+          "value": -1.4,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotation-8",
+          "timeMs": 6320,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotation-9",
+          "timeMs": 8050,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotation-10",
+          "timeMs": 8560,
+          "value": 1.2,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotation-11",
+          "timeMs": 9120,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotation-12",
+          "timeMs": 10850,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotation-13",
+          "timeMs": 11360,
+          "value": -2,
+          "easing": "easeOutExpo"
+        },
+        {
+          "id": "rotation-14",
+          "timeMs": 11920,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotation-15",
+          "timeMs": 13650,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotation-16",
+          "timeMs": 14160,
+          "value": 1.6,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "rotation-17",
+          "timeMs": 14720,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotation-18",
+          "timeMs": 16450,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotation-19",
+          "timeMs": 16960,
+          "value": -1.2,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "rotation-20",
+          "timeMs": 17520,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotation-21",
+          "timeMs": 19250,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotation-22",
+          "timeMs": 19760,
+          "value": 2,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotation-23",
+          "timeMs": 20320,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotation-24",
+          "timeMs": 22050,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotation-25",
+          "timeMs": 22560,
+          "value": -1.8,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotation-26",
+          "timeMs": 23120,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotation-27",
+          "timeMs": 24850,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotation-28",
+          "timeMs": 25360,
+          "value": 1.4,
+          "easing": "easeOutExpo"
+        },
+        {
+          "id": "rotation-29",
+          "timeMs": 25920,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotation-30",
+          "timeMs": 27650,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotation-31",
+          "timeMs": 28160,
+          "value": -1.2,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "rotation-32",
+          "timeMs": 28720,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotation-33",
+          "timeMs": 30450,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotation-34",
+          "timeMs": 30960,
+          "value": 1.7,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "rotation-35",
+          "timeMs": 31520,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotation-36",
+          "timeMs": 33250,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotation-37",
+          "timeMs": 33760,
+          "value": -1.1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotation-38",
+          "timeMs": 34320,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotation-39",
+          "timeMs": 36050,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotation-40",
+          "timeMs": 36560,
+          "value": 1.4,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotation-41",
+          "timeMs": 37120,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotation-42",
+          "timeMs": 38850,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotation-43",
+          "timeMs": 39360,
+          "value": -0.8,
+          "easing": "easeOutExpo"
+        },
+        {
+          "id": "rotation-44",
+          "timeMs": 39920,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotation-45",
+          "timeMs": 41650,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotation-46",
+          "timeMs": 42160,
+          "value": 0,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "rotation-47",
+          "timeMs": 42720,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotation-48",
+          "timeMs": 44450,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotation-49",
+          "timeMs": 45000,
+          "value": 0,
+          "easing": "linear"
+        }
+      ]
+    },
+    {
+      "id": "track-rotationX",
+      "property": "rotationX",
+      "label": "rotationX",
+      "keyframes": [
+        {
+          "id": "rotationX-0",
+          "timeMs": 0,
+          "value": 0,
+          "easing": "linear"
+        },
+        {
+          "id": "rotationX-1",
+          "timeMs": 160,
+          "value": 5,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "rotationX-2",
+          "timeMs": 720,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotationX-3",
+          "timeMs": 2450,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotationX-4",
+          "timeMs": 2960,
+          "value": -4,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "rotationX-5",
+          "timeMs": 3520,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotationX-6",
+          "timeMs": 5250,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotationX-7",
+          "timeMs": 5760,
+          "value": 3,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotationX-8",
+          "timeMs": 6320,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotationX-9",
+          "timeMs": 8050,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotationX-10",
+          "timeMs": 8560,
+          "value": -5,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotationX-11",
+          "timeMs": 9120,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotationX-12",
+          "timeMs": 10850,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotationX-13",
+          "timeMs": 11360,
+          "value": 4,
+          "easing": "easeOutExpo"
+        },
+        {
+          "id": "rotationX-14",
+          "timeMs": 11920,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotationX-15",
+          "timeMs": 13650,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotationX-16",
+          "timeMs": 14160,
+          "value": -3,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "rotationX-17",
+          "timeMs": 14720,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotationX-18",
+          "timeMs": 16450,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotationX-19",
+          "timeMs": 16960,
+          "value": 5,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "rotationX-20",
+          "timeMs": 17520,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotationX-21",
+          "timeMs": 19250,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotationX-22",
+          "timeMs": 19760,
+          "value": -4,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotationX-23",
+          "timeMs": 20320,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotationX-24",
+          "timeMs": 22050,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotationX-25",
+          "timeMs": 22560,
+          "value": 3,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotationX-26",
+          "timeMs": 23120,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotationX-27",
+          "timeMs": 24850,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotationX-28",
+          "timeMs": 25360,
+          "value": -5,
+          "easing": "easeOutExpo"
+        },
+        {
+          "id": "rotationX-29",
+          "timeMs": 25920,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotationX-30",
+          "timeMs": 27650,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotationX-31",
+          "timeMs": 28160,
+          "value": 4,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "rotationX-32",
+          "timeMs": 28720,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotationX-33",
+          "timeMs": 30450,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotationX-34",
+          "timeMs": 30960,
+          "value": -3,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "rotationX-35",
+          "timeMs": 31520,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotationX-36",
+          "timeMs": 33250,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotationX-37",
+          "timeMs": 33760,
+          "value": 3,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotationX-38",
+          "timeMs": 34320,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotationX-39",
+          "timeMs": 36050,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotationX-40",
+          "timeMs": 36560,
+          "value": -4,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotationX-41",
+          "timeMs": 37120,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotationX-42",
+          "timeMs": 38850,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotationX-43",
+          "timeMs": 39360,
+          "value": 2,
+          "easing": "easeOutExpo"
+        },
+        {
+          "id": "rotationX-44",
+          "timeMs": 39920,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotationX-45",
+          "timeMs": 41650,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotationX-46",
+          "timeMs": 42160,
+          "value": 0,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "rotationX-47",
+          "timeMs": 42720,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotationX-48",
+          "timeMs": 44450,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotationX-49",
+          "timeMs": 45000,
+          "value": 0,
+          "easing": "linear"
+        }
+      ]
+    },
+    {
+      "id": "track-rotationY",
+      "property": "rotationY",
+      "label": "rotationY",
+      "keyframes": [
+        {
+          "id": "rotationY-0",
+          "timeMs": 0,
+          "value": 0,
+          "easing": "linear"
+        },
+        {
+          "id": "rotationY-1",
+          "timeMs": 160,
+          "value": -7,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "rotationY-2",
+          "timeMs": 720,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotationY-3",
+          "timeMs": 2450,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotationY-4",
+          "timeMs": 2960,
+          "value": 6,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "rotationY-5",
+          "timeMs": 3520,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotationY-6",
+          "timeMs": 5250,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotationY-7",
+          "timeMs": 5760,
+          "value": -5,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotationY-8",
+          "timeMs": 6320,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotationY-9",
+          "timeMs": 8050,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotationY-10",
+          "timeMs": 8560,
+          "value": 8,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotationY-11",
+          "timeMs": 9120,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotationY-12",
+          "timeMs": 10850,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotationY-13",
+          "timeMs": 11360,
+          "value": -6,
+          "easing": "easeOutExpo"
+        },
+        {
+          "id": "rotationY-14",
+          "timeMs": 11920,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotationY-15",
+          "timeMs": 13650,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotationY-16",
+          "timeMs": 14160,
+          "value": 5,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "rotationY-17",
+          "timeMs": 14720,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotationY-18",
+          "timeMs": 16450,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotationY-19",
+          "timeMs": 16960,
+          "value": -8,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "rotationY-20",
+          "timeMs": 17520,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotationY-21",
+          "timeMs": 19250,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotationY-22",
+          "timeMs": 19760,
+          "value": 6,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotationY-23",
+          "timeMs": 20320,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotationY-24",
+          "timeMs": 22050,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotationY-25",
+          "timeMs": 22560,
+          "value": -5,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotationY-26",
+          "timeMs": 23120,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotationY-27",
+          "timeMs": 24850,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotationY-28",
+          "timeMs": 25360,
+          "value": 7,
+          "easing": "easeOutExpo"
+        },
+        {
+          "id": "rotationY-29",
+          "timeMs": 25920,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotationY-30",
+          "timeMs": 27650,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotationY-31",
+          "timeMs": 28160,
+          "value": -6,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "rotationY-32",
+          "timeMs": 28720,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotationY-33",
+          "timeMs": 30450,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotationY-34",
+          "timeMs": 30960,
+          "value": 5,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "rotationY-35",
+          "timeMs": 31520,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotationY-36",
+          "timeMs": 33250,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotationY-37",
+          "timeMs": 33760,
+          "value": -4,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotationY-38",
+          "timeMs": 34320,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotationY-39",
+          "timeMs": 36050,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotationY-40",
+          "timeMs": 36560,
+          "value": 5,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotationY-41",
+          "timeMs": 37120,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotationY-42",
+          "timeMs": 38850,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotationY-43",
+          "timeMs": 39360,
+          "value": -3,
+          "easing": "easeOutExpo"
+        },
+        {
+          "id": "rotationY-44",
+          "timeMs": 39920,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotationY-45",
+          "timeMs": 41650,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotationY-46",
+          "timeMs": 42160,
+          "value": 0,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "rotationY-47",
+          "timeMs": 42720,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "rotationY-48",
+          "timeMs": 44450,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "rotationY-49",
+          "timeMs": 45000,
+          "value": 0,
+          "easing": "linear"
+        }
+      ]
+    },
+    {
+      "id": "track-screenTurn",
+      "property": "screenTurn",
+      "label": "screenTurn",
+      "keyframes": [
+        {
+          "id": "screenTurn-0",
+          "timeMs": 0,
+          "value": 0,
+          "easing": "linear"
+        },
+        {
+          "id": "screenTurn-1",
+          "timeMs": 160,
+          "value": -9,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "screenTurn-2",
+          "timeMs": 720,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "screenTurn-3",
+          "timeMs": 2450,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "screenTurn-4",
+          "timeMs": 2960,
+          "value": 8,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "screenTurn-5",
+          "timeMs": 3520,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "screenTurn-6",
+          "timeMs": 5250,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "screenTurn-7",
+          "timeMs": 5760,
+          "value": -7,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "screenTurn-8",
+          "timeMs": 6320,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "screenTurn-9",
+          "timeMs": 8050,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "screenTurn-10",
+          "timeMs": 8560,
+          "value": 10,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "screenTurn-11",
+          "timeMs": 9120,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "screenTurn-12",
+          "timeMs": 10850,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "screenTurn-13",
+          "timeMs": 11360,
+          "value": -8,
+          "easing": "easeOutExpo"
+        },
+        {
+          "id": "screenTurn-14",
+          "timeMs": 11920,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "screenTurn-15",
+          "timeMs": 13650,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "screenTurn-16",
+          "timeMs": 14160,
+          "value": 6,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "screenTurn-17",
+          "timeMs": 14720,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "screenTurn-18",
+          "timeMs": 16450,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "screenTurn-19",
+          "timeMs": 16960,
+          "value": -10,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "screenTurn-20",
+          "timeMs": 17520,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "screenTurn-21",
+          "timeMs": 19250,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "screenTurn-22",
+          "timeMs": 19760,
+          "value": 7,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "screenTurn-23",
+          "timeMs": 20320,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "screenTurn-24",
+          "timeMs": 22050,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "screenTurn-25",
+          "timeMs": 22560,
+          "value": -6,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "screenTurn-26",
+          "timeMs": 23120,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "screenTurn-27",
+          "timeMs": 24850,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "screenTurn-28",
+          "timeMs": 25360,
+          "value": 9,
+          "easing": "easeOutExpo"
+        },
+        {
+          "id": "screenTurn-29",
+          "timeMs": 25920,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "screenTurn-30",
+          "timeMs": 27650,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "screenTurn-31",
+          "timeMs": 28160,
+          "value": -7,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "screenTurn-32",
+          "timeMs": 28720,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "screenTurn-33",
+          "timeMs": 30450,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "screenTurn-34",
+          "timeMs": 30960,
+          "value": 6,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "screenTurn-35",
+          "timeMs": 31520,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "screenTurn-36",
+          "timeMs": 33250,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "screenTurn-37",
+          "timeMs": 33760,
+          "value": -5,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "screenTurn-38",
+          "timeMs": 34320,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "screenTurn-39",
+          "timeMs": 36050,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "screenTurn-40",
+          "timeMs": 36560,
+          "value": 7,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "screenTurn-41",
+          "timeMs": 37120,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "screenTurn-42",
+          "timeMs": 38850,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "screenTurn-43",
+          "timeMs": 39360,
+          "value": -4,
+          "easing": "easeOutExpo"
+        },
+        {
+          "id": "screenTurn-44",
+          "timeMs": 39920,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "screenTurn-45",
+          "timeMs": 41650,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "screenTurn-46",
+          "timeMs": 42160,
+          "value": 0,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "screenTurn-47",
+          "timeMs": 42720,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "screenTurn-48",
+          "timeMs": 44450,
+          "value": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "screenTurn-49",
+          "timeMs": 45000,
+          "value": 0,
+          "easing": "linear"
+        }
       ]
     },
     {
       "id": "track-scale",
       "property": "scale",
-      "label": "Scale overshoot",
+      "label": "scale",
       "keyframes": [
-        { "id": "s-start", "timeMs": 0, "value": 0.72, "easing": "linear" },
-        { "id": "s-hit", "timeMs": 820, "value": 1.1, "easing": "easeOut" },
-        { "id": "s-settle", "timeMs": 1020, "value": 0.97, "easing": "easeOut" },
-        { "id": "s-rest", "timeMs": 1260, "value": 1, "easing": "easeOut" },
-        { "id": "s-breathe", "timeMs": 4300, "value": 1.025, "easing": "easeInOut" },
-        { "id": "s-breathe-rest", "timeMs": 4700, "value": 1, "easing": "easeOut" },
-        { "id": "s-end", "timeMs": 6200, "value": 1, "easing": "linear" }
+        {
+          "id": "scale-0",
+          "timeMs": 0,
+          "value": 1,
+          "easing": "linear"
+        },
+        {
+          "id": "scale-1",
+          "timeMs": 160,
+          "value": 0.92,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "scale-2",
+          "timeMs": 720,
+          "value": 1.015,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "scale-3",
+          "timeMs": 2450,
+          "value": 1.045,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "scale-4",
+          "timeMs": 2960,
+          "value": 1.08,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "scale-5",
+          "timeMs": 3520,
+          "value": 1.015,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "scale-6",
+          "timeMs": 5250,
+          "value": 1.045,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "scale-7",
+          "timeMs": 5760,
+          "value": 0.94,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "scale-8",
+          "timeMs": 6320,
+          "value": 1.015,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "scale-9",
+          "timeMs": 8050,
+          "value": 1.045,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "scale-10",
+          "timeMs": 8560,
+          "value": 1.06,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "scale-11",
+          "timeMs": 9120,
+          "value": 1.015,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "scale-12",
+          "timeMs": 10850,
+          "value": 1.045,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "scale-13",
+          "timeMs": 11360,
+          "value": 0.91,
+          "easing": "easeOutExpo"
+        },
+        {
+          "id": "scale-14",
+          "timeMs": 11920,
+          "value": 1.015,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "scale-15",
+          "timeMs": 13650,
+          "value": 1.045,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "scale-16",
+          "timeMs": 14160,
+          "value": 1.1,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "scale-17",
+          "timeMs": 14720,
+          "value": 1.015,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "scale-18",
+          "timeMs": 16450,
+          "value": 1.045,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "scale-19",
+          "timeMs": 16960,
+          "value": 0.95,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "scale-20",
+          "timeMs": 17520,
+          "value": 1.015,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "scale-21",
+          "timeMs": 19250,
+          "value": 1.045,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "scale-22",
+          "timeMs": 19760,
+          "value": 1.08,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "scale-23",
+          "timeMs": 20320,
+          "value": 1.015,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "scale-24",
+          "timeMs": 22050,
+          "value": 1.045,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "scale-25",
+          "timeMs": 22560,
+          "value": 0.9,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "scale-26",
+          "timeMs": 23120,
+          "value": 1.015,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "scale-27",
+          "timeMs": 24850,
+          "value": 1.045,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "scale-28",
+          "timeMs": 25360,
+          "value": 1.07,
+          "easing": "easeOutExpo"
+        },
+        {
+          "id": "scale-29",
+          "timeMs": 25920,
+          "value": 1.015,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "scale-30",
+          "timeMs": 27650,
+          "value": 1.045,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "scale-31",
+          "timeMs": 28160,
+          "value": 0.94,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "scale-32",
+          "timeMs": 28720,
+          "value": 1.015,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "scale-33",
+          "timeMs": 30450,
+          "value": 1.045,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "scale-34",
+          "timeMs": 30960,
+          "value": 1.09,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "scale-35",
+          "timeMs": 31520,
+          "value": 1.015,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "scale-36",
+          "timeMs": 33250,
+          "value": 1.045,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "scale-37",
+          "timeMs": 33760,
+          "value": 0.93,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "scale-38",
+          "timeMs": 34320,
+          "value": 1.015,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "scale-39",
+          "timeMs": 36050,
+          "value": 1.045,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "scale-40",
+          "timeMs": 36560,
+          "value": 1.05,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "scale-41",
+          "timeMs": 37120,
+          "value": 1.015,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "scale-42",
+          "timeMs": 38850,
+          "value": 1.045,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "scale-43",
+          "timeMs": 39360,
+          "value": 0.96,
+          "easing": "easeOutExpo"
+        },
+        {
+          "id": "scale-44",
+          "timeMs": 39920,
+          "value": 1.015,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "scale-45",
+          "timeMs": 41650,
+          "value": 1.045,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "scale-46",
+          "timeMs": 42160,
+          "value": 1,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "scale-47",
+          "timeMs": 42720,
+          "value": 1.015,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "scale-48",
+          "timeMs": 44450,
+          "value": 1.045,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "scale-49",
+          "timeMs": 45000,
+          "value": 1.045,
+          "easing": "linear"
+        }
       ]
     },
     {
       "id": "track-opacity",
       "property": "opacity",
-      "label": "Hero reveal",
+      "label": "opacity",
       "keyframes": [
-        { "id": "o-start", "timeMs": 0, "value": 0, "easing": "linear" },
-        { "id": "o-reveal", "timeMs": 650, "value": 1, "easing": "easeOut" },
-        { "id": "o-hold", "timeMs": 6200, "value": 1, "easing": "linear" }
+        {
+          "id": "opacity-0",
+          "timeMs": 0,
+          "value": 1,
+          "easing": "linear"
+        },
+        {
+          "id": "opacity-1",
+          "timeMs": 160,
+          "value": 1,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "opacity-2",
+          "timeMs": 720,
+          "value": 1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "opacity-3",
+          "timeMs": 2450,
+          "value": 1,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "opacity-4",
+          "timeMs": 2960,
+          "value": 1,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "opacity-5",
+          "timeMs": 3520,
+          "value": 1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "opacity-6",
+          "timeMs": 5250,
+          "value": 1,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "opacity-7",
+          "timeMs": 5760,
+          "value": 1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "opacity-8",
+          "timeMs": 6320,
+          "value": 1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "opacity-9",
+          "timeMs": 8050,
+          "value": 1,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "opacity-10",
+          "timeMs": 8560,
+          "value": 1,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "opacity-11",
+          "timeMs": 9120,
+          "value": 1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "opacity-12",
+          "timeMs": 10850,
+          "value": 1,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "opacity-13",
+          "timeMs": 11360,
+          "value": 1,
+          "easing": "easeOutExpo"
+        },
+        {
+          "id": "opacity-14",
+          "timeMs": 11920,
+          "value": 1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "opacity-15",
+          "timeMs": 13650,
+          "value": 1,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "opacity-16",
+          "timeMs": 14160,
+          "value": 1,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "opacity-17",
+          "timeMs": 14720,
+          "value": 1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "opacity-18",
+          "timeMs": 16450,
+          "value": 1,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "opacity-19",
+          "timeMs": 16960,
+          "value": 1,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "opacity-20",
+          "timeMs": 17520,
+          "value": 1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "opacity-21",
+          "timeMs": 19250,
+          "value": 1,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "opacity-22",
+          "timeMs": 19760,
+          "value": 1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "opacity-23",
+          "timeMs": 20320,
+          "value": 1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "opacity-24",
+          "timeMs": 22050,
+          "value": 1,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "opacity-25",
+          "timeMs": 22560,
+          "value": 1,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "opacity-26",
+          "timeMs": 23120,
+          "value": 1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "opacity-27",
+          "timeMs": 24850,
+          "value": 1,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "opacity-28",
+          "timeMs": 25360,
+          "value": 1,
+          "easing": "easeOutExpo"
+        },
+        {
+          "id": "opacity-29",
+          "timeMs": 25920,
+          "value": 1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "opacity-30",
+          "timeMs": 27650,
+          "value": 1,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "opacity-31",
+          "timeMs": 28160,
+          "value": 1,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "opacity-32",
+          "timeMs": 28720,
+          "value": 1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "opacity-33",
+          "timeMs": 30450,
+          "value": 1,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "opacity-34",
+          "timeMs": 30960,
+          "value": 1,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "opacity-35",
+          "timeMs": 31520,
+          "value": 1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "opacity-36",
+          "timeMs": 33250,
+          "value": 1,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "opacity-37",
+          "timeMs": 33760,
+          "value": 1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "opacity-38",
+          "timeMs": 34320,
+          "value": 1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "opacity-39",
+          "timeMs": 36050,
+          "value": 1,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "opacity-40",
+          "timeMs": 36560,
+          "value": 1,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "opacity-41",
+          "timeMs": 37120,
+          "value": 1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "opacity-42",
+          "timeMs": 38850,
+          "value": 1,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "opacity-43",
+          "timeMs": 39360,
+          "value": 1,
+          "easing": "easeOutExpo"
+        },
+        {
+          "id": "opacity-44",
+          "timeMs": 39920,
+          "value": 1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "opacity-45",
+          "timeMs": 41650,
+          "value": 1,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "opacity-46",
+          "timeMs": 42160,
+          "value": 1,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "opacity-47",
+          "timeMs": 42720,
+          "value": 1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "opacity-48",
+          "timeMs": 44450,
+          "value": 1,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "opacity-49",
+          "timeMs": 45000,
+          "value": 1,
+          "easing": "linear"
+        }
       ]
     },
     {
-      "id": "track-rotation-x", "property": "rotationX", "label": "3D tilt · X",
+      "id": "track-shineSweep",
+      "property": "shineSweep",
+      "label": "shineSweep",
       "keyframes": [
-        { "id": "rx-start", "timeMs": 0, "value": 34, "easing": "easeOut" },
-        { "id": "rx-settle", "timeMs": 1100, "value": 0, "easing": "easeOut" },
-        { "id": "rx-end", "timeMs": 6200, "value": 0, "easing": "linear" }
+        {
+          "id": "shineSweep-0",
+          "timeMs": 0,
+          "value": -1,
+          "easing": "linear"
+        },
+        {
+          "id": "shineSweep-1",
+          "timeMs": 160,
+          "value": -1,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "shineSweep-2",
+          "timeMs": 720,
+          "value": -1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "shineSweep-3",
+          "timeMs": 2450,
+          "value": -1,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "shineSweep-4",
+          "timeMs": 2960,
+          "value": 1,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "shineSweep-5",
+          "timeMs": 3520,
+          "value": 1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "shineSweep-6",
+          "timeMs": 5250,
+          "value": 1,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "shineSweep-7",
+          "timeMs": 5760,
+          "value": 0.2,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "shineSweep-8",
+          "timeMs": 6320,
+          "value": 0.2,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "shineSweep-9",
+          "timeMs": 8050,
+          "value": 0.2,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "shineSweep-10",
+          "timeMs": 8560,
+          "value": -1,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "shineSweep-11",
+          "timeMs": 9120,
+          "value": -1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "shineSweep-12",
+          "timeMs": 10850,
+          "value": -1,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "shineSweep-13",
+          "timeMs": 11360,
+          "value": 1,
+          "easing": "easeOutExpo"
+        },
+        {
+          "id": "shineSweep-14",
+          "timeMs": 11920,
+          "value": 1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "shineSweep-15",
+          "timeMs": 13650,
+          "value": 1,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "shineSweep-16",
+          "timeMs": 14160,
+          "value": 0.2,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "shineSweep-17",
+          "timeMs": 14720,
+          "value": 0.2,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "shineSweep-18",
+          "timeMs": 16450,
+          "value": 0.2,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "shineSweep-19",
+          "timeMs": 16960,
+          "value": -1,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "shineSweep-20",
+          "timeMs": 17520,
+          "value": -1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "shineSweep-21",
+          "timeMs": 19250,
+          "value": -1,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "shineSweep-22",
+          "timeMs": 19760,
+          "value": 1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "shineSweep-23",
+          "timeMs": 20320,
+          "value": 1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "shineSweep-24",
+          "timeMs": 22050,
+          "value": 1,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "shineSweep-25",
+          "timeMs": 22560,
+          "value": 0.2,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "shineSweep-26",
+          "timeMs": 23120,
+          "value": 0.2,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "shineSweep-27",
+          "timeMs": 24850,
+          "value": 0.2,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "shineSweep-28",
+          "timeMs": 25360,
+          "value": -1,
+          "easing": "easeOutExpo"
+        },
+        {
+          "id": "shineSweep-29",
+          "timeMs": 25920,
+          "value": -1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "shineSweep-30",
+          "timeMs": 27650,
+          "value": -1,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "shineSweep-31",
+          "timeMs": 28160,
+          "value": 1,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "shineSweep-32",
+          "timeMs": 28720,
+          "value": 1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "shineSweep-33",
+          "timeMs": 30450,
+          "value": 1,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "shineSweep-34",
+          "timeMs": 30960,
+          "value": 0.2,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "shineSweep-35",
+          "timeMs": 31520,
+          "value": 0.2,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "shineSweep-36",
+          "timeMs": 33250,
+          "value": 0.2,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "shineSweep-37",
+          "timeMs": 33760,
+          "value": -1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "shineSweep-38",
+          "timeMs": 34320,
+          "value": -1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "shineSweep-39",
+          "timeMs": 36050,
+          "value": -1,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "shineSweep-40",
+          "timeMs": 36560,
+          "value": 1,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "shineSweep-41",
+          "timeMs": 37120,
+          "value": 1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "shineSweep-42",
+          "timeMs": 38850,
+          "value": 1,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "shineSweep-43",
+          "timeMs": 39360,
+          "value": 0.2,
+          "easing": "easeOutExpo"
+        },
+        {
+          "id": "shineSweep-44",
+          "timeMs": 39920,
+          "value": 0.2,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "shineSweep-45",
+          "timeMs": 41650,
+          "value": 0.2,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "shineSweep-46",
+          "timeMs": 42160,
+          "value": -1,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "shineSweep-47",
+          "timeMs": 42720,
+          "value": -1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "shineSweep-48",
+          "timeMs": 44450,
+          "value": -1,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "shineSweep-49",
+          "timeMs": 45000,
+          "value": -1,
+          "easing": "linear"
+        }
       ]
     },
     {
-      "id": "track-rotation-y", "property": "rotationY", "label": "3D turn · Y",
+      "id": "track-contrast",
+      "property": "contrast",
+      "label": "contrast",
       "keyframes": [
-        { "id": "ry-start", "timeMs": 0, "value": -58, "easing": "easeOut" },
-        { "id": "ry-settle", "timeMs": 1050, "value": 0, "easing": "easeOut" },
-        { "id": "ry-end", "timeMs": 6200, "value": 0, "easing": "linear" }
+        {
+          "id": "contrast-0",
+          "timeMs": 0,
+          "value": 1.08,
+          "easing": "linear"
+        },
+        {
+          "id": "contrast-1",
+          "timeMs": 160,
+          "value": 1.12,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "contrast-2",
+          "timeMs": 720,
+          "value": 1.12,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "contrast-3",
+          "timeMs": 2450,
+          "value": 1.12,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "contrast-4",
+          "timeMs": 2960,
+          "value": 1.04,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "contrast-5",
+          "timeMs": 3520,
+          "value": 1.04,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "contrast-6",
+          "timeMs": 5250,
+          "value": 1.04,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "contrast-7",
+          "timeMs": 5760,
+          "value": 1.18,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "contrast-8",
+          "timeMs": 6320,
+          "value": 1.18,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "contrast-9",
+          "timeMs": 8050,
+          "value": 1.18,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "contrast-10",
+          "timeMs": 8560,
+          "value": 1.08,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "contrast-11",
+          "timeMs": 9120,
+          "value": 1.08,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "contrast-12",
+          "timeMs": 10850,
+          "value": 1.08,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "contrast-13",
+          "timeMs": 11360,
+          "value": 1.12,
+          "easing": "easeOutExpo"
+        },
+        {
+          "id": "contrast-14",
+          "timeMs": 11920,
+          "value": 1.12,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "contrast-15",
+          "timeMs": 13650,
+          "value": 1.12,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "contrast-16",
+          "timeMs": 14160,
+          "value": 1.04,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "contrast-17",
+          "timeMs": 14720,
+          "value": 1.04,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "contrast-18",
+          "timeMs": 16450,
+          "value": 1.04,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "contrast-19",
+          "timeMs": 16960,
+          "value": 1.18,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "contrast-20",
+          "timeMs": 17520,
+          "value": 1.18,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "contrast-21",
+          "timeMs": 19250,
+          "value": 1.18,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "contrast-22",
+          "timeMs": 19760,
+          "value": 1.08,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "contrast-23",
+          "timeMs": 20320,
+          "value": 1.08,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "contrast-24",
+          "timeMs": 22050,
+          "value": 1.08,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "contrast-25",
+          "timeMs": 22560,
+          "value": 1.12,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "contrast-26",
+          "timeMs": 23120,
+          "value": 1.12,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "contrast-27",
+          "timeMs": 24850,
+          "value": 1.12,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "contrast-28",
+          "timeMs": 25360,
+          "value": 1.04,
+          "easing": "easeOutExpo"
+        },
+        {
+          "id": "contrast-29",
+          "timeMs": 25920,
+          "value": 1.04,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "contrast-30",
+          "timeMs": 27650,
+          "value": 1.04,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "contrast-31",
+          "timeMs": 28160,
+          "value": 1.18,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "contrast-32",
+          "timeMs": 28720,
+          "value": 1.18,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "contrast-33",
+          "timeMs": 30450,
+          "value": 1.18,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "contrast-34",
+          "timeMs": 30960,
+          "value": 1.08,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "contrast-35",
+          "timeMs": 31520,
+          "value": 1.08,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "contrast-36",
+          "timeMs": 33250,
+          "value": 1.08,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "contrast-37",
+          "timeMs": 33760,
+          "value": 1.12,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "contrast-38",
+          "timeMs": 34320,
+          "value": 1.12,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "contrast-39",
+          "timeMs": 36050,
+          "value": 1.12,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "contrast-40",
+          "timeMs": 36560,
+          "value": 1.04,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "contrast-41",
+          "timeMs": 37120,
+          "value": 1.04,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "contrast-42",
+          "timeMs": 38850,
+          "value": 1.04,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "contrast-43",
+          "timeMs": 39360,
+          "value": 1.18,
+          "easing": "easeOutExpo"
+        },
+        {
+          "id": "contrast-44",
+          "timeMs": 39920,
+          "value": 1.18,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "contrast-45",
+          "timeMs": 41650,
+          "value": 1.18,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "contrast-46",
+          "timeMs": 42160,
+          "value": 1.08,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "contrast-47",
+          "timeMs": 42720,
+          "value": 1.08,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "contrast-48",
+          "timeMs": 44450,
+          "value": 1.08,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "contrast-49",
+          "timeMs": 45000,
+          "value": 1.08,
+          "easing": "linear"
+        }
       ]
     },
     {
-      "id": "track-screen-turn", "property": "screenTurn", "label": "Screen turn",
+      "id": "track-brightness",
+      "property": "brightness",
+      "label": "brightness",
       "keyframes": [
-        { "id": "st-start", "timeMs": 0, "value": -42, "easing": "easeOut" },
-        { "id": "st-settle", "timeMs": 800, "value": 0, "easing": "easeInOut" },
-        { "id": "st-rest", "timeMs": 6200, "value": 0, "easing": "linear" }
+        {
+          "id": "brightness-0",
+          "timeMs": 0,
+          "value": 1,
+          "easing": "linear"
+        },
+        {
+          "id": "brightness-1",
+          "timeMs": 160,
+          "value": 0.94,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "brightness-2",
+          "timeMs": 720,
+          "value": 0.94,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "brightness-3",
+          "timeMs": 2450,
+          "value": 0.94,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "brightness-4",
+          "timeMs": 2960,
+          "value": 1.02,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "brightness-5",
+          "timeMs": 3520,
+          "value": 1.02,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "brightness-6",
+          "timeMs": 5250,
+          "value": 1.02,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "brightness-7",
+          "timeMs": 5760,
+          "value": 0.96,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "brightness-8",
+          "timeMs": 6320,
+          "value": 0.96,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "brightness-9",
+          "timeMs": 8050,
+          "value": 0.96,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "brightness-10",
+          "timeMs": 8560,
+          "value": 1.04,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "brightness-11",
+          "timeMs": 9120,
+          "value": 1.04,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "brightness-12",
+          "timeMs": 10850,
+          "value": 1.04,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "brightness-13",
+          "timeMs": 11360,
+          "value": 0.94,
+          "easing": "easeOutExpo"
+        },
+        {
+          "id": "brightness-14",
+          "timeMs": 11920,
+          "value": 0.94,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "brightness-15",
+          "timeMs": 13650,
+          "value": 0.94,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "brightness-16",
+          "timeMs": 14160,
+          "value": 1.02,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "brightness-17",
+          "timeMs": 14720,
+          "value": 1.02,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "brightness-18",
+          "timeMs": 16450,
+          "value": 1.02,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "brightness-19",
+          "timeMs": 16960,
+          "value": 0.96,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "brightness-20",
+          "timeMs": 17520,
+          "value": 0.96,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "brightness-21",
+          "timeMs": 19250,
+          "value": 0.96,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "brightness-22",
+          "timeMs": 19760,
+          "value": 1.04,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "brightness-23",
+          "timeMs": 20320,
+          "value": 1.04,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "brightness-24",
+          "timeMs": 22050,
+          "value": 1.04,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "brightness-25",
+          "timeMs": 22560,
+          "value": 0.94,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "brightness-26",
+          "timeMs": 23120,
+          "value": 0.94,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "brightness-27",
+          "timeMs": 24850,
+          "value": 0.94,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "brightness-28",
+          "timeMs": 25360,
+          "value": 1.02,
+          "easing": "easeOutExpo"
+        },
+        {
+          "id": "brightness-29",
+          "timeMs": 25920,
+          "value": 1.02,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "brightness-30",
+          "timeMs": 27650,
+          "value": 1.02,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "brightness-31",
+          "timeMs": 28160,
+          "value": 0.96,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "brightness-32",
+          "timeMs": 28720,
+          "value": 0.96,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "brightness-33",
+          "timeMs": 30450,
+          "value": 0.96,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "brightness-34",
+          "timeMs": 30960,
+          "value": 1.04,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "brightness-35",
+          "timeMs": 31520,
+          "value": 1.04,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "brightness-36",
+          "timeMs": 33250,
+          "value": 1.04,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "brightness-37",
+          "timeMs": 33760,
+          "value": 0.94,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "brightness-38",
+          "timeMs": 34320,
+          "value": 0.94,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "brightness-39",
+          "timeMs": 36050,
+          "value": 0.94,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "brightness-40",
+          "timeMs": 36560,
+          "value": 1.02,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "brightness-41",
+          "timeMs": 37120,
+          "value": 1.02,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "brightness-42",
+          "timeMs": 38850,
+          "value": 1.02,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "brightness-43",
+          "timeMs": 39360,
+          "value": 0.96,
+          "easing": "easeOutExpo"
+        },
+        {
+          "id": "brightness-44",
+          "timeMs": 39920,
+          "value": 0.96,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "brightness-45",
+          "timeMs": 41650,
+          "value": 0.96,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "brightness-46",
+          "timeMs": 42160,
+          "value": 1.04,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "brightness-47",
+          "timeMs": 42720,
+          "value": 1.04,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "brightness-48",
+          "timeMs": 44450,
+          "value": 1.04,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "brightness-49",
+          "timeMs": 45000,
+          "value": 1.04,
+          "easing": "linear"
+        }
       ]
     },
     {
-      "id": "track-shine-sweep", "property": "shineSweep", "label": "Shine sweep",
+      "id": "track-reflection",
+      "property": "reflection",
+      "label": "reflection",
       "keyframes": [
-        { "id": "shine-start", "timeMs": 800, "value": -1, "easing": "linear" },
-        { "id": "shine-mid", "timeMs": 1600, "value": 0, "easing": "easeInOut" },
-        { "id": "shine-end", "timeMs": 2400, "value": 1, "easing": "easeInOut" },
-        { "id": "shine-reset", "timeMs": 6200, "value": -1, "easing": "linear" }
-      ]
-    },
-    {
-      "id": "track-contrast", "property": "contrast", "label": "Contrast pulse",
-      "keyframes": [
-        { "id": "contrast-start", "timeMs": 0, "value": 1.7, "easing": "easeOut" },
-        { "id": "contrast-rest", "timeMs": 1000, "value": 1.24, "easing": "easeOut" },
-        { "id": "contrast-end", "timeMs": 6200, "value": 1.24, "easing": "linear" }
+        {
+          "id": "reflection-0",
+          "timeMs": 0,
+          "value": 0.06,
+          "easing": "linear"
+        },
+        {
+          "id": "reflection-1",
+          "timeMs": 160,
+          "value": 0.04,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "reflection-2",
+          "timeMs": 720,
+          "value": 0.04,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "reflection-3",
+          "timeMs": 2450,
+          "value": 0.04,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "reflection-4",
+          "timeMs": 2960,
+          "value": 0.18,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "reflection-5",
+          "timeMs": 3520,
+          "value": 0.18,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "reflection-6",
+          "timeMs": 5250,
+          "value": 0.18,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "reflection-7",
+          "timeMs": 5760,
+          "value": 0.08,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "reflection-8",
+          "timeMs": 6320,
+          "value": 0.08,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "reflection-9",
+          "timeMs": 8050,
+          "value": 0.08,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "reflection-10",
+          "timeMs": 8560,
+          "value": 0.12,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "reflection-11",
+          "timeMs": 9120,
+          "value": 0.12,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "reflection-12",
+          "timeMs": 10850,
+          "value": 0.12,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "reflection-13",
+          "timeMs": 11360,
+          "value": 0.04,
+          "easing": "easeOutExpo"
+        },
+        {
+          "id": "reflection-14",
+          "timeMs": 11920,
+          "value": 0.04,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "reflection-15",
+          "timeMs": 13650,
+          "value": 0.04,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "reflection-16",
+          "timeMs": 14160,
+          "value": 0.18,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "reflection-17",
+          "timeMs": 14720,
+          "value": 0.18,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "reflection-18",
+          "timeMs": 16450,
+          "value": 0.18,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "reflection-19",
+          "timeMs": 16960,
+          "value": 0.08,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "reflection-20",
+          "timeMs": 17520,
+          "value": 0.08,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "reflection-21",
+          "timeMs": 19250,
+          "value": 0.08,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "reflection-22",
+          "timeMs": 19760,
+          "value": 0.12,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "reflection-23",
+          "timeMs": 20320,
+          "value": 0.12,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "reflection-24",
+          "timeMs": 22050,
+          "value": 0.12,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "reflection-25",
+          "timeMs": 22560,
+          "value": 0.04,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "reflection-26",
+          "timeMs": 23120,
+          "value": 0.04,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "reflection-27",
+          "timeMs": 24850,
+          "value": 0.04,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "reflection-28",
+          "timeMs": 25360,
+          "value": 0.18,
+          "easing": "easeOutExpo"
+        },
+        {
+          "id": "reflection-29",
+          "timeMs": 25920,
+          "value": 0.18,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "reflection-30",
+          "timeMs": 27650,
+          "value": 0.18,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "reflection-31",
+          "timeMs": 28160,
+          "value": 0.08,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "reflection-32",
+          "timeMs": 28720,
+          "value": 0.08,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "reflection-33",
+          "timeMs": 30450,
+          "value": 0.08,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "reflection-34",
+          "timeMs": 30960,
+          "value": 0.12,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "reflection-35",
+          "timeMs": 31520,
+          "value": 0.12,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "reflection-36",
+          "timeMs": 33250,
+          "value": 0.12,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "reflection-37",
+          "timeMs": 33760,
+          "value": 0.04,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "reflection-38",
+          "timeMs": 34320,
+          "value": 0.04,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "reflection-39",
+          "timeMs": 36050,
+          "value": 0.04,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "reflection-40",
+          "timeMs": 36560,
+          "value": 0.18,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "reflection-41",
+          "timeMs": 37120,
+          "value": 0.18,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "reflection-42",
+          "timeMs": 38850,
+          "value": 0.18,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "reflection-43",
+          "timeMs": 39360,
+          "value": 0.08,
+          "easing": "easeOutExpo"
+        },
+        {
+          "id": "reflection-44",
+          "timeMs": 39920,
+          "value": 0.08,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "reflection-45",
+          "timeMs": 41650,
+          "value": 0.08,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "reflection-46",
+          "timeMs": 42160,
+          "value": 0.12,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "reflection-47",
+          "timeMs": 42720,
+          "value": 0.12,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "reflection-48",
+          "timeMs": 44450,
+          "value": 0.12,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "reflection-49",
+          "timeMs": 45000,
+          "value": 0.12,
+          "easing": "linear"
+        }
       ]
     }
   ],
   "scenes": [
-    { "id": "scene-entry", "startMs": 0, "label": "NEXT LEVEL", "subtitle": "A BETTER PLACE TO PLAY", "background": "#070912", "objectColor": "#727bff", "transition": { "type": "cut", "durationMs": 620 }, "entrance": { "type": "rotateIn", "durationMs": 760 } },
-    { "id": "scene-community", "startMs": 2200, "label": "FIND YOUR PEOPLE", "subtitle": "GAMES · EVENTS · REAL COMMUNITY", "background": "#080c1a", "objectColor": "#47d9ff", "transition": { "type": "iris", "durationMs": 760 }, "entrance": { "type": "fadeUp", "durationMs": 620 } },
-    { "id": "scene-cta", "startMs": 4550, "label": "YOUR NEXT LEVEL", "subtitle": "JOIN OUR DISCORD TODAY", "background": "#110818", "objectColor": "#ff5f9b", "transition": { "type": "push", "durationMs": 720 }, "entrance": { "type": "pop", "durationMs": 520 } }
+    {
+      "id": "scene-nl-01",
+      "startMs": 0,
+      "label": "WHO'S ONLINE?",
+      "subtitle": "THE NIGHT IS JUST GETTING STARTED",
+      "background": "#050610",
+      "objectColor": "#a88aff",
+      "presentation": "kinetic",
+      "backdrop": "scan",
+      "titleSize": 158,
+      "titleY": 0.44,
+      "titleAlign": "center",
+      "fontFamily": "Archivo Black",
+      "transition": {
+        "type": "cut",
+        "durationMs": 180
+      },
+      "entrance": {
+        "type": "blurIn",
+        "durationMs": 560
+      }
+    },
+    {
+      "id": "scene-nl-02",
+      "startMs": 2800,
+      "label": "NEXT LEVEL",
+      "subtitle": "YOUR PEOPLE. YOUR GAMES. YOUR LOBBY.",
+      "background": "#080717",
+      "objectColor": "#9f82ff",
+      "presentation": "kinetic",
+      "backdrop": "spotlight",
+      "titleSize": 206,
+      "titleY": 0.42,
+      "titleAlign": "center",
+      "fontFamily": "Anton",
+      "transition": {
+        "type": "flash",
+        "durationMs": 420
+      },
+      "entrance": {
+        "type": "pop",
+        "durationMs": 560
+      }
+    },
+    {
+      "id": "scene-nl-03",
+      "startMs": 5600,
+      "label": "NO SOLO QUEUE.",
+      "subtitle": "BETTER GAMES START WITH THE RIGHT SQUAD.",
+      "background": "#071018",
+      "objectColor": "#66dff3",
+      "presentation": "kinetic",
+      "backdrop": "arena",
+      "titleSize": 148,
+      "titleY": 0.46,
+      "titleAlign": "center",
+      "fontFamily": "Barlow Condensed",
+      "transition": {
+        "type": "push",
+        "durationMs": 420
+      },
+      "entrance": {
+        "type": "reveal",
+        "durationMs": 560
+      }
+    },
+    {
+      "id": "scene-nl-04",
+      "startMs": 8400,
+      "label": "FIND YOUR PEOPLE",
+      "subtitle": "VOICE CHAT · OPEN LOBBIES · GOOD COMPANY",
+      "background": "#100715",
+      "objectColor": "#ff70aa",
+      "presentation": "kinetic",
+      "backdrop": "burst",
+      "titleSize": 144,
+      "titleY": 0.4,
+      "titleAlign": "center",
+      "fontFamily": "Archivo Black",
+      "transition": {
+        "type": "zoom",
+        "durationMs": 420
+      },
+      "entrance": {
+        "type": "fadeUp",
+        "durationMs": 560
+      }
+    },
+    {
+      "id": "scene-nl-05",
+      "startMs": 11200,
+      "label": "SQUAD UP",
+      "subtitle": "THE GROUP CHAT FINALLY HAS A LOBBY.",
+      "background": "#070914",
+      "objectColor": "#b985ff",
+      "presentation": "kinetic",
+      "backdrop": "scan",
+      "titleSize": 174,
+      "titleY": 0.44,
+      "titleAlign": "center",
+      "fontFamily": "Archivo Black",
+      "transition": {
+        "type": "cut",
+        "durationMs": 180
+      },
+      "entrance": {
+        "type": "bounce",
+        "durationMs": 560
+      }
+    },
+    {
+      "id": "scene-nl-06",
+      "startMs": 14000,
+      "label": "PICK YOUR GAME",
+      "subtitle": "TONIGHT’S PLAN: WHATEVER YOU’RE INTO.",
+      "background": "#101009",
+      "objectColor": "#f4bd68",
+      "presentation": "kinetic",
+      "backdrop": "spotlight",
+      "titleSize": 138,
+      "titleY": 0.47,
+      "titleAlign": "center",
+      "fontFamily": "Anton",
+      "transition": {
+        "type": "reflectionFlip",
+        "durationMs": 420
+      },
+      "entrance": {
+        "type": "blurIn",
+        "durationMs": 560
+      }
+    },
+    {
+      "id": "scene-nl-07",
+      "startMs": 16800,
+      "label": "ONE MORE ROUND",
+      "subtitle": "THAT’S HOW THE BEST NIGHTS START.",
+      "background": "#06120f",
+      "objectColor": "#65e3d3",
+      "presentation": "kinetic",
+      "backdrop": "burst",
+      "titleSize": 154,
+      "titleY": 0.43,
+      "titleAlign": "center",
+      "fontFamily": "Barlow Condensed",
+      "transition": {
+        "type": "flash",
+        "durationMs": 420
+      },
+      "entrance": {
+        "type": "pop",
+        "durationMs": 560
+      }
+    },
+    {
+      "id": "scene-nl-08",
+      "startMs": 19600,
+      "label": "CLIPS. CHAOS. CARRY.",
+      "subtitle": "PLAY IT. SAVE IT. SEND IT TO THE SQUAD.",
+      "background": "#0c0716",
+      "objectColor": "#a88aff",
+      "presentation": "kinetic",
+      "backdrop": "arena",
+      "titleSize": 120,
+      "titleY": 0.43,
+      "titleAlign": "center",
+      "fontFamily": "Archivo Black",
+      "transition": {
+        "type": "wipe",
+        "durationMs": 420
+      },
+      "entrance": {
+        "type": "reveal",
+        "durationMs": 560
+      }
+    },
+    {
+      "id": "scene-nl-09",
+      "startMs": 22400,
+      "label": "VOICE ON.",
+      "subtitle": "YOU’RE NOT PLAYING ALONE ANYMORE.",
+      "background": "#061017",
+      "objectColor": "#62def1",
+      "presentation": "kinetic",
+      "backdrop": "scan",
+      "titleSize": 190,
+      "titleY": 0.39,
+      "titleAlign": "center",
+      "fontFamily": "Archivo Black",
+      "transition": {
+        "type": "zoom",
+        "durationMs": 420
+      },
+      "entrance": {
+        "type": "rotateIn",
+        "durationMs": 560
+      }
+    },
+    {
+      "id": "scene-nl-10",
+      "startMs": 25200,
+      "label": "ALWAYS SOMETHING",
+      "subtitle": "COMMUNITY NIGHTS · CHALLENGES · EVENTS",
+      "background": "#100a08",
+      "objectColor": "#f78b70",
+      "presentation": "kinetic",
+      "backdrop": "burst",
+      "titleSize": 138,
+      "titleY": 0.46,
+      "titleAlign": "center",
+      "fontFamily": "Anton",
+      "transition": {
+        "type": "push",
+        "durationMs": 420
+      },
+      "entrance": {
+        "type": "fadeUp",
+        "durationMs": 560
+      }
+    },
+    {
+      "id": "scene-nl-11",
+      "startMs": 28000,
+      "label": "YOUR NEXT MAIN",
+      "subtitle": "FIND YOUR PEOPLE, THEN FIND YOUR GAME.",
+      "background": "#0a0715",
+      "objectColor": "#d18aff",
+      "presentation": "kinetic",
+      "backdrop": "spotlight",
+      "titleSize": 152,
+      "titleY": 0.42,
+      "titleAlign": "center",
+      "fontFamily": "Barlow Condensed",
+      "transition": {
+        "type": "reflectionFlip",
+        "durationMs": 420
+      },
+      "entrance": {
+        "type": "bounce",
+        "durationMs": 560
+      }
+    },
+    {
+      "id": "scene-nl-12",
+      "startMs": 30800,
+      "label": "LATE NIGHTS",
+      "subtitle": "ONE LAST GAME TURNS INTO THREE.",
+      "background": "#06120f",
+      "objectColor": "#6fdcc3",
+      "presentation": "kinetic",
+      "backdrop": "arena",
+      "titleSize": 176,
+      "titleY": 0.44,
+      "titleAlign": "center",
+      "fontFamily": "Archivo Black",
+      "transition": {
+        "type": "flash",
+        "durationMs": 420
+      },
+      "entrance": {
+        "type": "pop",
+        "durationMs": 560
+      }
+    },
+    {
+      "id": "scene-nl-13",
+      "startMs": 33600,
+      "label": "GOOD GAMES.",
+      "subtitle": "BETTER PEOPLE.",
+      "background": "#111009",
+      "objectColor": "#ffc76a",
+      "presentation": "kinetic",
+      "backdrop": "burst",
+      "titleSize": 184,
+      "titleY": 0.42,
+      "titleAlign": "center",
+      "fontFamily": "Archivo Black",
+      "transition": {
+        "type": "wipe",
+        "durationMs": 420
+      },
+      "entrance": {
+        "type": "reveal",
+        "durationMs": 560
+      }
+    },
+    {
+      "id": "scene-nl-14",
+      "startMs": 36400,
+      "label": "THIS IS YOUR LOBBY",
+      "subtitle": "COME AS YOU ARE. BRING THE SQUAD.",
+      "background": "#090713",
+      "objectColor": "#a58cff",
+      "presentation": "kinetic",
+      "backdrop": "spotlight",
+      "titleSize": 136,
+      "titleY": 0.45,
+      "titleAlign": "center",
+      "fontFamily": "Anton",
+      "transition": {
+        "type": "zoom",
+        "durationMs": 420
+      },
+      "entrance": {
+        "type": "blurIn",
+        "durationMs": 560
+      }
+    },
+    {
+      "id": "scene-nl-15",
+      "startMs": 39200,
+      "label": "JOIN THE LOBBY.",
+      "subtitle": "YOUR NEXT FAVORITE SQUAD IS ONE CLICK AWAY.",
+      "background": "#071018",
+      "objectColor": "#69dff1",
+      "presentation": "kinetic",
+      "backdrop": "scan",
+      "titleSize": 184,
+      "titleY": 0.43,
+      "titleAlign": "center",
+      "fontFamily": "Barlow Condensed",
+      "transition": {
+        "type": "cut",
+        "durationMs": 180
+      },
+      "entrance": {
+        "type": "pop",
+        "durationMs": 560
+      }
+    },
+    {
+      "id": "scene-nl-16",
+      "startMs": 42000,
+      "label": "NEXT LEVEL",
+      "subtitle": "JOIN THE DISCORD COMMUNITY · YOUR CREW IS WAITING",
+      "background": "#080711",
+      "objectColor": "#b393ff",
+      "presentation": "kinetic",
+      "backdrop": "spotlight",
+      "titleSize": 224,
+      "titleY": 0.45,
+      "titleAlign": "center",
+      "fontFamily": "Archivo Black",
+      "transition": {
+        "type": "fade",
+        "durationMs": 420
+      },
+      "entrance": {
+        "type": "fadeUp",
+        "durationMs": 560
+      }
+    }
+  ],
+  "objects": [
+    {
+      "id": "nl-obj-001",
+      "name": "Beat 01 caption 1",
+      "type": "word",
+      "text": "THE NIGHT IS JUST GETTING STARTED",
+      "color": "#f4f5ff",
+      "colorEnd": "#a88aff",
+      "gradient": true,
+      "glow": 8,
+      "size": 980,
+      "fontSize": 60,
+      "fontFamily": "Anton",
+      "fontWeight": 800,
+      "letterSpacing": -0.6,
+      "keyframes": [
+        {
+          "id": "objkf-0",
+          "timeMs": 0,
+          "x": 240,
+          "y": 535,
+          "scale": 0.72,
+          "rotation": -5,
+          "opacity": 0,
+          "easing": "linear"
+        },
+        {
+          "id": "objkf-1",
+          "timeMs": 160,
+          "x": 240,
+          "y": 535,
+          "scale": 0.72,
+          "rotation": -5,
+          "opacity": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "objkf-2",
+          "timeMs": 580,
+          "x": 0,
+          "y": 455,
+          "scale": 1.06,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "objkf-3",
+          "timeMs": 820,
+          "x": 0,
+          "y": 450,
+          "scale": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "objkf-4",
+          "timeMs": 2440,
+          "x": 0,
+          "y": 450,
+          "scale": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "objkf-5",
+          "timeMs": 2720,
+          "x": -250,
+          "y": 315,
+          "scale": 0.68,
+          "rotation": 7,
+          "opacity": 0,
+          "easing": "easeInBack"
+        }
+      ],
+      "wrap": true
+    },
+    {
+      "id": "nl-obj-004",
+      "name": "Beat 02 caption 1",
+      "type": "word",
+      "text": "YOUR PEOPLE. YOUR GAMES. YOUR LOBBY.",
+      "color": "#f4f5ff",
+      "colorEnd": "#9f82ff",
+      "gradient": true,
+      "glow": 8,
+      "size": 980,
+      "fontSize": 60,
+      "fontFamily": "Anton",
+      "fontWeight": 800,
+      "letterSpacing": -0.6,
+      "keyframes": [
+        {
+          "id": "objkf-17",
+          "timeMs": 0,
+          "x": -240,
+          "y": 535,
+          "scale": 0.72,
+          "rotation": -5,
+          "opacity": 0,
+          "easing": "linear"
+        },
+        {
+          "id": "objkf-18",
+          "timeMs": 2960,
+          "x": -240,
+          "y": 535,
+          "scale": 0.72,
+          "rotation": -5,
+          "opacity": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "objkf-19",
+          "timeMs": 3380,
+          "x": 0,
+          "y": 455,
+          "scale": 1.06,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "objkf-20",
+          "timeMs": 3620,
+          "x": 0,
+          "y": 450,
+          "scale": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "objkf-21",
+          "timeMs": 5240,
+          "x": 0,
+          "y": 450,
+          "scale": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "objkf-22",
+          "timeMs": 5520,
+          "x": 250,
+          "y": 315,
+          "scale": 0.68,
+          "rotation": 7,
+          "opacity": 0,
+          "easing": "easeInBack"
+        }
+      ],
+      "wrap": true
+    },
+    {
+      "id": "nl-obj-007",
+      "name": "Beat 03 caption 1",
+      "type": "word",
+      "text": "BETTER GAMES START WITH THE RIGHT SQUAD.",
+      "color": "#f4f5ff",
+      "colorEnd": "#66dff3",
+      "gradient": true,
+      "glow": 8,
+      "size": 980,
+      "fontSize": 60,
+      "fontFamily": "Anton",
+      "fontWeight": 800,
+      "letterSpacing": -0.6,
+      "keyframes": [
+        {
+          "id": "objkf-34",
+          "timeMs": 0,
+          "x": 240,
+          "y": 535,
+          "scale": 0.72,
+          "rotation": -5,
+          "opacity": 0,
+          "easing": "linear"
+        },
+        {
+          "id": "objkf-35",
+          "timeMs": 5760,
+          "x": 240,
+          "y": 535,
+          "scale": 0.72,
+          "rotation": -5,
+          "opacity": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "objkf-36",
+          "timeMs": 6180,
+          "x": 0,
+          "y": 455,
+          "scale": 1.06,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "objkf-37",
+          "timeMs": 6420,
+          "x": 0,
+          "y": 450,
+          "scale": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "objkf-38",
+          "timeMs": 8040,
+          "x": 0,
+          "y": 450,
+          "scale": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "objkf-39",
+          "timeMs": 8320,
+          "x": -250,
+          "y": 315,
+          "scale": 0.68,
+          "rotation": 7,
+          "opacity": 0,
+          "easing": "easeInBack"
+        }
+      ],
+      "wrap": true
+    },
+    {
+      "id": "nl-obj-010",
+      "name": "Beat 04 caption 1",
+      "type": "word",
+      "text": "VOICE CHAT · OPEN LOBBIES · GOOD COMPANY",
+      "color": "#f4f5ff",
+      "colorEnd": "#ff70aa",
+      "gradient": true,
+      "glow": 8,
+      "size": 980,
+      "fontSize": 60,
+      "fontFamily": "Anton",
+      "fontWeight": 800,
+      "letterSpacing": -0.6,
+      "keyframes": [
+        {
+          "id": "objkf-51",
+          "timeMs": 0,
+          "x": -240,
+          "y": 535,
+          "scale": 0.72,
+          "rotation": -5,
+          "opacity": 0,
+          "easing": "linear"
+        },
+        {
+          "id": "objkf-52",
+          "timeMs": 8560,
+          "x": -240,
+          "y": 535,
+          "scale": 0.72,
+          "rotation": -5,
+          "opacity": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "objkf-53",
+          "timeMs": 8980,
+          "x": 0,
+          "y": 455,
+          "scale": 1.06,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "objkf-54",
+          "timeMs": 9220,
+          "x": 0,
+          "y": 450,
+          "scale": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "objkf-55",
+          "timeMs": 10840,
+          "x": 0,
+          "y": 450,
+          "scale": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "objkf-56",
+          "timeMs": 11120,
+          "x": 250,
+          "y": 315,
+          "scale": 0.68,
+          "rotation": 7,
+          "opacity": 0,
+          "easing": "easeInBack"
+        }
+      ],
+      "wrap": true
+    },
+    {
+      "id": "nl-obj-013",
+      "name": "Beat 05 caption 1",
+      "type": "word",
+      "text": "THE GROUP CHAT FINALLY HAS A LOBBY.",
+      "color": "#f4f5ff",
+      "colorEnd": "#b985ff",
+      "gradient": true,
+      "glow": 8,
+      "size": 980,
+      "fontSize": 60,
+      "fontFamily": "Anton",
+      "fontWeight": 800,
+      "letterSpacing": -0.6,
+      "keyframes": [
+        {
+          "id": "objkf-68",
+          "timeMs": 0,
+          "x": 240,
+          "y": 535,
+          "scale": 0.72,
+          "rotation": -5,
+          "opacity": 0,
+          "easing": "linear"
+        },
+        {
+          "id": "objkf-69",
+          "timeMs": 11360,
+          "x": 240,
+          "y": 535,
+          "scale": 0.72,
+          "rotation": -5,
+          "opacity": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "objkf-70",
+          "timeMs": 11780,
+          "x": 0,
+          "y": 455,
+          "scale": 1.06,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "objkf-71",
+          "timeMs": 12020,
+          "x": 0,
+          "y": 450,
+          "scale": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "objkf-72",
+          "timeMs": 13640,
+          "x": 0,
+          "y": 450,
+          "scale": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "objkf-73",
+          "timeMs": 13920,
+          "x": -250,
+          "y": 315,
+          "scale": 0.68,
+          "rotation": 7,
+          "opacity": 0,
+          "easing": "easeInBack"
+        }
+      ],
+      "wrap": true
+    },
+    {
+      "id": "nl-obj-016",
+      "name": "Beat 06 caption 1",
+      "type": "word",
+      "text": "TONIGHT’S PLAN: WHATEVER YOU’RE INTO.",
+      "color": "#f4f5ff",
+      "colorEnd": "#f4bd68",
+      "gradient": true,
+      "glow": 8,
+      "size": 980,
+      "fontSize": 60,
+      "fontFamily": "Anton",
+      "fontWeight": 800,
+      "letterSpacing": -0.6,
+      "keyframes": [
+        {
+          "id": "objkf-85",
+          "timeMs": 0,
+          "x": -240,
+          "y": 535,
+          "scale": 0.72,
+          "rotation": -5,
+          "opacity": 0,
+          "easing": "linear"
+        },
+        {
+          "id": "objkf-86",
+          "timeMs": 14160,
+          "x": -240,
+          "y": 535,
+          "scale": 0.72,
+          "rotation": -5,
+          "opacity": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "objkf-87",
+          "timeMs": 14580,
+          "x": 0,
+          "y": 455,
+          "scale": 1.06,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "objkf-88",
+          "timeMs": 14820,
+          "x": 0,
+          "y": 450,
+          "scale": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "objkf-89",
+          "timeMs": 16440,
+          "x": 0,
+          "y": 450,
+          "scale": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "objkf-90",
+          "timeMs": 16720,
+          "x": 250,
+          "y": 315,
+          "scale": 0.68,
+          "rotation": 7,
+          "opacity": 0,
+          "easing": "easeInBack"
+        }
+      ],
+      "wrap": true
+    },
+    {
+      "id": "nl-obj-019",
+      "name": "Beat 07 caption 1",
+      "type": "word",
+      "text": "THAT’S HOW THE BEST NIGHTS START.",
+      "color": "#f4f5ff",
+      "colorEnd": "#65e3d3",
+      "gradient": true,
+      "glow": 8,
+      "size": 980,
+      "fontSize": 60,
+      "fontFamily": "Anton",
+      "fontWeight": 800,
+      "letterSpacing": -0.6,
+      "keyframes": [
+        {
+          "id": "objkf-102",
+          "timeMs": 0,
+          "x": 240,
+          "y": 535,
+          "scale": 0.72,
+          "rotation": -5,
+          "opacity": 0,
+          "easing": "linear"
+        },
+        {
+          "id": "objkf-103",
+          "timeMs": 16960,
+          "x": 240,
+          "y": 535,
+          "scale": 0.72,
+          "rotation": -5,
+          "opacity": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "objkf-104",
+          "timeMs": 17380,
+          "x": 0,
+          "y": 455,
+          "scale": 1.06,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "objkf-105",
+          "timeMs": 17620,
+          "x": 0,
+          "y": 450,
+          "scale": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "objkf-106",
+          "timeMs": 19240,
+          "x": 0,
+          "y": 450,
+          "scale": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "objkf-107",
+          "timeMs": 19520,
+          "x": -250,
+          "y": 315,
+          "scale": 0.68,
+          "rotation": 7,
+          "opacity": 0,
+          "easing": "easeInBack"
+        }
+      ],
+      "wrap": true
+    },
+    {
+      "id": "nl-obj-022",
+      "name": "Beat 08 caption 1",
+      "type": "word",
+      "text": "PLAY IT. SAVE IT. SEND IT TO THE SQUAD.",
+      "color": "#f4f5ff",
+      "colorEnd": "#a88aff",
+      "gradient": true,
+      "glow": 8,
+      "size": 980,
+      "fontSize": 60,
+      "fontFamily": "Anton",
+      "fontWeight": 800,
+      "letterSpacing": -0.6,
+      "keyframes": [
+        {
+          "id": "objkf-119",
+          "timeMs": 0,
+          "x": -240,
+          "y": 535,
+          "scale": 0.72,
+          "rotation": -5,
+          "opacity": 0,
+          "easing": "linear"
+        },
+        {
+          "id": "objkf-120",
+          "timeMs": 19760,
+          "x": -240,
+          "y": 535,
+          "scale": 0.72,
+          "rotation": -5,
+          "opacity": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "objkf-121",
+          "timeMs": 20180,
+          "x": 0,
+          "y": 455,
+          "scale": 1.06,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "objkf-122",
+          "timeMs": 20420,
+          "x": 0,
+          "y": 450,
+          "scale": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "objkf-123",
+          "timeMs": 22040,
+          "x": 0,
+          "y": 450,
+          "scale": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "objkf-124",
+          "timeMs": 22320,
+          "x": 250,
+          "y": 315,
+          "scale": 0.68,
+          "rotation": 7,
+          "opacity": 0,
+          "easing": "easeInBack"
+        }
+      ],
+      "wrap": true
+    },
+    {
+      "id": "nl-obj-025",
+      "name": "Beat 09 caption 1",
+      "type": "word",
+      "text": "YOU’RE NOT PLAYING ALONE ANYMORE.",
+      "color": "#f4f5ff",
+      "colorEnd": "#62def1",
+      "gradient": true,
+      "glow": 8,
+      "size": 980,
+      "fontSize": 60,
+      "fontFamily": "Anton",
+      "fontWeight": 800,
+      "letterSpacing": -0.6,
+      "keyframes": [
+        {
+          "id": "objkf-136",
+          "timeMs": 0,
+          "x": 240,
+          "y": 535,
+          "scale": 0.72,
+          "rotation": -5,
+          "opacity": 0,
+          "easing": "linear"
+        },
+        {
+          "id": "objkf-137",
+          "timeMs": 22560,
+          "x": 240,
+          "y": 535,
+          "scale": 0.72,
+          "rotation": -5,
+          "opacity": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "objkf-138",
+          "timeMs": 22980,
+          "x": 0,
+          "y": 455,
+          "scale": 1.06,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "objkf-139",
+          "timeMs": 23220,
+          "x": 0,
+          "y": 450,
+          "scale": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "objkf-140",
+          "timeMs": 24840,
+          "x": 0,
+          "y": 450,
+          "scale": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "objkf-141",
+          "timeMs": 25120,
+          "x": -250,
+          "y": 315,
+          "scale": 0.68,
+          "rotation": 7,
+          "opacity": 0,
+          "easing": "easeInBack"
+        }
+      ],
+      "wrap": true
+    },
+    {
+      "id": "nl-obj-028",
+      "name": "Beat 10 caption 1",
+      "type": "word",
+      "text": "COMMUNITY NIGHTS · CHALLENGES · EVENTS",
+      "color": "#f4f5ff",
+      "colorEnd": "#f78b70",
+      "gradient": true,
+      "glow": 8,
+      "size": 980,
+      "fontSize": 60,
+      "fontFamily": "Anton",
+      "fontWeight": 800,
+      "letterSpacing": -0.6,
+      "keyframes": [
+        {
+          "id": "objkf-153",
+          "timeMs": 0,
+          "x": -240,
+          "y": 535,
+          "scale": 0.72,
+          "rotation": -5,
+          "opacity": 0,
+          "easing": "linear"
+        },
+        {
+          "id": "objkf-154",
+          "timeMs": 25360,
+          "x": -240,
+          "y": 535,
+          "scale": 0.72,
+          "rotation": -5,
+          "opacity": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "objkf-155",
+          "timeMs": 25780,
+          "x": 0,
+          "y": 455,
+          "scale": 1.06,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "objkf-156",
+          "timeMs": 26020,
+          "x": 0,
+          "y": 450,
+          "scale": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "objkf-157",
+          "timeMs": 27640,
+          "x": 0,
+          "y": 450,
+          "scale": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "objkf-158",
+          "timeMs": 27920,
+          "x": 250,
+          "y": 315,
+          "scale": 0.68,
+          "rotation": 7,
+          "opacity": 0,
+          "easing": "easeInBack"
+        }
+      ],
+      "wrap": true
+    },
+    {
+      "id": "nl-obj-031",
+      "name": "Beat 11 caption 1",
+      "type": "word",
+      "text": "FIND YOUR PEOPLE, THEN FIND YOUR GAME.",
+      "color": "#f4f5ff",
+      "colorEnd": "#d18aff",
+      "gradient": true,
+      "glow": 8,
+      "size": 980,
+      "fontSize": 60,
+      "fontFamily": "Anton",
+      "fontWeight": 800,
+      "letterSpacing": -0.6,
+      "keyframes": [
+        {
+          "id": "objkf-170",
+          "timeMs": 0,
+          "x": 240,
+          "y": 535,
+          "scale": 0.72,
+          "rotation": -5,
+          "opacity": 0,
+          "easing": "linear"
+        },
+        {
+          "id": "objkf-171",
+          "timeMs": 28160,
+          "x": 240,
+          "y": 535,
+          "scale": 0.72,
+          "rotation": -5,
+          "opacity": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "objkf-172",
+          "timeMs": 28580,
+          "x": 0,
+          "y": 455,
+          "scale": 1.06,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "objkf-173",
+          "timeMs": 28820,
+          "x": 0,
+          "y": 450,
+          "scale": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "objkf-174",
+          "timeMs": 30440,
+          "x": 0,
+          "y": 450,
+          "scale": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "objkf-175",
+          "timeMs": 30720,
+          "x": -250,
+          "y": 315,
+          "scale": 0.68,
+          "rotation": 7,
+          "opacity": 0,
+          "easing": "easeInBack"
+        }
+      ],
+      "wrap": true
+    },
+    {
+      "id": "nl-obj-034",
+      "name": "Beat 12 caption 1",
+      "type": "word",
+      "text": "ONE LAST GAME TURNS INTO THREE.",
+      "color": "#f4f5ff",
+      "colorEnd": "#6fdcc3",
+      "gradient": true,
+      "glow": 8,
+      "size": 980,
+      "fontSize": 60,
+      "fontFamily": "Anton",
+      "fontWeight": 800,
+      "letterSpacing": -0.6,
+      "keyframes": [
+        {
+          "id": "objkf-187",
+          "timeMs": 0,
+          "x": -240,
+          "y": 535,
+          "scale": 0.72,
+          "rotation": -5,
+          "opacity": 0,
+          "easing": "linear"
+        },
+        {
+          "id": "objkf-188",
+          "timeMs": 30960,
+          "x": -240,
+          "y": 535,
+          "scale": 0.72,
+          "rotation": -5,
+          "opacity": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "objkf-189",
+          "timeMs": 31380,
+          "x": 0,
+          "y": 455,
+          "scale": 1.06,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "objkf-190",
+          "timeMs": 31620,
+          "x": 0,
+          "y": 450,
+          "scale": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "objkf-191",
+          "timeMs": 33240,
+          "x": 0,
+          "y": 450,
+          "scale": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "objkf-192",
+          "timeMs": 33520,
+          "x": 250,
+          "y": 315,
+          "scale": 0.68,
+          "rotation": 7,
+          "opacity": 0,
+          "easing": "easeInBack"
+        }
+      ],
+      "wrap": true
+    },
+    {
+      "id": "nl-obj-037",
+      "name": "Beat 13 caption 1",
+      "type": "word",
+      "text": "BETTER PEOPLE.",
+      "color": "#f4f5ff",
+      "colorEnd": "#ffc76a",
+      "gradient": true,
+      "glow": 8,
+      "size": 980,
+      "fontSize": 78,
+      "fontFamily": "Anton",
+      "fontWeight": 800,
+      "letterSpacing": -0.6,
+      "keyframes": [
+        {
+          "id": "objkf-204",
+          "timeMs": 0,
+          "x": 240,
+          "y": 535,
+          "scale": 0.72,
+          "rotation": -5,
+          "opacity": 0,
+          "easing": "linear"
+        },
+        {
+          "id": "objkf-205",
+          "timeMs": 33760,
+          "x": 240,
+          "y": 535,
+          "scale": 0.72,
+          "rotation": -5,
+          "opacity": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "objkf-206",
+          "timeMs": 34180,
+          "x": 0,
+          "y": 455,
+          "scale": 1.06,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "objkf-207",
+          "timeMs": 34420,
+          "x": 0,
+          "y": 450,
+          "scale": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "objkf-208",
+          "timeMs": 36040,
+          "x": 0,
+          "y": 450,
+          "scale": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "objkf-209",
+          "timeMs": 36320,
+          "x": -250,
+          "y": 315,
+          "scale": 0.68,
+          "rotation": 7,
+          "opacity": 0,
+          "easing": "easeInBack"
+        }
+      ],
+      "wrap": true
+    },
+    {
+      "id": "nl-obj-040",
+      "name": "Beat 14 caption 1",
+      "type": "word",
+      "text": "COME AS YOU ARE. BRING THE SQUAD.",
+      "color": "#f4f5ff",
+      "colorEnd": "#a58cff",
+      "gradient": true,
+      "glow": 8,
+      "size": 980,
+      "fontSize": 60,
+      "fontFamily": "Anton",
+      "fontWeight": 800,
+      "letterSpacing": -0.6,
+      "keyframes": [
+        {
+          "id": "objkf-221",
+          "timeMs": 0,
+          "x": -240,
+          "y": 535,
+          "scale": 0.72,
+          "rotation": -5,
+          "opacity": 0,
+          "easing": "linear"
+        },
+        {
+          "id": "objkf-222",
+          "timeMs": 36560,
+          "x": -240,
+          "y": 535,
+          "scale": 0.72,
+          "rotation": -5,
+          "opacity": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "objkf-223",
+          "timeMs": 36980,
+          "x": 0,
+          "y": 455,
+          "scale": 1.06,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "objkf-224",
+          "timeMs": 37220,
+          "x": 0,
+          "y": 450,
+          "scale": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "objkf-225",
+          "timeMs": 38840,
+          "x": 0,
+          "y": 450,
+          "scale": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "objkf-226",
+          "timeMs": 39120,
+          "x": 250,
+          "y": 315,
+          "scale": 0.68,
+          "rotation": 7,
+          "opacity": 0,
+          "easing": "easeInBack"
+        }
+      ],
+      "wrap": true
+    },
+    {
+      "id": "nl-obj-043",
+      "name": "Beat 15 caption 1",
+      "type": "word",
+      "text": "YOUR NEXT FAVORITE SQUAD IS ONE CLICK AWAY.",
+      "color": "#f4f5ff",
+      "colorEnd": "#69dff1",
+      "gradient": true,
+      "glow": 8,
+      "size": 980,
+      "fontSize": 60,
+      "fontFamily": "Anton",
+      "fontWeight": 800,
+      "letterSpacing": -0.6,
+      "keyframes": [
+        {
+          "id": "objkf-238",
+          "timeMs": 0,
+          "x": 240,
+          "y": 535,
+          "scale": 0.72,
+          "rotation": -5,
+          "opacity": 0,
+          "easing": "linear"
+        },
+        {
+          "id": "objkf-239",
+          "timeMs": 39360,
+          "x": 240,
+          "y": 535,
+          "scale": 0.72,
+          "rotation": -5,
+          "opacity": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "objkf-240",
+          "timeMs": 39780,
+          "x": 0,
+          "y": 455,
+          "scale": 1.06,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "objkf-241",
+          "timeMs": 40020,
+          "x": 0,
+          "y": 450,
+          "scale": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "objkf-242",
+          "timeMs": 41640,
+          "x": 0,
+          "y": 450,
+          "scale": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "objkf-243",
+          "timeMs": 41920,
+          "x": -250,
+          "y": 315,
+          "scale": 0.68,
+          "rotation": 7,
+          "opacity": 0,
+          "easing": "easeInBack"
+        }
+      ],
+      "wrap": true
+    },
+    {
+      "id": "nl-obj-046",
+      "name": "Beat 16 caption 1",
+      "type": "word",
+      "text": "JOIN THE DISCORD COMMUNITY · YOUR CREW IS WAITING",
+      "color": "#f4f5ff",
+      "colorEnd": "#b393ff",
+      "gradient": true,
+      "glow": 8,
+      "size": 980,
+      "fontSize": 60,
+      "fontFamily": "Anton",
+      "fontWeight": 800,
+      "letterSpacing": -0.6,
+      "keyframes": [
+        {
+          "id": "objkf-255",
+          "timeMs": 0,
+          "x": -240,
+          "y": 535,
+          "scale": 0.72,
+          "rotation": -5,
+          "opacity": 0,
+          "easing": "linear"
+        },
+        {
+          "id": "objkf-256",
+          "timeMs": 42160,
+          "x": -240,
+          "y": 535,
+          "scale": 0.72,
+          "rotation": -5,
+          "opacity": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "objkf-257",
+          "timeMs": 42580,
+          "x": 0,
+          "y": 455,
+          "scale": 1.06,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "objkf-258",
+          "timeMs": 42820,
+          "x": 0,
+          "y": 450,
+          "scale": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeOutCubic"
+        },
+        {
+          "id": "objkf-259",
+          "timeMs": 44640,
+          "x": 0,
+          "y": 450,
+          "scale": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "objkf-260",
+          "timeMs": 44920,
+          "x": 250,
+          "y": 315,
+          "scale": 0.68,
+          "rotation": 7,
+          "opacity": 0,
+          "easing": "easeInBack"
+        }
+      ],
+      "wrap": true
+    },
+    {
+      "id": "nl-shape-01",
+      "name": "Beat 01 accent",
+      "type": "ring",
+      "color": "#a88aff",
+      "colorEnd": "#ffffff",
+      "gradient": true,
+      "glow": 28,
+      "size": 112,
+      "keyframes": [
+        {
+          "id": "nl-shape-kf-0-0",
+          "timeMs": 0,
+          "x": 430,
+          "y": -390,
+          "scale": 0.1,
+          "rotation": -20,
+          "opacity": 0,
+          "easing": "linear"
+        },
+        {
+          "id": "nl-shape-kf-0-1",
+          "timeMs": 200,
+          "x": 430,
+          "y": -390,
+          "scale": 0.1,
+          "rotation": -20,
+          "opacity": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "nl-shape-kf-0-2",
+          "timeMs": 620,
+          "x": 369.8,
+          "y": -368,
+          "scale": 1.08,
+          "rotation": 18,
+          "opacity": 0.9,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "nl-shape-kf-0-3",
+          "timeMs": 2420,
+          "x": 301,
+          "y": -405,
+          "scale": 0.82,
+          "rotation": 165,
+          "opacity": 0.62,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "nl-shape-kf-0-4",
+          "timeMs": 2720,
+          "x": 580.5,
+          "y": -315,
+          "scale": 0.05,
+          "rotation": 350,
+          "opacity": 0,
+          "easing": "easeInBack"
+        }
+      ]
+    },
+    {
+      "id": "nl-shape-03",
+      "name": "Beat 03 accent",
+      "type": "bolt",
+      "color": "#66dff3",
+      "colorEnd": "#ffffff",
+      "gradient": true,
+      "glow": 28,
+      "size": 78,
+      "keyframes": [
+        {
+          "id": "nl-shape-kf-2-0",
+          "timeMs": 0,
+          "x": -430,
+          "y": 420,
+          "scale": 0.1,
+          "rotation": -20,
+          "opacity": 0,
+          "easing": "linear"
+        },
+        {
+          "id": "nl-shape-kf-2-1",
+          "timeMs": 5800,
+          "x": -430,
+          "y": 420,
+          "scale": 0.1,
+          "rotation": -20,
+          "opacity": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "nl-shape-kf-2-2",
+          "timeMs": 6220,
+          "x": -369.8,
+          "y": 442,
+          "scale": 1.08,
+          "rotation": 18,
+          "opacity": 0.9,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "nl-shape-kf-2-3",
+          "timeMs": 8020,
+          "x": -301,
+          "y": 405,
+          "scale": 0.82,
+          "rotation": 165,
+          "opacity": 0.62,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "nl-shape-kf-2-4",
+          "timeMs": 8320,
+          "x": -580.5,
+          "y": 495,
+          "scale": 0.05,
+          "rotation": 350,
+          "opacity": 0,
+          "easing": "easeInBack"
+        }
+      ]
+    },
+    {
+      "id": "nl-shape-05",
+      "name": "Beat 05 accent",
+      "type": "star",
+      "color": "#b985ff",
+      "colorEnd": "#ffffff",
+      "gradient": true,
+      "glow": 28,
+      "size": 78,
+      "keyframes": [
+        {
+          "id": "nl-shape-kf-4-0",
+          "timeMs": 0,
+          "x": 430,
+          "y": 300,
+          "scale": 0.1,
+          "rotation": -20,
+          "opacity": 0,
+          "easing": "linear"
+        },
+        {
+          "id": "nl-shape-kf-4-1",
+          "timeMs": 11400,
+          "x": 430,
+          "y": 300,
+          "scale": 0.1,
+          "rotation": -20,
+          "opacity": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "nl-shape-kf-4-2",
+          "timeMs": 11820,
+          "x": 369.8,
+          "y": 322,
+          "scale": 1.08,
+          "rotation": 18,
+          "opacity": 0.9,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "nl-shape-kf-4-3",
+          "timeMs": 13620,
+          "x": 301,
+          "y": 285,
+          "scale": 0.82,
+          "rotation": 165,
+          "opacity": 0.62,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "nl-shape-kf-4-4",
+          "timeMs": 13920,
+          "x": 580.5,
+          "y": 375,
+          "scale": 0.05,
+          "rotation": 350,
+          "opacity": 0,
+          "easing": "easeInBack"
+        }
+      ]
+    },
+    {
+      "id": "nl-shape-07",
+      "name": "Beat 07 accent",
+      "type": "diamond",
+      "color": "#65e3d3",
+      "colorEnd": "#ffffff",
+      "gradient": true,
+      "glow": 28,
+      "size": 78,
+      "keyframes": [
+        {
+          "id": "nl-shape-kf-6-0",
+          "timeMs": 0,
+          "x": -430,
+          "y": -450,
+          "scale": 0.1,
+          "rotation": -20,
+          "opacity": 0,
+          "easing": "linear"
+        },
+        {
+          "id": "nl-shape-kf-6-1",
+          "timeMs": 17000,
+          "x": -430,
+          "y": -450,
+          "scale": 0.1,
+          "rotation": -20,
+          "opacity": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "nl-shape-kf-6-2",
+          "timeMs": 17420,
+          "x": -369.8,
+          "y": -428,
+          "scale": 1.08,
+          "rotation": 18,
+          "opacity": 0.9,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "nl-shape-kf-6-3",
+          "timeMs": 19220,
+          "x": -301,
+          "y": -465,
+          "scale": 0.82,
+          "rotation": 165,
+          "opacity": 0.62,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "nl-shape-kf-6-4",
+          "timeMs": 19520,
+          "x": -580.5,
+          "y": -375,
+          "scale": 0.05,
+          "rotation": 350,
+          "opacity": 0,
+          "easing": "easeInBack"
+        }
+      ]
+    },
+    {
+      "id": "nl-shape-09",
+      "name": "Beat 09 accent",
+      "type": "arrow",
+      "color": "#62def1",
+      "colorEnd": "#ffffff",
+      "gradient": true,
+      "glow": 28,
+      "size": 78,
+      "keyframes": [
+        {
+          "id": "nl-shape-kf-8-0",
+          "timeMs": 0,
+          "x": 430,
+          "y": 390,
+          "scale": 0.1,
+          "rotation": -20,
+          "opacity": 0,
+          "easing": "linear"
+        },
+        {
+          "id": "nl-shape-kf-8-1",
+          "timeMs": 22600,
+          "x": 430,
+          "y": 390,
+          "scale": 0.1,
+          "rotation": -20,
+          "opacity": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "nl-shape-kf-8-2",
+          "timeMs": 23020,
+          "x": 369.8,
+          "y": 412,
+          "scale": 1.08,
+          "rotation": 18,
+          "opacity": 0.9,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "nl-shape-kf-8-3",
+          "timeMs": 24820,
+          "x": 301,
+          "y": 375,
+          "scale": 0.82,
+          "rotation": 165,
+          "opacity": 0.62,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "nl-shape-kf-8-4",
+          "timeMs": 25120,
+          "x": 580.5,
+          "y": 465,
+          "scale": 0.05,
+          "rotation": 350,
+          "opacity": 0,
+          "easing": "easeInBack"
+        }
+      ]
+    },
+    {
+      "id": "nl-shape-11",
+      "name": "Beat 11 accent",
+      "type": "triangle",
+      "color": "#d18aff",
+      "colorEnd": "#ffffff",
+      "gradient": true,
+      "glow": 28,
+      "size": 78,
+      "keyframes": [
+        {
+          "id": "nl-shape-kf-10-0",
+          "timeMs": 0,
+          "x": -430,
+          "y": -300,
+          "scale": 0.1,
+          "rotation": -20,
+          "opacity": 0,
+          "easing": "linear"
+        },
+        {
+          "id": "nl-shape-kf-10-1",
+          "timeMs": 28200,
+          "x": -430,
+          "y": -300,
+          "scale": 0.1,
+          "rotation": -20,
+          "opacity": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "nl-shape-kf-10-2",
+          "timeMs": 28620,
+          "x": -369.8,
+          "y": -278,
+          "scale": 1.08,
+          "rotation": 18,
+          "opacity": 0.9,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "nl-shape-kf-10-3",
+          "timeMs": 30420,
+          "x": -301,
+          "y": -315,
+          "scale": 0.82,
+          "rotation": 165,
+          "opacity": 0.62,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "nl-shape-kf-10-4",
+          "timeMs": 30720,
+          "x": -580.5,
+          "y": -225,
+          "scale": 0.05,
+          "rotation": 350,
+          "opacity": 0,
+          "easing": "easeInBack"
+        }
+      ]
+    },
+    {
+      "id": "nl-shape-13",
+      "name": "Beat 13 accent",
+      "type": "hexagon",
+      "color": "#ffc76a",
+      "colorEnd": "#ffffff",
+      "gradient": true,
+      "glow": 28,
+      "size": 78,
+      "keyframes": [
+        {
+          "id": "nl-shape-kf-12-0",
+          "timeMs": 0,
+          "x": 430,
+          "y": 430,
+          "scale": 0.1,
+          "rotation": -20,
+          "opacity": 0,
+          "easing": "linear"
+        },
+        {
+          "id": "nl-shape-kf-12-1",
+          "timeMs": 33800,
+          "x": 430,
+          "y": 430,
+          "scale": 0.1,
+          "rotation": -20,
+          "opacity": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "nl-shape-kf-12-2",
+          "timeMs": 34220,
+          "x": 369.8,
+          "y": 452,
+          "scale": 1.08,
+          "rotation": 18,
+          "opacity": 0.9,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "nl-shape-kf-12-3",
+          "timeMs": 36020,
+          "x": 301,
+          "y": 415,
+          "scale": 0.82,
+          "rotation": 165,
+          "opacity": 0.62,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "nl-shape-kf-12-4",
+          "timeMs": 36320,
+          "x": 580.5,
+          "y": 505,
+          "scale": 0.05,
+          "rotation": 350,
+          "opacity": 0,
+          "easing": "easeInBack"
+        }
+      ]
+    },
+    {
+      "id": "nl-shape-15",
+      "name": "Beat 15 accent",
+      "type": "square",
+      "color": "#69dff1",
+      "colorEnd": "#ffffff",
+      "gradient": true,
+      "glow": 28,
+      "size": 78,
+      "keyframes": [
+        {
+          "id": "nl-shape-kf-14-0",
+          "timeMs": 0,
+          "x": -430,
+          "y": -410,
+          "scale": 0.1,
+          "rotation": -20,
+          "opacity": 0,
+          "easing": "linear"
+        },
+        {
+          "id": "nl-shape-kf-14-1",
+          "timeMs": 39400,
+          "x": -430,
+          "y": -410,
+          "scale": 0.1,
+          "rotation": -20,
+          "opacity": 0,
+          "easing": "easeInCubic"
+        },
+        {
+          "id": "nl-shape-kf-14-2",
+          "timeMs": 39820,
+          "x": -369.8,
+          "y": -388,
+          "scale": 1.08,
+          "rotation": 18,
+          "opacity": 0.9,
+          "easing": "easeOutBack"
+        },
+        {
+          "id": "nl-shape-kf-14-3",
+          "timeMs": 41620,
+          "x": -301,
+          "y": -425,
+          "scale": 0.82,
+          "rotation": 165,
+          "opacity": 0.62,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "id": "nl-shape-kf-14-4",
+          "timeMs": 41920,
+          "x": -580.5,
+          "y": -335,
+          "scale": 0.05,
+          "rotation": 350,
+          "opacity": 0,
+          "easing": "easeInBack"
+        }
+      ]
+    }
   ]
 }

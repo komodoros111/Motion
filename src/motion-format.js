@@ -1,4 +1,8 @@
+import { EASING_NAMES } from "./easing.js";
+import { MOTION_OBJECT_TYPES } from "./motion-objects.js";
+
 export const MOTION_FORMAT = "nirvy.motion";
+export const ANIMATABLE_PROPERTIES = ["x", "y", "rotation", "rotationX", "rotationY", "screenTurn", "scale", "opacity", "contrast", "brightness", "shineSweep", "reflection"];
 export const MOTION_VERSION = 1;
 export const MAX_BINARY_BYTES = 16 * 1024 * 1024;
 const MAGIC = new Uint8Array([0x4e, 0x56, 0x4d, 0x42]); // NVMB
@@ -73,6 +77,10 @@ export function validateMotionDocument(value) {
       sceneIds.add(scene.id); previousStart = scene.startMs;
       if (scene.transition !== undefined && (!scene.transition || !["cut", "fade", "push", "wipe", "curtain", "iris", "flip", "cube", "zoom", "flash", "reflectionFlip", "spin"].includes(scene.transition.type) || !Number.isFinite(scene.transition.durationMs) || scene.transition.durationMs < 100 || scene.transition.durationMs > 4000 || scene.startMs + (scene.transition.type === "cut" ? 0 : scene.transition.durationMs / 2) > value.durationMs)) throw new Error("Invalid scene transition type, duration, or timeline position.");
       if (scene.entrance !== undefined && (!scene.entrance || !["none", "fadeUp", "pop", "rotateIn", "blurIn", "reveal", "bounce"].includes(scene.entrance.type) || !Number.isFinite(scene.entrance.durationMs) || scene.entrance.durationMs < 180 || scene.entrance.durationMs > 1800)) throw new Error("Invalid scene entrance animation or duration.");
+      if (scene.enter !== undefined && scene.enter !== null && !["fade-up", "pop-in", "slide-left", "drop-bounce", "elastic-zoom", "flip-in-3d", "spring-rise"].includes(scene.enter)) throw new Error("Unsupported per-scene entrance preset.");
+      if (scene.reveal !== undefined && scene.reveal !== null && (!scene.reveal || !["none", "rise", "scale", "blur", "drop", "slide", "tilt"].includes(scene.reveal.style) || !["char", "word"].includes(scene.reveal.unit ?? "char") || !["forward", "center", "reverse"].includes(scene.reveal.order ?? "forward") || !Number.isFinite(scene.reveal.staggerMs ?? 40) || (scene.reveal.staggerMs ?? 40) < 0 || (scene.reveal.staggerMs ?? 40) > 500 || !Number.isFinite(scene.reveal.durationMs ?? 520) || (scene.reveal.durationMs ?? 520) < 100 || (scene.reveal.durationMs ?? 520) > 5000 || !Number.isFinite(scene.reveal.delayMs ?? 0) || (scene.reveal.delayMs ?? 0) < 0 || (scene.reveal.delayMs ?? 0) > 5000)) throw new Error("Invalid text reveal settings.");
+      const backdrop = scene.backdropMotion ?? (typeof scene.backdrop === "object" ? scene.backdrop : null);
+      if (backdrop && (!backdrop || !["none", "aurora", "particles", "rings", "grid"].includes(backdrop.type) || !Number.isFinite(backdrop.intensity ?? .6) || (backdrop.intensity ?? .6) < 0 || (backdrop.intensity ?? .6) > 1 || !Number.isFinite(backdrop.speed ?? 1) || (backdrop.speed ?? 1) < 0 || (backdrop.speed ?? 1) > 3)) throw new Error("Invalid animated backdrop settings.");
     }
     const transitionHalf = (scene) => scene.transition?.type === "cut" ? 0 : (scene.transition?.durationMs ?? 0) / 2;
     for (let i = 1; i < value.scenes.length; i++) {
@@ -82,8 +90,8 @@ export function validateMotionDocument(value) {
   if (value.narration !== undefined && (!value.narration || typeof value.narration !== "object" || typeof value.narration.text !== "string" || value.narration.text.length > 1000 || (value.narration.voiceURI !== undefined && (typeof value.narration.voiceURI !== "string" || value.narration.voiceURI.length > 500)) || (value.narration.rate !== undefined && (!Number.isFinite(value.narration.rate) || value.narration.rate < 0.5 || value.narration.rate > 2)))) throw new Error("Invalid narration: limit text to 1000 characters and speech rate to 0.5–2.");
   for (const key of ["background", "objectColor"]) if (value.canvas[key] !== undefined && (typeof value.canvas[key] !== "string" || !/^#[\da-f]{6}$/i.test(value.canvas[key]))) throw new Error(`Invalid ${key} color; use #RRGGBB hex format.`);
   if (!Array.isArray(value.tracks) || value.tracks.length > 64) throw new Error("Track list is invalid or exceeds the 64-track limit.");
-  const properties = new Set(["x", "y", "rotation", "rotationX", "rotationY", "screenTurn", "scale", "opacity", "contrast", "brightness", "shineSweep", "reflection"]);
-  const easing = new Set(["linear", "easeIn", "easeOut", "easeInOut"]);
+  const properties = new Set(ANIMATABLE_PROPERTIES);
+  const easing = new Set(EASING_NAMES);
   const ids = new Set(decorationIds);
   const usedProperties = new Set();
   let keyframeCount = 0;
@@ -106,6 +114,19 @@ export function validateMotionDocument(value) {
       if (["shine", "reflection", "opacity"].includes(track.property) && (frame.value < 0 || frame.value > 1)) throw new Error(`${track.property} must stay between 0 and 1.`);
       if (track.property === "shineSweep" && (frame.value < -1 || frame.value > 1)) throw new Error("shineSweep must stay between -1 and 1.");
       if (["contrast", "brightness"].includes(track.property) && (frame.value < 0 || frame.value > 3)) throw new Error(`${track.property} must stay between 0 and 3.`);
+    }
+  }
+  if (value.objects !== undefined && (!Array.isArray(value.objects) || value.objects.length > 24)) throw new Error("A project can contain up to 24 independent motion objects.");
+  for (const object of value.objects ?? []) {
+    if (!object || typeof object !== "object" || typeof object.id !== "string" || !object.id || ids.has(object.id) || typeof object.name !== "string" || !object.name || object.name.length > 24 || !MOTION_OBJECT_TYPES.includes(object.type) || typeof object.color !== "string" || !/^#[\da-f]{6}$/i.test(object.color) || (object.colorEnd !== undefined && (typeof object.colorEnd !== "string" || !/^#[\da-f]{6}$/i.test(object.colorEnd))) || (object.gradient !== undefined && typeof object.gradient !== "boolean") || (object.fillStyle !== undefined && !["solid", "linear", "radial"].includes(object.fillStyle)) || (object.shadow !== undefined && (!Number.isFinite(object.shadow) || object.shadow < 0 || object.shadow > 100)) || (object.innerShadow !== undefined && (!Number.isFinite(object.innerShadow) || object.innerShadow < 0 || object.innerShadow > 100)) || (object.wrap !== undefined && typeof object.wrap !== "boolean") || (object.glow !== undefined && (!Number.isFinite(object.glow) || object.glow < 0 || object.glow > 100)) || (object.text !== undefined && (typeof object.text !== "string" || object.text.length > 80)) || (object.fontSize !== undefined && (!Number.isFinite(object.fontSize) || object.fontSize < 12 || object.fontSize > 400)) || (object.fontWeight !== undefined && ![400, 500, 600, 700, 800, 900].includes(object.fontWeight)) || (object.fontFamily !== undefined && (typeof object.fontFamily !== "string" || object.fontFamily.length > 80 || !/^[\p{L}\p{N}][\p{L}\p{N} _.,'-]{0,79}$/u.test(object.fontFamily))) || (object.letterSpacing !== undefined && (!Number.isFinite(object.letterSpacing) || object.letterSpacing < -10 || object.letterSpacing > 30)) || !Number.isFinite(object.size) || object.size < 8 || object.size > 1200 || !Array.isArray(object.keyframes) || !object.keyframes.length) throw new Error("Invalid motion object: check ID, name, shape, styling, size, and keyframes.");
+    ids.add(object.id);
+    let previousObjectTime = -1;
+    for (const frame of object.keyframes) {
+      keyframeCount++;
+      if (keyframeCount > 10000) throw new Error("The project exceeds the 10,000-keyframe limit.");
+      if (!frame || typeof frame.id !== "string" || !frame.id || ids.has(frame.id) || !Number.isFinite(frame.timeMs) || frame.timeMs < 0 || frame.timeMs > value.durationMs || frame.timeMs <= previousObjectTime || !easing.has(frame.easing) || !["x", "y", "scale", "rotation", "opacity"].every((property) => Number.isFinite(frame[property]))) throw new Error("Invalid motion-object keyframe: use unique IDs, ordered times, numeric transforms, and supported easing.");
+      if (Math.abs(frame.x) > 100000 || Math.abs(frame.y) > 100000 || frame.scale < 0 || frame.scale > 100 || Math.abs(frame.rotation) > 360000 || frame.opacity < 0 || frame.opacity > 1) throw new Error("Motion-object keyframe values exceed the supported position, scale, rotation, or opacity range.");
+      ids.add(frame.id); previousObjectTime = frame.timeMs;
     }
   }
   for (const scene of value.scenes ?? []) {

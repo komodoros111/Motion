@@ -1,11 +1,12 @@
 {
   "name": "motion-ai-studio",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Local-first visual motion editor with AI handoff and a documented binary container.",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "node server.mjs",
-    "check": "node --check src/app.js && node --check src/motion-format.js && node --check src/video-export.js && node --check server.mjs"
+    "check": "node --check src/app.js && node --check src/motion-format.js && node --check src/video-export.js && node --check src/easing.js && node --check src/presets.js && node --check src/kinetic.js && node --check src/backdrop.js && node --check server.mjs",
+    "test": "node --test tests/*.test.js"
   }
 }

@@ -1,25 +1,37 @@
-# Next Level — Discord Promo
+# NEXT LEVEL — Kinetic Community Film
 
-**Afterburn** is a 6.2-second, 1920 × 1080 promo for the Next Level Discord community. It uses three distinct title cards, cool indigo and cyan into a warm magenta finish, a 3D title entrance, restrained contrast pulse, mirrored reflection, a single shine sweep, and two timed screen transitions. It does not invent an invite URL.
+The editor's **Next Level promo** button loads a 45-second, 1080 × 1920 vertical community film. It runs at 30 FPS and contains 16 story beats, 24 animated vector/text objects, 12 camera/effect tracks, and 736 keyframes. This revision replaces the earlier sequence of repeated title cards with kinetic typography, varied backdrops, moving accents, changing camera language, and a closing hold.
 
-## Sequence
+## Storyboard
 
-| Time | Scene / action |
-|---:|---|
-| 0–2.2 s | Indigo hook: “NEXT LEVEL” enters with X/Y tilt, a short screen turn, and a settling scale overshoot. |
-| 2.2 s | Reflection flip into cyan: “FIND YOUR PEOPLE.” One white shine sweep crosses the title during the opening hold. |
-| 4.55 s | Zoom through to the magenta CTA: “YOUR NEXT LEVEL.” |
-| 5.0–6.2 s | Hold the final “JOIN OUR DISCORD TODAY” card. |
+| Time | Main beat | Supporting line |
+|---|---|---|
+| 00:00–00:02.8 | WHO'S ONLINE? | The night is just getting started. |
+| 00:02.8–00:05.6 | NEXT LEVEL | Your people. Your games. Your lobby. |
+| 00:05.6–00:08.4 | NO SOLO QUEUE. | Better games start with the right squad. |
+| 00:08.4–00:11.2 | FIND YOUR PEOPLE | Voice chat · open lobbies · good company. |
+| 00:11.2–00:14 | SQUAD UP | The group chat finally has a lobby. |
+| 00:14–00:16.8 | PICK YOUR GAME | Tonight's plan: whatever you're into. |
+| 00:16.8–00:19.6 | ONE MORE ROUND | That's how the best nights start. |
+| 00:19.6–00:22.4 | CLIPS. CHAOS. CARRY. | Play it. Save it. Send it to the squad. |
+| 00:22.4–00:25.2 | VOICE ON. | You're not playing alone anymore. |
+| 00:25.2–00:28 | ALWAYS SOMETHING | Community nights · challenges · events. |
+| 00:28–00:30.8 | YOUR NEXT MAIN | Find your people, then find your game. |
+| 00:30.8–00:33.6 | LATE NIGHTS | One last game turns into three. |
+| 00:33.6–00:36.4 | GOOD GAMES. | Better people. |
+| 00:36.4–00:39.2 | THIS IS YOUR LOBBY | Come as you are. Bring the squad. |
+| 00:39.2–00:42 | JOIN THE LOBBY. | Your next favorite squad is one click away. |
+| 00:42–00:45 | NEXT LEVEL | Join the Discord community · your crew is waiting. |
 
-The transition windows are centered on scene markers. The JSON is the editable source; NVMB is the same project in the binary container.
+## Motion direction
 
-## Files and use
+- Titles use a no-card kinetic presentation with varied display fonts, scale, position, entrances, and camera easing.
+- Supporting lines animate independently below the title, with accent shapes adding a second visual layer. Scene backgrounds alternate among scan, arena, burst, and spotlight treatments.
+- Cuts, pushes, zooms, wipes, flashes, and a reflection turn create varied transitions; the final message holds to the end.
+- The editor stage and WebM exporter support the same kinetic scene presentation. WebM is silent; optional narration remains saved with the project but is not mixed into export.
 
-- `next-level-promo.motion.json`: editable source.
-- `next-level-promo.nvmb`: the same composition encoded in NVMB v1.
+## Reference and originality
 
-Click **Next Level promo** in the editor to open the JSON. Your previous project can be restored from the top bar. Scrub the orange scene markers and the animation tracks to inspect each transition.
+The public YouTube Short [“Claude Code Made These Motion Graphics From ONE Prompt” by @edita.visuals](https://www.youtube.com/shorts/uGoQJJ76tSE) (51.56 seconds) informed the emphasis on changing visual beats, kinetic type, demonstrations, and a deliberate close. The review was based on visible samples at roughly five-second intervals, not an exhaustive extraction of every frame. This project does not use the reference's footage, frames, text, code, or logo; copy, art direction, and animation data are original. No Discord invite URL is invented.
 
-## Before publishing
-
-Replace the CTA with the server's invite URL if desired, verify the wording against the community rules, and review the exported WebM on target devices. WebM is silent; browser narration preview is not mixed into the export.
+Load the project with **Next Level promo**, scrub the 16 scene markers, and use **Hero frame** to inspect a beat. The timeline is 45 seconds at 30 FPS (1,350 frames).

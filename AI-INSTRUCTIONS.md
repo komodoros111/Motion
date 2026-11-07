@@ -8,11 +8,20 @@ This is the operating contract for assistants that create, edit, review, or expl
 - **Editor request:** inspect `AGENTS.md`, edit the smallest responsible modules, update docs and examples, then run `npm run check`.
 - **Binary request:** read `docs/FORMAT.md`. Prefer a validated JSON source. Never invent offsets for unknown binary formats.
 
+## Promo pacing
+
+- When the request is for a promotional video and no duration is specified, target 45 seconds. For the user's Next Level promos, treat 30 seconds as a hard minimum unless the user explicitly asks for a shorter cut.
+- Plan a beginning, several distinct story beats, and a deliberate closing hold. Give each scene enough screen time to read; don't stretch a 6-second sting with empty holds to reach the duration.
+- Animate several independent layers through the timeline: text entrances/exits, scale changes, directional movement, rotation, accent shapes, light sweeps, and scene transitions. Keep all timing within the project duration and make live preview and canvas export agree.
+- Use original copy, colors, shapes, and timing when referencing another creator's video. Document which visual observations are direct and which are approximations; never copy source footage, logos, or source code without permission and a compatible license.
+
 ## Renderer capabilities
 
-The editor renders typographic promo scenes with per-scene titles, subtitles, backgrounds, accent colors, preset SVG accents, dotted strokes, and overlapping transitions. It previews and exports `cut`, `fade`, `push`, `wipe`, `curtain`, `iris`, `flip`, `cube`, `zoom`, `flash`, `reflectionFlip`, and `spin` scene transitions. Entrance presets are `none`, `fadeUp`, `pop`, `rotateIn`, `blurIn`, `reveal`, and `bounce`. Animated tracks support X/Y position, Z/X/Y rotation, whole-screen turn, scale, opacity, contrast, brightness, shine sweep, and reflection. Static look controls set shine intensity and 3D perspective. WebM export is silent; browser voice narration is stored as text and can be previewed, but is not muxed into the video.
+The editor renders typographic promo scenes with per-scene titles, subtitles, backgrounds, accent colors, preset SVG accents, dotted strokes, and overlapping transitions. Scenes may set `presentation: "kinetic"` to render a large unboxed title with varied display styling and a per-scene backdrop (`arena`, `burst`, `scan`, or `spotlight`). It supports up to 24 independently animated vector layers: glow orbs, rings, stars, diamonds, bolts, arrows, triangles, squares, circles, hexagons, and gradient text. Each layer has its own animated position, scale, rotation, opacity, color pair, glow, and (for text) font, weight, size, letter spacing, and optional `wrap: true` multiline layout. Object keyframes support the same easing list as tracks. The stage supports direct pointer dragging to create position keys; use the inspector's pop, slide-shrink, zoom-out, float, and pulse recipes as starting points. Layers render in the live preview and WebM export.
 
-The editor does not render imported footage, arbitrary multi-layer compositions, masks, particle systems, custom SVG path authoring, or audio tracks. It uses a 2D canvas exporter, so perspective and transition rendering are approximations of the live CSS preview. Never claim pixel-identical parity or unsupported capabilities.
+The editor previews and exports `cut`, `fade`, `push`, `wipe`, `curtain`, `iris`, `flip`, `cube`, `zoom`, `flash`, `reflectionFlip`, and `spin` scene transitions. Legacy entrance presets are `fadeUp`, `pop`, `rotateIn`, `blurIn`, `reveal`, and `bounce`; per-scene entrances also support `fade-up`, `pop-in`, `slide-left`, `drop-bounce`, `elastic-zoom`, `flip-in-3d`, and `spring-rise`. Scene titles can reveal by character or word using rise, scale, blur, drop, slide, or tilt motion; animated backdrops include aurora, particles, rings, and perspective grid. Animated tracks support X/Y position, Z/X/Y rotation, whole-screen turn, scale, opacity, contrast, brightness, shine sweep, and reflection. Static look controls set shine intensity and 3D perspective. WebM export is silent; browser voice narration is stored as text and can be previewed, but is not muxed into the video.
+
+The editor does not render imported footage, masks, particle systems, custom SVG path authoring, or audio tracks. Its vector layers are the supported multi-layer composition system, with fixed preset geometry. It uses a 2D canvas exporter, so perspective and transition rendering are approximations of the live CSS preview. Never claim pixel-identical parity or unsupported capabilities.
 
 ## Motion JSON v1
 
@@ -50,6 +59,8 @@ Each scene `startMs` is the transition midpoint and its incoming transition dete
 
 Each track has a unique `id`, supported `property`, optional display `label`, and `keyframes`. A keyframe has a unique global `id`, `timeMs`, numeric `value`, and `easing`. The easing on the arriving keyframe governs interpolation into it.
 
+Optional top-level `objects` supports up to 24 vector layers. Shapes are `orb`, `ring`, `star`, `diamond`, `bolt`, `arrow`, `triangle`, `square`, `circle`, and `hexagon`; `word` creates gradient/glow typography. Each object has `id`, `name`, `type`, `color`, `size`, and at least one keyframe; optional style fields are `colorEnd`, `gradient`, `glow`, `text`, `fontFamily`, `fontSize`, `fontWeight`, and `letterSpacing`. Each object keyframe has a globally unique `id`, strictly increasing `timeMs`, `x`, `y`, `scale`, `rotation`, `opacity`, and `easing`. Position is measured in pixels from canvas center, scale is a multiplier, rotation is degrees, and opacity is `0..1`. To create shrink-and-move motion, animate `scale` toward `0` while changing `x` or `y`; easing is controlled by the arriving keyframe.
+
 ```json
 {
   "id": "track-turn",
@@ -70,7 +81,7 @@ Each track has a unique `id`, supported `property`, optional display `label`, an
 - `opacity`, `reflection`: 0–1.
 - `contrast`, `brightness`: 0–3, where 1 is neutral.
 - `shineSweep`: -1–1, left to right across the title.
-- Easing: `linear`, `easeIn`, `easeOut`, `easeInOut`.
+- Easing: `linear`, `easeIn`, `easeOut`, `easeInOut`, `easeInCubic`, `easeOutCubic`, `easeInOutCubic`, `easeInExpo`, `easeOutExpo`, `easeInBack`, `easeOutBack`, `easeInOutBack`, `easeOutElastic`, `easeOutBounce`, `spring`, and `hold`. The easing on the arriving keyframe governs the segment that ends there. `hold` keeps the prior value until that keyframe.
 - `durationMs`: 100–120000; `fps`: 1–240; canvas width/height: 1–8192.
 - Up to 64 tracks, 32 scenes, and 10000 keyframes. Track and keyframe IDs are non-empty and globally unique.
 - Canvas colors use `#RRGGBB`; scene title is limited to 24 characters and subtitle to 80.
@@ -88,11 +99,14 @@ Each track has a unique `id`, supported `property`, optional display `label`, an
 7. Use a single shine sweep with a clear start and end. Keep it short and avoid leaving a bright stripe parked on the title.
 8. Use ease-out to settle, ease-in to accelerate, and ease-in-out for balanced turns. Overshoot should be small and deliberate.
 9. Keep all keyframes inside the project duration. For a loop, align endpoints and velocities.
+10. The editor includes reusable Enter, Exit, and Accent/loop presets. Treat these as starting recipes; adapt timing and values to the composition rather than stacking presets blindly.
 
 ## Editing rules
 
 - Start from the exact input document. Preserve unrelated fields, IDs, scenes, timing, and style.
 - Do not add a second track for a property already in use.
+- Animate independent elements with `objects`; use tracks when the main title card should move. Keep object keyframes sorted and strictly increasing.
+- For text glow, set `type: "word"`, contrasting `color`/`colorEnd`, `gradient: true`, and restrained `glow`; sequence a readable entrance and a deliberate exit. For shrink exits, reduce `scale` while translating the layer and fading `opacity`.
 - Use fresh IDs for new objects and sort keyframes by `timeMs` and scenes by `startMs`.
 - Return the complete valid JSON document, never instructions or prose inside JSON.
 - If a request is ambiguous, make a conservative choice and state it after the JSON.
@@ -104,3 +118,7 @@ Each track has a unique `id`, supported `property`, optional display `label`, an
 3. A concise change summary and any renderer limitations.
 
 Never claim the project has been imported or visually verified unless the editor was actually used. Users can import the JSON, scrub scene markers and keyframes, preview with Space, and export WebM.
+
+## Visual timing review
+
+The live stage includes frame-accurate stepping, slow playback speeds, and an accessible readout of the current frame, scene or transition, and key property values. The timeline marks scene spans and transition windows. Use these cues to inspect pacing and place edits, while noting that the canvas video export approximates CSS perspective and transitions.
